@@ -29,7 +29,6 @@ public class Launch extends Application {
         primaryStage.show();
     }
 
-    /**/
     /**
      * Método main para fazer a Chamada do argumento
      *

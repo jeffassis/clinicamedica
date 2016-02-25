@@ -1,12 +1,16 @@
 package controller;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -27,8 +31,10 @@ public class MedicosController implements Initializable {
     private TextField txt_nome;
     @FXML
     private TextField txt_crm;
+    /*Preenchendo o ComboBox Manualmente */
     @FXML
     private ComboBox cb_especialidade;
+    ObservableList<String> listEspecialidade = FXCollections.observableArrayList("Cardiologista", "Ortopedista", "Pediatra");
     @FXML
     private TableView<MedicoModel> tabela_medico;
     @FXML
@@ -53,12 +59,25 @@ public class MedicosController implements Initializable {
     /*Criação da variavel de Class */
     private MedicoModel medicoModel;
 
+    int flag = 1;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        /**
+         * Preenchendo o ComboBox Especialidade
+         */
+        cb_especialidade.setItems(listEspecialidade);
+
+        /**
+         * Carrega todos as colunas da tabela pegando os dados do BD
+         */
+        this.codigoColuna.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty().asObject());
+        this.nomeColuna.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
+        this.crmColuna.setCellValueFactory(cellData -> cellData.getValue().getCrmProperty());
+        this.especialidadeColuna.setCellValueFactory(cellData -> cellData.getValue().getEspecialidadeProperty());
     }
 
     /**
@@ -68,12 +87,13 @@ public class MedicosController implements Initializable {
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                return MedicoDAO.executeQuery(null, MedicoDAO.QUERY_TODOS);
             }
 
             @Override
             protected void succeeded() {
                 super.succeeded();
+                tabela_medico.setItems((ObservableList<MedicoModel>) getValue());
             }
         };
         Thread thread = new Thread(task);
@@ -81,20 +101,101 @@ public class MedicosController implements Initializable {
         thread.start();
     }
 
+    /**
+     * Método da ação do Botão salvar da GUI do FXMl do Médico
+     */
     @FXML
     private void onSave() {
+        /*Verifica a flag. Se for 1 ela salva dados*/
+        if (flag == 1) {
+            /*Verifica se nome do Medico esta vazia*/
+            if (txt_nome.getText().length() == 0) {
+                alert("O campo nome não pode ser vazio");
+                return;
+            }
 
-        this.medicoModel = new MedicoModel();
-        medicoModel.setNome(txt_nome.getText().trim());
-        medicoModel.setCrm(txt_crm.getText().trim());
-        medicoModel.setEspecialidade((String) cb_especialidade.getSelectionModel().getSelectedItem());
-        if (MedicoDAO.executeUpdates(medicoModel, MedicoDAO.CREATE)) {
-            limparCampos();
-            alert("Dados inseridos com sucesso!");
-            carregarTabela();
-            desabilitarCampos();
+            this.medicoModel = new MedicoModel();
+            medicoModel.setNome(txt_nome.getText().trim());
+            medicoModel.setCrm(txt_crm.getText().trim());
+            medicoModel.setEspecialidade((String) cb_especialidade.getSelectionModel().getSelectedItem());
+            if (MedicoDAO.executeUpdates(medicoModel, MedicoDAO.CREATE)) {
+                limparCampos();
+                alert("Dados inseridos com sucesso!");
+                carregarTabela();
+                desabilitarCampos();
+            } else {
+                alert("Houve um erro ao inserir Dados");
+            }
         } else {
-            alert("Houve um erro ao inserir Dados");
+            /*Se a flag for 2 edita os dados do banco de dados*/
+            this.medicoModel = new MedicoModel();
+            medicoModel.setCodigo(Integer.parseInt(txt_codigo.getText().trim()));
+            medicoModel.setNome(txt_nome.getText().trim());
+            medicoModel.setCrm(txt_crm.getText().trim());
+            medicoModel.setEspecialidade((String) cb_especialidade.getSelectionModel().getSelectedItem());
+            if (MedicoDAO.executeUpdates(medicoModel, MedicoDAO.UPDATE)) {
+                limparCampos();
+                alert("Dados Atualizados com sucesso!");
+                carregarTabela();
+                flag = 1;
+                desabilitarCampos();
+            } else {
+                alert("Não foi possivel atualizar dados");
+            }
+        }
+    }
+
+    /**
+     * Método para ação do botão editar
+     *
+     */
+    @FXML
+    private void onEdit() {
+        /*Verificamos se a tabela foi selecionada*/
+        if (tabela_medico.getSelectionModel().getSelectedIndex() != -1) {
+            /*Habilito o botão salvar*/
+            this.bt_salvar.setDisable(false);
+            this.medicoModel = tabela_medico.getSelectionModel().getSelectedItem();
+            txt_codigo.setText(Integer.toString(medicoModel.getCodigo()));
+            txt_nome.setText(medicoModel.getNome());
+            txt_crm.setText(medicoModel.getCrm());
+            /*Utilizamos o for para descobrir qual posição é igual ao dado retornado
+             de especialidade*/
+            for (int i = 0; i < cb_especialidade.getItems().size(); i++) {
+                if (((String) cb_especialidade.getItems().get(i)).equals(medicoModel.getEspecialidade())) {
+                    cb_especialidade.getSelectionModel().select(i);
+                    /*agora q ja achamos paramos o for*/
+                    break;
+                }
+            }
+            flag = 2;
+            /*Desabilita os botões excluir e editar */
+            this.bt_editar.setDisable(true);
+            this.bt_excluir.setDisable(true);
+            habilitarCampos();
+        }
+    }
+
+    /**
+     * Metodo criado para acao do botao Excluir
+     */
+    @FXML
+    private void onDelete() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Mensagem");
+        alert.setHeaderText("");
+        alert.setContentText("Deseja excluir?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            this.medicoModel = tabela_medico.getItems().get(tabela_medico.getSelectionModel().getSelectedIndex());
+
+            if (MedicoDAO.executeUpdates(medicoModel, MedicoDAO.DELETE)) {
+                tabela_medico.getItems().remove(tabela_medico.getSelectionModel().getSelectedIndex());
+                alert("Excluido com sucesso!");
+                desabilitarCampos();
+            } else {
+                alert("Não foi possivel excluir dados");
+            }
         }
     }
 
@@ -102,13 +203,31 @@ public class MedicosController implements Initializable {
      * Método ação do Botao Novo
      */
     @FXML
-    public void onNew() {
+    private void onNew() {
         bt_novo.setDisable(false);
         bt_salvar.setDisable(false);
         bt_editar.setDisable(true);
         bt_excluir.setDisable(true);
         habilitarCampos();
         txt_nome.requestFocus();
+        flag = 1;
+    }
+
+    /**
+     * Método que desativa os botoes editar e excluir
+     */
+    @FXML
+    private void onCancel() {
+        /* Desmarca qualquer registro que esteja selecionado na tabela*/
+        tabela_medico.getSelectionModel().clearSelection();
+
+        desabilitarCampos();
+        limparCampos();
+        bt_novo.setDisable(false);
+        bt_salvar.setDisable(true);
+        bt_editar.setDisable(true);
+        bt_excluir.setDisable(true);
+
     }
 
     /**
@@ -127,7 +246,7 @@ public class MedicosController implements Initializable {
     /**
      * Método que limpa os campos
      */
-    public void limparCampos() {
+    private void limparCampos() {
         txt_codigo.setText("");
         txt_nome.setText("");
         txt_crm.setText("");
@@ -135,9 +254,20 @@ public class MedicosController implements Initializable {
     }
 
     /**
+     * Método para que seja acionado os botoes editar e excluir quando a tabela
+     * for clickada
+     */
+    public void onClicked() {
+        bt_novo.setDisable(false);
+        bt_salvar.setDisable(true);
+        bt_editar.setDisable(false);
+        bt_excluir.setDisable(false);
+    }
+
+    /**
      * Método responsavel por habilitar os campos
      */
-    public void habilitarCampos() {
+    private void habilitarCampos() {
         txt_nome.setDisable(false);
         txt_crm.setDisable(false);
         cb_especialidade.setDisable(false);
@@ -146,7 +276,7 @@ public class MedicosController implements Initializable {
     /**
      * Método responsavel por desabilitar os campos e botôes
      */
-    public void desabilitarCampos() {
+    private void desabilitarCampos() {
         txt_nome.setDisable(true);
         txt_crm.setDisable(true);
         cb_especialidade.setDisable(true);
