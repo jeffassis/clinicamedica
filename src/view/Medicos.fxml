@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -13,14 +17,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MedicosController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MedicosController">
    <children>
       <VBox layoutX="54.0" layoutY="99.0" spacing="10.0">
          <children>
-            <Button fx:id="bt_novo" mnemonicParsing="false" prefWidth="65.0" text="Novo" />
-            <Button fx:id="bt_salvar" mnemonicParsing="false" prefWidth="65.0" text="Salvar" />
-            <Button fx:id="bt_editar" mnemonicParsing="false" prefWidth="65.0" text="Editar" />
-            <Button fx:id="bt_excluir" mnemonicParsing="false" prefWidth="65.0" text="Excluir" />
+            <Button fx:id="bt_novo" mnemonicParsing="false" onAction="#onNew" prefWidth="65.0" text="Novo" />
+            <Button fx:id="bt_salvar" disable="true" mnemonicParsing="false" onAction="#onSave" prefWidth="65.0" text="Salvar" />
+            <Button fx:id="bt_editar" disable="true" mnemonicParsing="false" prefWidth="65.0" text="Editar" />
+            <Button fx:id="bt_excluir" disable="true" mnemonicParsing="false" prefWidth="65.0" text="Excluir" />
             <Button fx:id="bt_cancelar" mnemonicParsing="false" prefWidth="65.0" text="Cancelar" />
          </children>
       </VBox>
@@ -52,17 +56,17 @@
                   <Insets right="5.0" />
                </padding>
             </Label>
-            <TextField fx:id="txt_codigo" GridPane.columnIndex="1">
+            <TextField fx:id="txt_codigo" disable="true" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="3.0" right="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="txt_nome" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+            <TextField fx:id="txt_nome" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="3.0" right="8.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="txt_crm" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="txt_crm" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="3.0" right="5.0" />
                </GridPane.margin>
@@ -72,7 +76,7 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </Label>
-            <ComboBox fx:id="cb_especialista" prefHeight="25.0" prefWidth="158.0" GridPane.columnIndex="3" />
+            <ComboBox fx:id="cb_especialista" disable="true" prefHeight="25.0" prefWidth="158.0" GridPane.columnIndex="3" />
          </children>
       </GridPane>
       <TableView fx:id="tabela_medico" layoutX="151.0" layoutY="200.0" prefHeight="165.0" prefWidth="417.0">

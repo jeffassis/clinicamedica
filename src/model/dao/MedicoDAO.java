@@ -3,9 +3,12 @@ package model.dao;
 import factory.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.bean.MedicoModel;
 
 /**
@@ -29,7 +32,7 @@ public class MedicoDAO {
      * @param operacao
      * @return
      */
-    public boolean executeUpdates(MedicoModel mm, int operacao) {
+    public static boolean executeUpdates(MedicoModel mm, int operacao) {
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement ps;
         String sql;
@@ -80,5 +83,61 @@ public class MedicoDAO {
             Logger.getLogger(MedicoDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+
+    /**
+     * Método estático que retorna uma observableList com uma pesquisa
+     *
+     * @param mm
+     * @param operacao
+     * @return
+     */
+    public static ObservableList<MedicoModel> executeQuery(MedicoModel mm, int operacao) {
+        Connection conexao = ConnectionFactory.getConnection();
+        PreparedStatement ps;
+        ResultSet rs;
+        String sql;
+        ObservableList<MedicoModel> listaMedico = FXCollections.observableArrayList();
+        MedicoModel medicoModel;
+        try {
+            switch (operacao) {
+                case QUERY_TODOS:
+                    sql = "select * from medico order by id_medico";
+                    ps = conexao.prepareStatement(sql);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        medicoModel = new MedicoModel();
+                        medicoModel.setCodigo(rs.getInt("id_medico"));
+                        medicoModel.setNome(rs.getString("nome_medico"));
+                        medicoModel.setCrm(rs.getString("crm_medico"));
+                        medicoModel.setEspecialidade(rs.getString("especialidade_medico"));
+                        listaMedico.add(medicoModel);
+                    }
+                    rs.close();
+                    ps.close();
+                    conexao.close();
+                    return listaMedico;
+                case QUERY_NOME:
+                    sql = "select * from medico order by nome_medico";
+                    ps = conexao.prepareCall(sql);
+                    ps.setString(1, mm.getNome());
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        medicoModel = new MedicoModel();
+                        medicoModel.setCodigo(rs.getInt("id_medico"));
+                        medicoModel.setNome(rs.getString("nome_medico"));
+                        medicoModel.setCrm(rs.getString("crm_medico"));
+                        medicoModel.setEspecialidade(rs.getString("especialidade_medico"));
+                        listaMedico.add(medicoModel);
+                    }
+                    rs.close();
+                    ps.close();
+                    conexao.close();
+                    return listaMedico;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MedicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaMedico;
     }
 }
