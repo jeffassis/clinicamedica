@@ -6,26 +6,26 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * Class Bean que contém as regras de negocio encapsuladas do médico
+ * Class Bean que contém as regras de negocio encapsuladas do Funcionario
  *
  * @author jeff-
  */
-public class MedicoModel {
+public class FuncionarioModel {
 
     /*Declaração das variaveis como propriedades */
     private IntegerProperty codigo;
     private StringProperty nome;
-    private StringProperty crm;
-    private StringProperty especialidade;
+    private StringProperty senha;
+    private StringProperty permissao;
 
     /**
      * Construtor que converte as variaveis para SimpleProperty
      */
-    public MedicoModel() {
+    public FuncionarioModel() {
         this.codigo = new SimpleIntegerProperty();
         this.nome = new SimpleStringProperty();
-        this.crm = new SimpleStringProperty();
-        this.especialidade = new SimpleStringProperty();
+        this.senha = new SimpleStringProperty();
+        this.permissao = new SimpleStringProperty();
     }
 
     /**
@@ -33,14 +33,14 @@ public class MedicoModel {
      *
      * @param codigo
      * @param nome
-     * @param crm
-     * @param especialidade
+     * @param senha
+     * @param permissao
      */
-    public MedicoModel(int codigo, String nome, String crm, String especialidade) {
+    public FuncionarioModel(int codigo, String nome, String senha, String permissao) {
         this.codigo = new SimpleIntegerProperty(codigo);
         this.nome = new SimpleStringProperty(nome);
-        this.crm = new SimpleStringProperty(crm);
-        this.especialidade = new SimpleStringProperty(especialidade);
+        this.senha = new SimpleStringProperty(senha);
+        this.permissao = new SimpleStringProperty(permissao);
     }
 
     // Getters e Setters não comuns e utilizando Property .....
@@ -60,20 +60,20 @@ public class MedicoModel {
         this.nome.set(nome);
     }
 
-    public StringProperty getCrmProperty() {
-        return this.crm;
+    public StringProperty getSenhaProperty() {
+        return this.senha;
     }
 
-    public void setCrm(String crm) {
-        this.crm.set(crm);
+    public void setSenha(String senha) {
+        this.senha.set(senha);
     }
 
-    public StringProperty getEspecialidadeProperty() {
-        return this.especialidade;
+    public StringProperty getPermissaoProperty() {
+        return this.permissao;
     }
 
-    public void setEspecialidade(String especialidade) {
-        this.especialidade.set(especialidade);
+    public void setPermissao(String permissao) {
+        this.permissao.set(permissao);
     }
 
     public int getCodigo() {
@@ -84,11 +84,11 @@ public class MedicoModel {
         return nome.get();
     }
 
-    public String getCrm() {
-        return crm.get();
+    public String getSenha() {
+        return senha.get();
     }
 
-    public String getEspecialidade() {
-        return especialidade.get();
+    public String getPermissao() {
+        return permissao.get();
     }
 }

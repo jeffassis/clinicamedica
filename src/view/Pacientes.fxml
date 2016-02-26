@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PacientesController">
+<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PacientesController">
    <children>
       <ToolBar layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
         <items>
@@ -51,11 +51,6 @@
             <Label text="Tipo:" GridPane.rowIndex="8" />
             <Label text="Observações:" GridPane.rowIndex="10" />
             <TextField GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets right="5.0" />
-               </GridPane.margin>
-            </TextField>
-            <TextField GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
@@ -144,16 +139,13 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField GridPane.columnIndex="4" GridPane.rowIndex="7">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin>
-            </TextField>
             <Label text="Cliente Desde:" GridPane.columnIndex="4" GridPane.rowIndex="6">
                <GridPane.margin>
                   <Insets left="7.0" />
                </GridPane.margin>
             </Label>
+            <DatePicker fx:id="dp_nascimento" GridPane.rowIndex="3" />
+            <DatePicker fx:id="dp_cliente" GridPane.columnIndex="4" GridPane.rowIndex="7" />
          </children>
       </GridPane>
    </children>

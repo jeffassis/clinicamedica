@@ -119,7 +119,7 @@ public class MedicoDAO {
                     return listaMedico;
                 case QUERY_NOME:
                     sql = "select * from medico order by nome_medico";
-                    ps = conexao.prepareCall(sql);
+                    ps = conexao.prepareStatement(sql);
                     ps.setString(1, mm.getNome());
                     rs = ps.executeQuery();
                     while (rs.next()) {
