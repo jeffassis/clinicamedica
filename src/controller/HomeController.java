@@ -20,11 +20,12 @@ import javafx.stage.Stage;
 public class HomeController implements Initializable {
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
-    private boolean abriuCadMedico;
+    private boolean abriuCadMedico, abriuCadPaciente;
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
-    private Stage cadMedicoPalco;
+    private Stage cadMedicoPalco, cadPacientePalco;
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
+    private PacientesController pacientesController;
 
     /**
      * Initializes the controller class.
@@ -61,6 +62,32 @@ public class HomeController implements Initializable {
         } else {
             this.cadMedicoPalco.show();
             this.medicosController.carregarTabela();
+        }
+    }
+
+    /**
+     * Método para chamar a GUI de Cadastro de Pacientes
+     */
+    @FXML
+    private void cadPaciente() {
+        if (!abriuCadPaciente) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Pacientes.fxml"));
+            try {
+                this.cadPacientePalco = new Stage();
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.pacientesController = carregar.getController();
+                this.cadPacientePalco.setTitle("Cadastro de Pacientes");
+                this.cadPacientePalco.setScene(scene);
+                this.cadPacientePalco.show();
+
+                this.abriuCadPaciente = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.cadPacientePalco.show();
         }
     }
 
