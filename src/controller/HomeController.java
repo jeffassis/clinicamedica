@@ -88,6 +88,7 @@ public class HomeController implements Initializable {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
+            this.cadPacientePalco.requestFocus();
             this.cadPacientePalco.show();
         }
     }
