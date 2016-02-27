@@ -61,6 +61,7 @@ public class HomeController implements Initializable {
             }
         } else {
             this.cadMedicoPalco.show();
+            this.cadMedicoPalco.requestFocus();
             this.medicosController.carregarTabela();
         }
     }
