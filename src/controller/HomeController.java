@@ -25,20 +25,21 @@ import javafx.stage.Stage;
  */
 public class HomeController implements Initializable {
 
-    /*Testando a TreeView*/
+    /*Declarando a TreeView*/
     @FXML
     private TreeView<String> treeView;
     /*Colocando uma imagem de pasta na Itens da TreeView*/
     Image icon = new Image(getClass().getResourceAsStream("/img/folder 16x16.png"));
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
-    private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario;
+    private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento;
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
-    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco;
+    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco;
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
     private PacientesController pacientesController;
     private FuncionarioController funcionarioController;
+    private AgendamentoController agendamentoController;
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC, nodeA1, nodeA2, nodeA3;
 
@@ -56,7 +57,7 @@ public class HomeController implements Initializable {
         root.setExpanded(true);
 
         this.nodeA = new TreeItem<>("Cadastros", new ImageView(icon));
-        this.nodeB = new TreeItem<>("Edit", new ImageView(icon));
+        this.nodeB = new TreeItem<>("Agendamento", new ImageView(icon));
         this.nodeC = new TreeItem<>("Help", new ImageView(icon));
         /*Adicionando os filhos do root da TreeItem*/
         root.getChildren().addAll(nodeA, nodeB, nodeC);
@@ -93,9 +94,11 @@ public class HomeController implements Initializable {
                     case "Funcionários":
                         cadFuncionario();
                         break;
+                    case "Agendamento":
+                        agendamento();
+                        break;
                     default:
                         break;
-
                 }
             }
         }
@@ -189,6 +192,32 @@ public class HomeController implements Initializable {
             this.cadFuncionarioPalco.show();
             this.cadFuncionarioPalco.requestFocus();
             this.funcionarioController.carregarTabela();
+        }
+    }
+
+  
+    @FXML
+    private void agendamento() {
+        if (!abriuAgendamento) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Agendamento.fxml"));
+            try {
+                this.AgendamentoPalco = new Stage();
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.agendamentoController = carregar.getController();
+                this.AgendamentoPalco.setTitle("Agendamento");
+                this.AgendamentoPalco.setScene(scene);
+                this.AgendamentoPalco.show();
+                this.agendamentoController.iniciarProcessos();
+                this.abriuAgendamento = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.AgendamentoPalco.show();
+            this.AgendamentoPalco.requestFocus();
+            this.agendamentoController.iniciarProcessos();
         }
     }
 

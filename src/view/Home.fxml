@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -17,6 +17,7 @@
               <MenuItem mnemonicParsing="false" onAction="#cadMedico" text="Médicos" />
                   <MenuItem fx:id="menuItemPacientes" mnemonicParsing="false" onAction="#cadPaciente" text="Pacientes" />
                   <MenuItem fx:id="menuItemFuncionario" mnemonicParsing="false" onAction="#cadFuncionario" text="Funcionários" />
+                  <MenuItem fx:id="menuItemAgendamento" mnemonicParsing="false" onAction="#agendamento" text="Agendamento" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -32,12 +33,25 @@
         </menus>
       </MenuBar>
    </top>
-   <left>
-      <VBox prefHeight="575.0" prefWidth="156.0" BorderPane.alignment="CENTER">
-         <children>
-            <Region prefHeight="127.0" prefWidth="100.0" />
-            <TreeView fx:id="treeView" onContextMenuRequested="#mouseTreeView" onMouseClicked="#mouseTreeView" prefHeight="297.0" prefWidth="126.0" />
-         </children>
-      </VBox>
-   </left>
+   <center>
+      <SplitPane dividerPositions="0.2024432809773124" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <SplitPane dividerPositions="0.23492462311557788" layoutX="156.0" layoutY="78.0" prefHeight="454.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <TreeView fx:id="treeView" layoutX="-14.0" layoutY="33.0" onContextMenuRequested="#mouseTreeView" onMouseClicked="#mouseTreeView" prefHeight="452.0" prefWidth="227.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </center>
 </BorderPane>
