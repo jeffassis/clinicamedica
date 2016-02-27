@@ -100,27 +100,84 @@ public class FuncionarioController implements Initializable {
      */
     @FXML
     private void onSave() {
-        /*Verifica se nome esta vazio*/
-        if (txt_nome.getText().length() == 0) {
-            alert("O campo nome não pode ser vazio");
-            return;
-        }
-        /*Verifica se a senha esta vazia*/
-        if (pass_senha.getText().length() == 0) {
-            alert("O campo senha não pode ser vazio");
-            return;
-        }
-        this.funcionarioModel = new FuncionarioModel();
-        funcionarioModel.setNome(txt_nome.getText().trim());
-        funcionarioModel.setSenha(pass_senha.getText().trim());
-        funcionarioModel.setPermissao((String) cb_permissao.getSelectionModel().getSelectedItem());
-        if (FuncionarioDAO.executeUpdates(funcionarioModel, FuncionarioDAO.CREATE)) {
-            limparCampos();
-            alert("Dados inseridos com sucesso!");
-            carregarTabela();
-            desabilitarCampos();
+        /*Verifica a flag. Se for 1 ela salva dados*/
+        if (flag == 1) {
+            /*Verifica se nome esta vazio*/
+            if (txt_nome.getText().length() == 0) {
+                alert("O campo nome não pode ser vazio");
+                return;
+            }
+            /*Verifica se a senha sao iguais*/
+            if (pass_senha.getText().equals(pass_conf_senha.getText())) {
+                /*Verifica se a senha esta vazio*/
+                if (pass_senha.getText().length() == 0) {
+                    alert("O campo senha não pode ser vazio");
+                    return;
+                }
+                this.funcionarioModel = new FuncionarioModel();
+                funcionarioModel.setNome(txt_nome.getText().trim());
+                funcionarioModel.setSenha(pass_senha.getText().trim());
+                funcionarioModel.setPermissao((String) cb_permissao.getSelectionModel().getSelectedItem());
+                if (FuncionarioDAO.executeUpdates(funcionarioModel, FuncionarioDAO.CREATE)) {
+                    limparCampos();
+                    alert("Dados inseridos com sucesso!");
+                    carregarTabela();
+                    desabilitarCampos();
+                } else {
+                    alert("Houve um erro ao inserir Dados");
+                }
+            } else {
+                alert("As senhas não correspondem");
+            }
+        } else if (pass_senha.getText().equals(pass_conf_senha.getText())) {
+            /*Se a flag for 2 edita os dados do banco de dados*/
+            this.funcionarioModel = new FuncionarioModel();
+            funcionarioModel.setCodigo(Integer.parseInt(txt_codigo.getText().trim()));
+            funcionarioModel.setNome(txt_nome.getText().trim());
+            funcionarioModel.setSenha(pass_senha.getText().trim());
+            funcionarioModel.setPermissao((String) cb_permissao.getSelectionModel().getSelectedItem());
+            if (FuncionarioDAO.executeUpdates(funcionarioModel, FuncionarioDAO.UPDATE)) {
+                limparCampos();
+                alert("Dados Atualizados com sucesso!");
+                carregarTabela();
+                flag = 1;
+                desabilitarCampos();
+            } else {
+                alert("Não foi possivel atualizar dados");
+            }
         } else {
-            alert("Houve um erro ao inserir Dados");
+            alert("As senhas não correspondem");
+        }
+    }
+
+    /**
+     * Método para ação do botão editar
+     *
+     */
+    @FXML
+    private void onEdit() {
+        /*Verificamos se a tabela foi selecionada*/
+        if (tabela_funcionario.getSelectionModel().getSelectedIndex() != -1) {
+            /*Habilito o botão salvar*/
+            this.bt_salvar.setDisable(false);
+            this.funcionarioModel = tabela_funcionario.getSelectionModel().getSelectedItem();
+            txt_codigo.setText(Integer.toString(funcionarioModel.getCodigo()));
+            txt_nome.setText(funcionarioModel.getNome());
+            pass_senha.setText(funcionarioModel.getSenha());
+            /*Utilizamos o for para descobrir qual posição é igual ao dado retornado
+             de especialidade*/
+            for (int i = 0; i < cb_permissao.getItems().size(); i++) {
+                if (((String) cb_permissao.getItems().get(i)).equals(funcionarioModel.getPermissao())) {
+                    cb_permissao.getSelectionModel().select(i);
+                    /*agora q ja achamos paramos o for*/
+                    break;
+                }
+            }
+            flag = 2;
+            /*Desabilita os botões excluir e editar */
+            this.bt_editar.setDisable(true);
+            this.bt_excluir.setDisable(true);
+            habilitarCampos();
         }
     }
 

@@ -72,7 +72,7 @@
                      <children>
                         <Button fx:id="bt_novo" mnemonicParsing="false" onAction="#onNew" prefWidth="70.0" text="Novo" />
                         <Button fx:id="bt_salvar" disable="true" mnemonicParsing="false" onAction="#onSave" prefWidth="70.0" text="Salvar" />
-                        <Button fx:id="bt_editar" disable="true" mnemonicParsing="false" prefWidth="70.0" text="Editar" />
+                        <Button fx:id="bt_editar" disable="true" mnemonicParsing="false" onAction="#onEdit" prefWidth="70.0" text="Editar" />
                         <Button fx:id="bt_excluir" disable="true" mnemonicParsing="false" onAction="#onDelete" prefWidth="70.0" text="Excluir" />
                         <Button fx:id="bt_cancelar" mnemonicParsing="false" onAction="#onCancel" prefWidth="70.0" text="Cancelar" />
                      </children>

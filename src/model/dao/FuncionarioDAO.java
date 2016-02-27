@@ -61,7 +61,7 @@ public class FuncionarioDAO {
                     conexao.close();
                     return true;
                 case UPDATE:
-                    sql = "update funcionario set"
+                    sql = "update funcionario set "
                             + "nome_funcionario=?,"
                             + "senha_funcionario=?,"
                             + "permissao_funcionario=? "

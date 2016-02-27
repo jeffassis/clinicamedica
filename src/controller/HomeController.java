@@ -62,6 +62,7 @@ public class HomeController implements Initializable {
             }
         } else {
             this.cadMedicoPalco.show();
+            this.cadMedicoPalco.requestFocus();
             this.medicosController.carregarTabela();
         }
     }
@@ -89,6 +90,7 @@ public class HomeController implements Initializable {
             }
         } else {
             this.cadPacientePalco.show();
+            this.cadPacientePalco.requestFocus();
         }
     }
 
@@ -113,6 +115,7 @@ public class HomeController implements Initializable {
             }
         } else {
             this.cadFuncionarioPalco.show();
+            this.cadFuncionarioPalco.requestFocus();
             this.funcionarioController.carregarTabela();
         }
     }
