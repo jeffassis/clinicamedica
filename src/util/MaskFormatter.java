@@ -1,10 +1,5 @@
 package util;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
@@ -270,10 +265,10 @@ public class MaskFormatter {
         });
 
     }
-    
+
     /**
-     * Exibi no componente o formato de máscara selecionado.
-     * Obs: Utilizar somente depois do método setMask()
+     * Exibi no componente o formato de máscara selecionado. Obs: Utilizar
+     * somente depois do método setMask()
      */
     public void showMask() {
         switch (this.maskSelecionada) {
@@ -294,4 +289,3 @@ public class MaskFormatter {
         }
     }
 }
-

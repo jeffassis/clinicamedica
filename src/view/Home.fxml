@@ -8,7 +8,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -32,4 +32,12 @@
         </menus>
       </MenuBar>
    </top>
+   <left>
+      <VBox prefHeight="575.0" prefWidth="156.0" BorderPane.alignment="CENTER">
+         <children>
+            <Region prefHeight="127.0" prefWidth="100.0" />
+            <TreeView fx:id="treeView" onContextMenuRequested="#mouseTreeView" onMouseClicked="#mouseTreeView" prefHeight="297.0" prefWidth="126.0" />
+         </children>
+      </VBox>
+   </left>
 </BorderPane>
