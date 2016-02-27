@@ -39,6 +39,8 @@ public class HomeController implements Initializable {
     private MedicosController medicosController;
     private PacientesController pacientesController;
     private FuncionarioController funcionarioController;
+    /*Declaração dos TreeItem*/
+    private TreeItem<String> root, nodeA, nodeB, nodeC, nodeA1, nodeA2, nodeA3;
 
     /**
      * Initializes the controller class.
@@ -49,21 +51,21 @@ public class HomeController implements Initializable {
          * Testando a TreeView
          */
         /*Declarando a TreeView com root Pai*/
-        TreeItem<String> root = new TreeItem<>("Administração", new ImageView(icon));
+        this.root = new TreeItem<>("Administração", new ImageView(icon));
         /*Deixa o TreeItem já aberto!*/
         root.setExpanded(true);
 
-        TreeItem<String> nodeA = new TreeItem<>("Cadastros", new ImageView(icon));
-        TreeItem<String> nodeB = new TreeItem<>("Edit", new ImageView(icon));
-        TreeItem<String> nodeC = new TreeItem<>("Help", new ImageView(icon));
+        this.nodeA = new TreeItem<>("Cadastros", new ImageView(icon));
+        this.nodeB = new TreeItem<>("Edit", new ImageView(icon));
+        this.nodeC = new TreeItem<>("Help", new ImageView(icon));
         /*Adicionando os filhos do root da TreeItem*/
         root.getChildren().addAll(nodeA, nodeB, nodeC);
         /*Deixa o TreeItem já aberto!*/
         nodeA.setExpanded(true);
 
-        TreeItem<String> nodeA1 = new TreeItem<>("Médicos", new ImageView(icon));
-        TreeItem<String> nodeA2 = new TreeItem<>("Pacientes", new ImageView(icon));
-        TreeItem<String> nodeA3 = new TreeItem<>("Funcionários", new ImageView(icon));
+        this.nodeA1 = new TreeItem<>("Médicos", new ImageView(icon));
+        this.nodeA2 = new TreeItem<>("Pacientes", new ImageView(icon));
+        this.nodeA3 = new TreeItem<>("Funcionários", new ImageView(icon));
         /*Adicionando os filhos do nodeA*/
         nodeA.getChildren().addAll(nodeA1, nodeA2, nodeA3);
         /*Adicionando o Node Pai a TreeView*/
@@ -79,7 +81,23 @@ public class HomeController implements Initializable {
     public void mouseTreeView(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2) {
             TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
-            System.out.println(item.getValue());
+            /*verificação para evitar exceção*/
+            if (item.getValue() != null) {
+                switch (item.getValue()) {
+                    case "Médicos":
+                        cadMedico();
+                        break;
+                    case "Pacientes":
+                        cadPaciente();
+                        break;
+                    case "Funcionários":
+                        cadFuncionario();
+                        break;
+                    default:
+                        break;
+
+                }
+            }
         }
     }
 
