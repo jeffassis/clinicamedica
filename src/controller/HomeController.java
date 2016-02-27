@@ -20,12 +20,13 @@ import javafx.stage.Stage;
 public class HomeController implements Initializable {
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
-    private boolean abriuCadMedico, abriuCadPaciente;
+    private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario;
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
-    private Stage cadMedicoPalco, cadPacientePalco;
+    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco;
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
     private PacientesController pacientesController;
+    private FuncionarioController funcionarioController;
 
     /**
      * Initializes the controller class.
@@ -90,6 +91,31 @@ public class HomeController implements Initializable {
         } else {
             this.cadPacientePalco.requestFocus();
             this.cadPacientePalco.show();
+        }
+    }
+
+    @FXML
+    private void cadFuncionario() {
+        if (!abriuCadFuncionario) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Funcionario.fxml"));
+            try {
+                this.cadFuncionarioPalco = new Stage();
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.funcionarioController = carregar.getController();
+                this.cadFuncionarioPalco.setTitle("Cadastro de Funcionarios");
+                this.cadFuncionarioPalco.setScene(scene);
+                this.cadFuncionarioPalco.show();
+                this.funcionarioController.carregarTabela();
+
+                this.abriuCadFuncionario = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.cadFuncionarioPalco.show();
+            this.funcionarioController.carregarTabela();
         }
     }
 
