@@ -115,6 +115,7 @@ public class HomeController implements Initializable {
             }
         } else {
             this.cadFuncionarioPalco.show();
+            this.cadFuncionarioPalco.requestFocus();
             this.funcionarioController.carregarTabela();
         }
     }
