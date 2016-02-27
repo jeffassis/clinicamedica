@@ -28,7 +28,7 @@ public class HomeController implements Initializable {
     /*Testando a TreeView*/
     @FXML
     private TreeView<String> treeView;
-
+    /*Colocando uma imagem de pasta na Itens da TreeView*/
     Image icon = new Image(getClass().getResourceAsStream("/img/folder 16x16.png"));
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
@@ -56,20 +56,26 @@ public class HomeController implements Initializable {
         TreeItem<String> nodeA = new TreeItem<>("Cadastros", new ImageView(icon));
         TreeItem<String> nodeB = new TreeItem<>("Edit", new ImageView(icon));
         TreeItem<String> nodeC = new TreeItem<>("Help", new ImageView(icon));
+        /*Adicionando os filhos do root da TreeItem*/
         root.getChildren().addAll(nodeA, nodeB, nodeC);
+        /*Deixa o TreeItem já aberto!*/
         nodeA.setExpanded(true);
 
         TreeItem<String> nodeA1 = new TreeItem<>("Médicos", new ImageView(icon));
         TreeItem<String> nodeA2 = new TreeItem<>("Pacientes", new ImageView(icon));
         TreeItem<String> nodeA3 = new TreeItem<>("Funcionários", new ImageView(icon));
+        /*Adicionando os filhos do nodeA*/
         nodeA.getChildren().addAll(nodeA1, nodeA2, nodeA3);
-
+        /*Adicionando o Node Pai a TreeView*/
         treeView.setRoot(root);
     }
 
     /**
      * Método que da ação com mouse na TreeView
+     *
+     * @param mouseEvent
      */
+    @FXML
     public void mouseTreeView(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2) {
             TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
