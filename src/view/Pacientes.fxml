@@ -12,12 +12,12 @@
    <children>
       <ToolBar layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
         <items>
-          <Button mnemonicParsing="false" text="Incluir" />
-            <Button mnemonicParsing="false" text="Gravar" />
-            <Button mnemonicParsing="false" text="Excluir" />
-            <Button mnemonicParsing="false" text="Localizar" />
-            <Button mnemonicParsing="false" text="Imprimir" />
-            <Button mnemonicParsing="false" text="Cancelar" />
+          <Button fx:id="bt_incluir" mnemonicParsing="false" text="Incluir" />
+            <Button fx:id="bt_gravar" mnemonicParsing="false" text="Gravar" />
+            <Button fx:id="bt_excluir" mnemonicParsing="false" text="Excluir" />
+            <Button fx:id="bt_localizar" mnemonicParsing="false" text="Localizar" />
+            <Button fx:id="bt_imprimir" mnemonicParsing="false" text="Imprimir" />
+            <Button fx:id="bt_cancelar" mnemonicParsing="false" text="Cancelar" />
         </items>
       </ToolBar>
       <GridPane layoutX="5.0" layoutY="78.0" prefHeight="364.0" prefWidth="690.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0">
@@ -43,25 +43,25 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField prefHeight="25.0" prefWidth="133.0" GridPane.columnSpan="5" GridPane.rowIndex="11" />
+            <TextField fx:id="txt_observacoes" prefHeight="25.0" prefWidth="133.0" GridPane.columnSpan="5" GridPane.rowIndex="11" />
             <Label text="Matricula:" />
             <Label text="Data Nascimento:" GridPane.rowIndex="2" />
             <Label text="Cidade:" GridPane.rowIndex="4" />
             <Label text="Documento:" GridPane.rowIndex="6" />
             <Label text="Tipo:" GridPane.rowIndex="8" />
             <Label text="Observações:" GridPane.rowIndex="10" />
-            <TextField GridPane.rowIndex="1">
+            <TextField fx:id="txt_matricula" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
             </TextField>
             <ComboBox prefHeight="25.0" prefWidth="219.0" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-            <TextField GridPane.columnSpan="2" GridPane.rowIndex="7">
+            <TextField fx:id="txt_documento" GridPane.columnSpan="2" GridPane.rowIndex="7">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField GridPane.columnSpan="2" GridPane.rowIndex="9">
+            <TextField fx:id="txt_tipo" GridPane.columnSpan="2" GridPane.rowIndex="9">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
@@ -71,7 +71,7 @@
                   <Insets left="7.0" />
                </GridPane.margin>
             </Label>
-            <TextField GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="1">
+            <TextField fx:id="txt_nome" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
@@ -81,7 +81,7 @@
                   <Insets left="7.0" />
                </GridPane.margin>
             </Label>
-            <TextField GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
+            <TextField fx:id="txt_endereco" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>
@@ -91,7 +91,7 @@
                   <Insets left="7.0" />
                </GridPane.margin>
             </Label>
-            <TextField GridPane.columnIndex="4" GridPane.rowIndex="3">
+            <TextField fx:id="txt_telefone" GridPane.columnIndex="4" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
@@ -134,7 +134,7 @@
                   <Insets left="7.0" />
                </GridPane.margin>
             </Label>
-            <TextField GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="9">
+            <TextField fx:id="txt_email" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="9">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
