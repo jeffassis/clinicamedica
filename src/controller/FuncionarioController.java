@@ -268,6 +268,11 @@ public class FuncionarioController implements Initializable {
         bt_salvar.setDisable(true);
         bt_editar.setDisable(false);
         bt_excluir.setDisable(false);
+        limparCampos();
+        txt_nome.setDisable(true);
+        pass_conf_senha.setDisable(true);
+        pass_senha.setDisable(true);
+        cb_permissao.setDisable(true);
     }
 
     /**

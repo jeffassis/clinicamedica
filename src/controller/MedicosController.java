@@ -34,7 +34,7 @@ public class MedicosController implements Initializable {
     /*Preenchendo o ComboBox Manualmente */
     @FXML
     private ComboBox cb_especialidade;
-    ObservableList<String> listEspecialidade = FXCollections.observableArrayList("Cardiologista", "Ortopedista", "Pediatra","Clinico Geral");
+    ObservableList<String> listEspecialidade = FXCollections.observableArrayList("Cardiologista", "Ortopedista", "Pediatra", "Clinico Geral");
     @FXML
     private TableView<MedicoModel> tabela_medico;
     @FXML
@@ -262,6 +262,10 @@ public class MedicosController implements Initializable {
         bt_salvar.setDisable(true);
         bt_editar.setDisable(false);
         bt_excluir.setDisable(false);
+        limparCampos();
+        txt_nome.setDisable(true);
+        txt_crm.setDisable(true);
+        cb_especialidade.setDisable(true);
     }
 
     /**
