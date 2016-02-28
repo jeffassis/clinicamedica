@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
@@ -32,14 +31,15 @@ public class HomeController implements Initializable {
     Image icon = new Image(getClass().getResourceAsStream("/img/folder 16x16.png"));
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
-    private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento;
+    private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento, abriuMeusPacientes;
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
-    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco;
+    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco, MeusPacientesPalco;
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
     private PacientesController pacientesController;
     private FuncionarioController funcionarioController;
     private AgendamentoController agendamentoController;
+    private MeusPacientesController meusPacientesController;
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC, nodeA1, nodeA2, nodeA3;
 
@@ -58,7 +58,7 @@ public class HomeController implements Initializable {
 
         this.nodeA = new TreeItem<>("Cadastros", new ImageView(icon));
         this.nodeB = new TreeItem<>("Agendamento", new ImageView(icon));
-        this.nodeC = new TreeItem<>("Help", new ImageView(icon));
+        this.nodeC = new TreeItem<>("Meus Pacientes", new ImageView(icon));
         /*Adicionando os filhos do root da TreeItem*/
         root.getChildren().addAll(nodeA, nodeB, nodeC);
         /*Deixa o TreeItem já aberto!*/
@@ -96,6 +96,9 @@ public class HomeController implements Initializable {
                         break;
                     case "Agendamento":
                         agendamento();
+                        break;
+                    case "Meus Pacientes":
+                        meusPacientes();
                         break;
                     default:
                         break;
@@ -195,7 +198,6 @@ public class HomeController implements Initializable {
         }
     }
 
-  
     @FXML
     private void agendamento() {
         if (!abriuAgendamento) {
@@ -218,6 +220,29 @@ public class HomeController implements Initializable {
             this.AgendamentoPalco.show();
             this.AgendamentoPalco.requestFocus();
             this.agendamentoController.iniciarProcessos();
+        }
+    }
+
+    @FXML
+    private void meusPacientes() {
+        if (!abriuMeusPacientes) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/MeusPacientes.fxml"));
+            try {
+                this.MeusPacientesPalco = new Stage();
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.meusPacientesController = carregar.getController();
+                this.MeusPacientesPalco.setTitle("Meus Pacientes");
+                this.MeusPacientesPalco.setScene(scene);
+                this.MeusPacientesPalco.show();
+                this.abriuMeusPacientes = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.MeusPacientesPalco.show();
+            this.MeusPacientesPalco.requestFocus();
         }
     }
 
