@@ -26,6 +26,10 @@ public class Launch extends Application {
         Scene scene = new Scene(root);
         primaryStage.setTitle("Tela Principal");
         primaryStage.setScene(scene);
+        /*Deixa já maximizado*/
+        primaryStage.setMaximized(true);
+        /*deixa em tela cheia*/
+        //primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 
