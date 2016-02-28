@@ -33,7 +33,7 @@
             <ComboBox fx:id="cb_cidade" disable="true" prefHeight="25.0" prefWidth="214.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <TableView fx:id="tabela_cidade" layoutX="30.0" layoutY="188.0" prefHeight="153.0" prefWidth="361.0">
+      <TableView fx:id="tabela_bairro" layoutX="30.0" layoutY="188.0" prefHeight="153.0" prefWidth="361.0">
         <columns>
           <TableColumn fx:id="codigoColuna" minWidth="8.0" prefWidth="70.0" text="Código" />
           <TableColumn fx:id="nomeColuna" minWidth="60.0" prefWidth="75.0" text="Nome da Cidade" />
