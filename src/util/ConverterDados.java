@@ -1,6 +1,8 @@
 package util;
 
 import javafx.util.StringConverter;
+import model.bean.BairroModel;
+import model.bean.CidadeModel;
 import model.bean.MedicoModel;
 
 /**
@@ -17,6 +19,18 @@ public class ConverterDados {
      */
     public static final int GET_MEDICO_CODIGO = 0;
     public static final int GET_MEDICO_NOME = 1;
+
+    /**
+     * Retorna o código da Cidade
+     */
+    public static final int GET_CIDADE_CODIGO = 2;
+    public static final int GET_CIDADE_NOME = 3;
+
+    /**
+     * Retorna o código da Bairro
+     */
+    public static final int GET_BAIRRO_CODIGO = 4;
+    public static final int GET_BAIRRO_NOME = 5;
 
     /**
      * Passe um int estatico da Classe ConverterDados informando o tipo da
@@ -50,6 +64,60 @@ public class ConverterDados {
 
             @Override
             public MedicoModel fromString(String string) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
+        return convertido;
+    }
+
+    /**
+     * Retorna um toString proprio de CidadeModel
+     *
+     * @return
+     */
+    public StringConverter<CidadeModel> getCidadeConverter() {
+        StringConverter<CidadeModel> convertido = new StringConverter<CidadeModel>() {
+            @Override
+            public String toString(CidadeModel object) {
+                switch (retorno) {
+                    case GET_CIDADE_CODIGO:
+                        return object.getCodigoProperty().getValue().toString();
+                    case GET_CIDADE_NOME:
+                        return object.getNome();
+                    default:
+                        return "";
+                }
+            }
+
+            @Override
+            public CidadeModel fromString(String string) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
+        return convertido;
+    }
+
+    /**
+     * Retorna um toString proprio de BairroModel
+     *
+     * @return
+     */
+    public StringConverter<BairroModel> getBairroConverter() {
+        StringConverter<BairroModel> convertido = new StringConverter<BairroModel>() {
+            @Override
+            public String toString(BairroModel object) {
+                switch (retorno) {
+                    case GET_BAIRRO_CODIGO:
+                        return object.getCodigoProperty().getValue().toString();
+                    case GET_BAIRRO_NOME:
+                        return object.getNome();
+                    default:
+                        return "";
+                }
+            }
+
+            @Override
+            public BairroModel fromString(String string) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         };

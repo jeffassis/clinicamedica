@@ -31,9 +31,9 @@ public class HomeController implements Initializable {
     Image icon = new Image(getClass().getResourceAsStream("/img/folder 16x16.png"));
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
-    private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento, abriuMeusPacientes, abriuCadCidade;
+    private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento, abriuMeusPacientes, abriuCadCidade, abriuCadBairro;
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
-    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco, MeusPacientesPalco, cadCidadePalco;
+    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco, MeusPacientesPalco, cadCidadePalco, cadBairroPalco;
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
     private PacientesController pacientesController;
@@ -41,8 +41,9 @@ public class HomeController implements Initializable {
     private AgendamentoController agendamentoController;
     private MeusPacientesController meusPacientesController;
     private CidadeController cidadeController;
+    private BairroController bairroController;
     /*Declaração dos TreeItem*/
-    private TreeItem<String> root, nodeA, nodeB, nodeC, nodeA1, nodeA2, nodeA3, nodeA4;
+    private TreeItem<String> root, nodeA, nodeB, nodeC, nodeA1, nodeA2, nodeA3, nodeA4, nodeA5;
 
     /**
      * Initializes the controller class.
@@ -69,8 +70,9 @@ public class HomeController implements Initializable {
         this.nodeA2 = new TreeItem<>("Pacientes", new ImageView(icon));
         this.nodeA3 = new TreeItem<>("Funcionários", new ImageView(icon));
         this.nodeA4 = new TreeItem<>("Cidades", new ImageView(icon));
+        this.nodeA5 = new TreeItem<>("Bairros", new ImageView(icon));
         /*Adicionando os filhos do nodeA*/
-        nodeA.getChildren().addAll(nodeA1, nodeA2, nodeA3, nodeA4);
+        nodeA.getChildren().addAll(nodeA1, nodeA2, nodeA3, nodeA4, nodeA5);
         /*Adicionando o Node Pai a TreeView*/
         treeView.setRoot(root);
     }
@@ -101,6 +103,9 @@ public class HomeController implements Initializable {
                         break;
                     case "Cidades":
                         cadCidade();
+                        break;
+                    case "Bairros":
+                        cadBairro();
                         break;
                     case "Meus Pacientes":
                         meusPacientes();
@@ -161,7 +166,7 @@ public class HomeController implements Initializable {
                 this.cadPacientePalco.setTitle("Cadastro de Pacientes");
                 this.cadPacientePalco.setScene(scene);
                 this.cadPacientePalco.show();
-
+                this.pacientesController.iniciarProcessos();
                 this.abriuCadPaciente = true;
 
             } catch (IOException ex) {
@@ -169,8 +174,8 @@ public class HomeController implements Initializable {
                         .getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            this.cadPacientePalco.requestFocus();
             this.cadPacientePalco.show();
+            this.pacientesController.iniciarProcessos();
             this.cadPacientePalco.requestFocus();
         }
     }
@@ -273,6 +278,34 @@ public class HomeController implements Initializable {
             this.cadCidadePalco.show();
             this.cadCidadePalco.requestFocus();
             this.cidadeController.carregarTabela();
+        }
+    }
+
+    @FXML
+    private void cadBairro() {
+        if (!abriuCadBairro) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Bairro.fxml"));
+            try {
+                this.cadBairroPalco = new Stage();
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.bairroController = carregar.getController();
+                this.cadBairroPalco.setTitle("Cadastro de Bairros");
+                this.cadBairroPalco.setScene(scene);
+                this.cadBairroPalco.show();
+                this.bairroController.carregarTabela();
+                this.bairroController.iniciarProcessos();
+                this.abriuCadBairro = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.cadBairroPalco.show();
+            this.cadBairroPalco.requestFocus();
+            this.bairroController.carregarTabela();
+            this.bairroController.iniciarProcessos();
+
         }
     }
 

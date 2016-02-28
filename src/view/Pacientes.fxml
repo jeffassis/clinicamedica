@@ -59,7 +59,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </TextField>
-            <ComboBox prefHeight="25.0" prefWidth="219.0" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+            <ComboBox fx:id="cb_cidade" prefHeight="25.0" prefWidth="219.0" GridPane.columnSpan="2" GridPane.rowIndex="5" />
             <TextField fx:id="txt_documento" GridPane.columnSpan="2" GridPane.rowIndex="7">
                <GridPane.margin>
                   <Insets right="5.0" />

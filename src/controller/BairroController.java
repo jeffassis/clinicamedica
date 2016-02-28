@@ -3,7 +3,6 @@ package controller;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -15,31 +14,33 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import model.bean.BairroModel;
 import model.bean.CidadeModel;
+import model.dao.BairroDAO;
 import model.dao.CidadeDAO;
+import util.ConverterDados;
 
 /**
  * FXML Controller class
  *
  * @author jeff-
  */
-public class CidadeController implements Initializable {
+public class BairroController implements Initializable {
 
     @FXML
     private TextField txt_codigo;
     @FXML
     private TextField txt_nome;
     @FXML
-    private ComboBox cb_sigla;
-    ObservableList<String> listaSigla = FXCollections.observableArrayList("RJ", "SP");
+    private ComboBox<CidadeModel> cb_cidade;
     @FXML
-    private TableView<CidadeModel> tabela_cidade;
+    private TableView<BairroModel> tabela_bairro;
     @FXML
-    private TableColumn<CidadeModel, Integer> codigoColuna;
+    private TableColumn<BairroModel, Integer> codigoColuna;
     @FXML
-    private TableColumn<CidadeModel, String> nomeColuna;
+    private TableColumn<BairroModel, String> nomeColuna;
     @FXML
-    private TableColumn<CidadeModel, String> siglaColuna;
+    private TableColumn<BairroModel, String> cidadeColuna;
     @FXML
     private Button bt_novo;
     @FXML
@@ -49,9 +50,7 @@ public class CidadeController implements Initializable {
     @FXML
     private Button bt_excluir;
 
-    CidadeModel cidadeModel;
-
-    int flag = 1;
+    BairroModel bairroModel;
 
     /**
      * Initializes the controller class.
@@ -59,16 +58,14 @@ public class CidadeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         /**
-         * Preenchendo o ComboBox Sigla
-         */
-        cb_sigla.setItems(listaSigla);
-
-        /**
          * Carrega todos as colunas da tabela pegando os dados do BD
          */
         this.codigoColuna.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty().asObject());
         this.nomeColuna.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
-        this.siglaColuna.setCellValueFactory(cellData -> cellData.getValue().getSiglaProperty());
+        this.cidadeColuna.setCellValueFactory(cellData -> cellData.getValue().getCidadeModel().getNomeProperty());
+
+        /*Utilizando a nossa Classe converter BairroModel*/
+        this.cb_cidade.setConverter(new ConverterDados(ConverterDados.GET_CIDADE_NOME).getCidadeConverter());
     }
 
     /**
@@ -78,13 +75,14 @@ public class CidadeController implements Initializable {
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                return CidadeDAO.executeQuery(null, CidadeDAO.QUERY_TODOS);
+                return BairroDAO.executeQuery(null, BairroDAO.QUERY_TODOS);
+
             }
 
             @Override
             protected void succeeded() {
                 super.succeeded();
-                tabela_cidade.setItems((ObservableList<CidadeModel>) getValue());
+                tabela_bairro.setItems((ObservableList<BairroModel>) getValue());
             }
         };
         Thread thread = new Thread(task);
@@ -93,42 +91,41 @@ public class CidadeController implements Initializable {
     }
 
     /**
-     * Método da ação do Botão salvar da GUI do FXMl
+     * Executa as funções iniciais como preencher o comboBox do Bairro
+     * utilizando o Task já que pode ser um processo pesado
+     */
+    public void iniciarProcessos() {
+        /*Para evitar uma exception de Thread temos que limpar o comboBox*/
+        cb_cidade.getItems().clear();
+
+        Task task = new Task() {
+            @Override
+            protected Object call() throws Exception {
+                cb_cidade.setItems(CidadeDAO.executeQuery(null, CidadeDAO.QUERY_TODOS));
+                return null;
+            }
+        };
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    /**
+     * Método da ação do Botão salvar da GUI do FXML
      */
     @FXML
     private void onSave() {
-        if (flag == 1) {
-            /*Verifica se nome do Medico esta vazia*/
-            if (txt_nome.getText().length() == 0) {
-                alert("O campo nome não pode ser vazio");
-                return;
-            }
-            this.cidadeModel = new CidadeModel();
-            cidadeModel.setNome(txt_nome.getText().trim());
-            cidadeModel.setSigla((String) cb_sigla.getSelectionModel().getSelectedItem());
-            if (CidadeDAO.executeUpdates(cidadeModel, CidadeDAO.CREATE)) {
-                limparCampos();
-                alert("Dados inseridos com sucesso!");
-                carregarTabela();
-                desabilitarCampos();
-            } else {
-                alert("Houve um erro ao inserir Dados");
-            }
+        this.bairroModel = new BairroModel();
+        bairroModel.setNome(txt_nome.getText().trim());
+        CidadeModel cidade = cb_cidade.getSelectionModel().getSelectedItem();
+        bairroModel.setCidadeModel(cidade);
+        if (BairroDAO.executeUpdates(bairroModel, BairroDAO.CREATE)) {
+            limparCampos();
+            alert("Dados inseridos com sucesso!");
+            carregarTabela();
+            desabilitarCampos();
         } else {
-            /*Se a flag for 2 edita os dados do banco de dados*/
-            this.cidadeModel = new CidadeModel();
-            cidadeModel.setCodigo(Integer.parseInt(txt_codigo.getText().trim()));
-            cidadeModel.setNome(txt_nome.getText().trim());
-            cidadeModel.setSigla((String) cb_sigla.getSelectionModel().getSelectedItem());
-            if (CidadeDAO.executeUpdates(cidadeModel, CidadeDAO.UPDATE)) {
-                limparCampos();
-                alert("Dados Atualizados com sucesso!");
-                carregarTabela();
-                flag = 1;
-                desabilitarCampos();
-            } else {
-                alert("Não foi possivel atualizar dados");
-            }
+            alert("Houve um erro ao inserir Dados");
         }
     }
 
@@ -138,28 +135,7 @@ public class CidadeController implements Initializable {
      */
     @FXML
     private void onEdit() {
-        /*Verificamos se a tabela foi selecionada*/
-        if (tabela_cidade.getSelectionModel().getSelectedIndex() != -1) {
-            /*Habilito o botão salvar*/
-            this.bt_salvar.setDisable(false);
-            this.cidadeModel = tabela_cidade.getSelectionModel().getSelectedItem();
-            txt_codigo.setText(Integer.toString(cidadeModel.getCodigo()));
-            txt_nome.setText(cidadeModel.getNome());
-            /*Utilizamos o for para descobrir qual posição é igual ao dado retornado
-             de especialidade*/
-            for (int i = 0; i < cb_sigla.getItems().size(); i++) {
-                if (((String) cb_sigla.getItems().get(i)).equals(cidadeModel.getSigla())) {
-                    cb_sigla.getSelectionModel().select(i);
-                    /*agora q ja achamos paramos o for*/
-                    break;
-                }
-            }
-            flag = 2;
-            /*Desabilita os botões excluir e editar */
-            this.bt_editar.setDisable(true);
-            this.bt_excluir.setDisable(true);
-            habilitarCampos();
-        }
+
     }
 
     /**
@@ -173,10 +149,10 @@ public class CidadeController implements Initializable {
         alert.setContentText("Deseja excluir?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            this.cidadeModel = tabela_cidade.getItems().get(tabela_cidade.getSelectionModel().getSelectedIndex());
+            this.bairroModel = tabela_bairro.getItems().get(tabela_bairro.getSelectionModel().getSelectedIndex());
 
-            if (CidadeDAO.executeUpdates(cidadeModel, CidadeDAO.DELETE)) {
-                tabela_cidade.getItems().remove(tabela_cidade.getSelectionModel().getSelectedIndex());
+            if (BairroDAO.executeUpdates(bairroModel, BairroDAO.DELETE)) {
+                tabela_bairro.getItems().remove(tabela_bairro.getSelectionModel().getSelectedIndex());
                 alert("Excluido com sucesso!");
                 desabilitarCampos();
             } else {
@@ -196,7 +172,6 @@ public class CidadeController implements Initializable {
         bt_excluir.setDisable(true);
         habilitarCampos();
         txt_nome.requestFocus();
-        flag = 1;
     }
 
     /**
@@ -205,7 +180,7 @@ public class CidadeController implements Initializable {
     @FXML
     private void onCancel() {
         /* Desmarca qualquer registro que esteja selecionado na tabela*/
-        tabela_cidade.getSelectionModel().clearSelection();
+        tabela_bairro.getSelectionModel().clearSelection();
 
         desabilitarCampos();
         limparCampos();
@@ -234,7 +209,7 @@ public class CidadeController implements Initializable {
     private void limparCampos() {
         txt_codigo.setText("");
         txt_nome.setText("");
-        cb_sigla.getSelectionModel().clearSelection();
+        cb_cidade.getSelectionModel().clearSelection();
     }
 
     /**
@@ -248,7 +223,7 @@ public class CidadeController implements Initializable {
         bt_excluir.setDisable(false);
         limparCampos();
         txt_nome.setDisable(true);
-        cb_sigla.setDisable(true);
+        cb_cidade.setDisable(true);
     }
 
     /**
@@ -256,7 +231,7 @@ public class CidadeController implements Initializable {
      */
     private void habilitarCampos() {
         txt_nome.setDisable(false);
-        cb_sigla.setDisable(false);
+        cb_cidade.setDisable(false);
     }
 
     /**
@@ -264,7 +239,7 @@ public class CidadeController implements Initializable {
      */
     private void desabilitarCampos() {
         txt_nome.setDisable(true);
-        cb_sigla.setDisable(true);
+        cb_cidade.setDisable(true);
         bt_salvar.setDisable(true);
         bt_editar.setDisable(true);
         bt_excluir.setDisable(true);
