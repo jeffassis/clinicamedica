@@ -85,16 +85,18 @@ public class BairroDAO {
                     ps = conexao.prepareStatement(sql);
                     rs = ps.executeQuery();
                     while (rs.next()) {
-                        BairroModel baiM = new BairroModel();
-                        baiM.setCodigo(rs.getInt("id_bairro"));
-                        baiM.setNome(rs.getString("nome_bairro"));
+                        /*Inicializamos ele aqui e atribuimos os valores a ele*/
+                        bairroModel = new BairroModel();
+                        bairroModel.setCodigo(rs.getInt("id_bairro"));
+                        bairroModel.setNome(rs.getString("nome_bairro"));
 
                         CidadeModel cidadeModel = new CidadeModel();
                         cidadeModel.setCodigo(rs.getInt("id_cidade"));
                         cidadeModel.setNome(rs.getString("nome_cidade"));
                         cidadeModel.setSigla(rs.getString("sigla_cidade"));
-                        bairroModel = new BairroModel(cidadeModel);
-
+                        /*Colocamos a cidade*/
+                        bairroModel.setCidadeModel(cidadeModel);
+                        /*adicionamos ele*/
                         listaBairro.add(bairroModel);
                     }
                     ConnectionFactory.closeConnection(conexao, ps, rs);
