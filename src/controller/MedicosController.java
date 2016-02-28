@@ -227,7 +227,6 @@ public class MedicosController implements Initializable {
         bt_salvar.setDisable(true);
         bt_editar.setDisable(true);
         bt_excluir.setDisable(true);
-
     }
 
     /**

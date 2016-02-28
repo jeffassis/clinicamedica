@@ -18,6 +18,7 @@
                   <MenuItem fx:id="menuItemPacientes" mnemonicParsing="false" onAction="#cadPaciente" text="Pacientes" />
                   <MenuItem fx:id="menuItemFuncionario" mnemonicParsing="false" onAction="#cadFuncionario" text="Funcionários" />
                   <MenuItem fx:id="menuItemAgendamento" mnemonicParsing="false" onAction="#agendamento" text="Agendamento" />
+                  <MenuItem fx:id="menuItemCidade" mnemonicParsing="false" onAction="#cadCidade" text="Cidades" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">

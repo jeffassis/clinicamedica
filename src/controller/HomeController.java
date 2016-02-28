@@ -31,17 +31,18 @@ public class HomeController implements Initializable {
     Image icon = new Image(getClass().getResourceAsStream("/img/folder 16x16.png"));
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
-    private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento, abriuMeusPacientes;
+    private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento, abriuMeusPacientes, abriuCadCidade;
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
-    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco, MeusPacientesPalco;
+    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco, MeusPacientesPalco, cadCidadePalco;
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
     private PacientesController pacientesController;
     private FuncionarioController funcionarioController;
     private AgendamentoController agendamentoController;
     private MeusPacientesController meusPacientesController;
+    private CidadeController cidadeController;
     /*Declaração dos TreeItem*/
-    private TreeItem<String> root, nodeA, nodeB, nodeC, nodeA1, nodeA2, nodeA3;
+    private TreeItem<String> root, nodeA, nodeB, nodeC, nodeA1, nodeA2, nodeA3, nodeA4;
 
     /**
      * Initializes the controller class.
@@ -67,8 +68,9 @@ public class HomeController implements Initializable {
         this.nodeA1 = new TreeItem<>("Médicos", new ImageView(icon));
         this.nodeA2 = new TreeItem<>("Pacientes", new ImageView(icon));
         this.nodeA3 = new TreeItem<>("Funcionários", new ImageView(icon));
+        this.nodeA4 = new TreeItem<>("Cidades", new ImageView(icon));
         /*Adicionando os filhos do nodeA*/
-        nodeA.getChildren().addAll(nodeA1, nodeA2, nodeA3);
+        nodeA.getChildren().addAll(nodeA1, nodeA2, nodeA3, nodeA4);
         /*Adicionando o Node Pai a TreeView*/
         treeView.setRoot(root);
     }
@@ -96,6 +98,9 @@ public class HomeController implements Initializable {
                         break;
                     case "Agendamento":
                         agendamento();
+                        break;
+                    case "Cidades":
+                        cadCidade();
                         break;
                     case "Meus Pacientes":
                         meusPacientes();
@@ -243,6 +248,31 @@ public class HomeController implements Initializable {
         } else {
             this.MeusPacientesPalco.show();
             this.MeusPacientesPalco.requestFocus();
+        }
+    }
+
+    @FXML
+    private void cadCidade() {
+        if (!abriuCadCidade) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Cidade.fxml"));
+            try {
+                this.cadCidadePalco = new Stage();
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.cidadeController = carregar.getController();
+                this.cadCidadePalco.setTitle("Cadastro de Cidades");
+                this.cadCidadePalco.setScene(scene);
+                this.cadCidadePalco.show();
+                this.cidadeController.carregarTabela();
+                this.abriuCadCidade = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.cadCidadePalco.show();
+            this.cadCidadePalco.requestFocus();
+            this.cidadeController.carregarTabela();
         }
     }
 

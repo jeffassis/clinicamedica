@@ -28,12 +28,12 @@
             <Label text="Código" />
             <Label text="Cidade:" GridPane.rowIndex="1" />
             <Label text="Sigla:" GridPane.rowIndex="2" />
-            <TextField fx:id="txt_codigo" prefHeight="25.0" prefWidth="64.0" GridPane.columnIndex="1" />
-            <TextField fx:id="txt_nome" prefHeight="25.0" prefWidth="266.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ComboBox fx:id="cb_sigla" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txt_codigo" disable="true" prefHeight="25.0" prefWidth="64.0" GridPane.columnIndex="1" />
+            <TextField fx:id="txt_nome" disable="true" prefHeight="25.0" prefWidth="266.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cb_sigla" disable="true" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <TableView fx:id="tabela_cidade" layoutX="30.0" layoutY="188.0" prefHeight="153.0" prefWidth="361.0">
+      <TableView fx:id="tabela_cidade" layoutX="30.0" layoutY="188.0" onMouseClicked="#onClicked" prefHeight="153.0" prefWidth="361.0">
         <columns>
           <TableColumn fx:id="codigoColuna" minWidth="8.0" prefWidth="70.0" text="Código" />
           <TableColumn fx:id="nomeColuna" minWidth="60.0" prefWidth="75.0" text="Nome da Cidade" />
@@ -45,11 +45,11 @@
       </TableView>
       <HBox layoutX="41.0" layoutY="153.0" prefHeight="25.0" prefWidth="361.0" spacing="8.0">
          <children>
-            <Button fx:id="bt_novo" mnemonicParsing="false" prefWidth="65.0" text="Novo" />
-            <Button fx:id="bt_salvar" mnemonicParsing="false" prefWidth="65.0" text="Salvar" />
-            <Button fx:id="bt_editar" mnemonicParsing="false" prefWidth="65.0" text="Editar" />
-            <Button fx:id="bt_excluir" mnemonicParsing="false" prefWidth="65.0" text="Excluir" />
-            <Button fx:id="bt_cancelar" mnemonicParsing="false" prefWidth="65.0" text="Cancelar" />
+            <Button fx:id="bt_novo" mnemonicParsing="false" onAction="#onNew" prefWidth="65.0" text="Novo" />
+            <Button fx:id="bt_salvar" disable="true" mnemonicParsing="false" onAction="#onSave" prefWidth="65.0" text="Salvar" />
+            <Button fx:id="bt_editar" disable="true" mnemonicParsing="false" onAction="#onEdit" prefWidth="65.0" text="Editar" />
+            <Button fx:id="bt_excluir" disable="true" mnemonicParsing="false" onAction="#onDelete" prefWidth="65.0" text="Excluir" />
+            <Button fx:id="bt_cancelar" mnemonicParsing="false" onAction="#onCancel" prefWidth="65.0" text="Cancelar" />
          </children>
       </HBox>
    </children>
