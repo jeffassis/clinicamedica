@@ -184,7 +184,8 @@ public class BairroController implements Initializable {
 
     /**
      * Método que cria as Janelas de Dialog com Informação para usuario
-     *
+     * @deprecated Método deve ser Substituido pelo DialogFX
+     * @see DialogFX
      * @param msg
      */
     private void alert(String msg) {

@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.bean.FuncionarioModel;
 import model.dao.FuncionarioDAO;
+import util.DialogFX;
 
 /**
  * FXML Controller class
@@ -237,7 +238,8 @@ public class FuncionarioController implements Initializable {
 
     /**
      * Método que cria as Janelas de Dialog com Informação para usuario
-     *
+     * @deprecated Método deve ser Substituido pelo DialogFX
+     * @see DialogFX
      * @param msg
      */
     private void alert(String msg) {
