@@ -42,6 +42,9 @@ public class PacientesController implements Initializable {
         formatter.setMask(MaskFormatter.TEL_8DIG);
         /*Caso vc queria mostrar a mascara no TextField*/
         formatter.showMask();
+        /*Adicionamos outros componentes*/
+        formatter.addComponente(dp_cliente, MaskFormatter.DATA_BARRA, true);
+        formatter.addComponente(dp_nascimento, MaskFormatter.DATA_BARRA, true);
 
         /*Utilizando a nossa Classe converter CidadeModel*/
         this.cb_cidade.setConverter(new ConverterDados(ConverterDados.GET_CIDADE_NOME).getCidadeConverter());
