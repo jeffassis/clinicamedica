@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -26,6 +27,8 @@ public class Launch extends Application {
         Scene scene = new Scene(root);
         primaryStage.setTitle("Tela Principal");
         primaryStage.setScene(scene);
+        /*Adiciona o Icone*/
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
         /*Deixa já maximizado*/
         //primaryStage.setMaximized(true);
         /*deixa em tela cheia*/
