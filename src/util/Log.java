@@ -21,6 +21,13 @@ import java.util.logging.SimpleFormatter;
  */
 public class Log {
 
+    /**
+     * Gera um arquivo log dentro da Pasta Logger que fica na Pasta principal do
+     * Usuario.
+     *
+     * @param className
+     * @param ex
+     */
     public static void relatarExcecao(String className, Exception ex) {
         try {
             /*Informamos qual o nome do Logger, que no caso vai ser o nome da Classe
@@ -49,14 +56,14 @@ public class Log {
             escrever.setFormatter(new SimpleFormatter());
             /*Adicionamos ao nosso log a Classe que vai escrever a exceção que for gerada*/
             log.addHandler(escrever);
-            
+
             /*Geramos o Log, passamos que será de Nivel Severe(Alto), e passamos a exceção para ele*/
             log.log(Level.SEVERE, null, ex);
-            
+
             /*Finalizamos a escrita*/
             escrever.flush();
             escrever.close();
-          
+
         } catch (IOException | SecurityException e) {
             Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, e);
         }
