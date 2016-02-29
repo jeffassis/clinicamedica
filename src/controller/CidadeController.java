@@ -220,6 +220,7 @@ public class CidadeController implements Initializable {
     /**
      * Método que cria as Janelas de Dialog com Informação para usuario
      * @deprecated Está sendo substituido pelo DialogFX.
+     * @see DialogFX
      * @param msg
      */
     private void alert(String msg) {
