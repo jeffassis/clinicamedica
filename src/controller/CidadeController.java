@@ -98,7 +98,7 @@ public class CidadeController implements Initializable {
     @FXML
     private void onSave() {
         if (flag == 1) {
-            /*Verifica se nome do Medico esta vazia*/
+            /*Verifica se nome esta vazia*/
             if (txt_nome.getText().length() == 0) {
                 alert("O campo nome não pode ser vazio");
                 return;

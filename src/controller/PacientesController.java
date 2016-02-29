@@ -2,6 +2,8 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,9 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import model.bean.BairroModel;
 import model.bean.CidadeModel;
+import model.dao.BairroDAO;
 import model.dao.CidadeDAO;
-import model.dao.MedicoDAO;
 import util.ConverterDados;
 import util.MaskFormatter;
 
@@ -32,6 +35,11 @@ public class PacientesController implements Initializable {
     private Button bt_incluir, bt_gravar, bt_excluir, bt_localizar, bt_imprimir, bt_cancelar;
     @FXML
     private ComboBox<CidadeModel> cb_cidade;
+    @FXML
+    private ComboBox<BairroModel> cb_bairro;
+    @FXML
+    private ComboBox<String> cb_sexo;
+    ObservableList<String> listaSexo = FXCollections.observableArrayList("Feminino", "Masculino");
 
     /**
      * Initializes the controller class.
@@ -48,6 +56,9 @@ public class PacientesController implements Initializable {
 
         /*Utilizando a nossa Classe converter CidadeModel*/
         this.cb_cidade.setConverter(new ConverterDados(ConverterDados.GET_CIDADE_NOME).getCidadeConverter());
+        this.cb_bairro.setConverter(new ConverterDados(ConverterDados.GET_BAIRRO_NOME).getBairroConverter());
+
+        cb_sexo.setItems(listaSexo);
     }
 
     /**
@@ -57,11 +68,13 @@ public class PacientesController implements Initializable {
     public void iniciarProcessos() {
         /*Para evitar uma exception de Thread temos que limpar o comboBox*/
         cb_cidade.getItems().clear();
+        cb_bairro.getItems().clear();
 
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
                 cb_cidade.setItems(CidadeDAO.executeQuery(null, CidadeDAO.QUERY_TODOS));
+                cb_bairro.setItems(BairroDAO.executeQuery(null, BairroDAO.QUERY_TODOS));
                 return null;
             }
         };
