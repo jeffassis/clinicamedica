@@ -17,6 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.bean.CidadeModel;
 import model.dao.CidadeDAO;
+import util.DialogFX;
 
 /**
  * FXML Controller class
@@ -99,8 +100,9 @@ public class CidadeController implements Initializable {
     private void onSave() {
         if (flag == 1) {
             /*Verifica se nome esta vazia*/
-            if (txt_nome.getText().length() == 0) {
-                alert("O campo nome não pode ser vazio");
+            /*Trocamos o length por isEmpty, pois o isEmpty verifica se está vázio*/
+            if (txt_nome.getText().isEmpty()) {
+                DialogFX.showMessage("O campo não pode ser vazio!");
                 return;
             }
             this.cidadeModel = new CidadeModel();
@@ -217,7 +219,7 @@ public class CidadeController implements Initializable {
 
     /**
      * Método que cria as Janelas de Dialog com Informação para usuario
-     *
+     * @deprecated Está sendo substituido pelo DialogFX.
      * @param msg
      */
     private void alert(String msg) {
