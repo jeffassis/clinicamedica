@@ -98,9 +98,9 @@ public class CidadeController implements Initializable {
     private void onSave() {
         if (flag == 1) {
             /*Verifica se nome esta vazia*/
-            /*Trocamos o length por isEmpty, pois o isEmpty verifica se está vázio*/
+ /*Trocamos o length por isEmpty, pois o isEmpty verifica se está vázio*/
             if (txt_nome.getText().isEmpty()) {
-                DialogFX.showMessage("O campo não pode ser vazio!","Campo Vazio",DialogFX.ATENCAO);
+                DialogFX.showMessage("O campo não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
                 return;
             }
             this.cidadeModel = new CidadeModel();
@@ -167,15 +167,15 @@ public class CidadeController implements Initializable {
      */
     @FXML
     private void onDelete() {
-        if(DialogFX.showConfirmation("Deseja Excluir ?")){
+        if (DialogFX.showConfirmation("Deseja Excluir ?")) {
             this.cidadeModel = tabela_cidade.getItems().get(tabela_cidade.getSelectionModel().getSelectedIndex());
 
             if (CidadeDAO.executeUpdates(cidadeModel, CidadeDAO.DELETE)) {
                 tabela_cidade.getItems().remove(tabela_cidade.getSelectionModel().getSelectedIndex());
-                DialogFX.showMessage("Excluido com sucesso","Sucesso",DialogFX.SUCESS);
+                DialogFX.showMessage("Excluido com sucesso", "Sucesso", DialogFX.SUCESS);
                 desabilitarCampos();
             } else {
-                DialogFX.showMessage("Não foi possivel excluir dados","ERRO",DialogFX.ERRO);
+                DialogFX.showMessage("Não foi possivel excluir dados", "ERRO", DialogFX.ERRO);
             }
         }
     }
@@ -208,20 +208,6 @@ public class CidadeController implements Initializable {
         bt_salvar.setDisable(true);
         bt_editar.setDisable(true);
         bt_excluir.setDisable(true);
-    }
-
-    /**
-     * Método que cria as Janelas de Dialog com Informação para usuario
-     * @deprecated Está sendo substituido pelo DialogFX.
-     * @see DialogFX
-     * @param msg
-     */
-    private void alert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Mensagem");
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 
     /**

@@ -17,6 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.bean.MedicoModel;
 import model.dao.MedicoDAO;
+import util.DialogFX;
 
 /**
  * FXML Controller class
@@ -109,8 +110,8 @@ public class MedicosController implements Initializable {
         /*Verifica a flag. Se for 1 ela salva dados*/
         if (flag == 1) {
             /*Verifica se nome do Medico esta vazia*/
-            if (txt_nome.getText().length() == 0) {
-                alert("O campo nome não pode ser vazio");
+            if (txt_nome.getText().isEmpty()) {
+                DialogFX.showMessage("O campo não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
                 return;
             }
 
@@ -120,11 +121,11 @@ public class MedicosController implements Initializable {
             medicoModel.setEspecialidade((String) cb_especialidade.getSelectionModel().getSelectedItem());
             if (MedicoDAO.executeUpdates(medicoModel, MedicoDAO.CREATE)) {
                 limparCampos();
-                alert("Dados inseridos com sucesso!");
+                DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
                 carregarTabela();
                 desabilitarCampos();
             } else {
-                alert("Houve um erro ao inserir Dados");
+                DialogFX.showMessage("Houve um erro ao inserir Dados", "ERRO", DialogFX.ERRO);
             }
         } else {
             /*Se a flag for 2 edita os dados do banco de dados*/
@@ -135,12 +136,12 @@ public class MedicosController implements Initializable {
             medicoModel.setEspecialidade((String) cb_especialidade.getSelectionModel().getSelectedItem());
             if (MedicoDAO.executeUpdates(medicoModel, MedicoDAO.UPDATE)) {
                 limparCampos();
-                alert("Dados Atualizados com sucesso!");
+                DialogFX.showMessage("Dados Atualizados com sucesso!", "Sucesso", DialogFX.SUCESS);
                 carregarTabela();
                 flag = 1;
                 desabilitarCampos();
             } else {
-                alert("Não foi possivel atualizar dados");
+                DialogFX.showMessage("Não foi possivel atualizar dados", "ERROR", DialogFX.ERRO);
             }
         }
     }
@@ -181,20 +182,15 @@ public class MedicosController implements Initializable {
      */
     @FXML
     private void onDelete() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Mensagem");
-        alert.setHeaderText("");
-        alert.setContentText("Deseja excluir?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
+        if (DialogFX.showConfirmation("Deseja Excluir ?")) {
             this.medicoModel = tabela_medico.getItems().get(tabela_medico.getSelectionModel().getSelectedIndex());
 
             if (MedicoDAO.executeUpdates(medicoModel, MedicoDAO.DELETE)) {
                 tabela_medico.getItems().remove(tabela_medico.getSelectionModel().getSelectedIndex());
-                alert("Excluido com sucesso!");
+                DialogFX.showMessage("Excluido com sucesso", "Sucesso", DialogFX.SUCESS);
                 desabilitarCampos();
             } else {
-                alert("Não foi possivel excluir dados");
+                DialogFX.showMessage("Não foi possivel excluir dados", "ERRO", DialogFX.ERRO);
             }
         }
     }
@@ -227,20 +223,6 @@ public class MedicosController implements Initializable {
         bt_salvar.setDisable(true);
         bt_editar.setDisable(true);
         bt_excluir.setDisable(true);
-    }
-
-    /**
-     * Método que cria as Janelas de Dialog com Informação para usuario
-     * @deprecated Método deve ser Substituido pelo DialogFX
-     * @see DialogFX
-     * @param msg
-     */
-    private void alert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Mensagem");
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 
     /**

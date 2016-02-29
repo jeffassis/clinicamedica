@@ -104,15 +104,15 @@ public class FuncionarioController implements Initializable {
         /*Verifica a flag. Se for 1 ela salva dados*/
         if (flag == 1) {
             /*Verifica se nome esta vazio*/
-            if (txt_nome.getText().length() == 0) {
-                alert("O campo nome não pode ser vazio");
+            if (txt_nome.getText().isEmpty()) {
+                DialogFX.showMessage("O campo nome não pode ser vazio", "Atenção", DialogFX.ATENCAO);
                 return;
             }
             /*Verifica se a senha sao iguais*/
             if (pass_senha.getText().equals(pass_conf_senha.getText())) {
                 /*Verifica se a senha esta vazio*/
-                if (pass_senha.getText().length() == 0) {
-                    alert("O campo senha não pode ser vazio");
+                if (pass_senha.getText().isEmpty()) {
+                    DialogFX.showMessage("O campos senha não pode ser vazio!", "Atenção", DialogFX.ATENCAO);
                     return;
                 }
                 this.funcionarioModel = new FuncionarioModel();
@@ -121,14 +121,14 @@ public class FuncionarioController implements Initializable {
                 funcionarioModel.setPermissao((String) cb_permissao.getSelectionModel().getSelectedItem());
                 if (FuncionarioDAO.executeUpdates(funcionarioModel, FuncionarioDAO.CREATE)) {
                     limparCampos();
-                    alert("Dados inseridos com sucesso!");
+                    DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
                     carregarTabela();
                     desabilitarCampos();
                 } else {
-                    alert("Houve um erro ao inserir Dados");
+                    DialogFX.showMessage("Houve um erro ao inserir Dados!", "Erro", DialogFX.ERRO);
                 }
             } else {
-                alert("As senhas não correspondem");
+                DialogFX.showMessage("As senhas não correspondem", "Erro", DialogFX.ERRO);
             }
         } else if (pass_senha.getText().equals(pass_conf_senha.getText())) {
             /*Se a flag for 2 edita os dados do banco de dados*/
@@ -139,15 +139,15 @@ public class FuncionarioController implements Initializable {
             funcionarioModel.setPermissao((String) cb_permissao.getSelectionModel().getSelectedItem());
             if (FuncionarioDAO.executeUpdates(funcionarioModel, FuncionarioDAO.UPDATE)) {
                 limparCampos();
-                alert("Dados Atualizados com sucesso!");
+                DialogFX.showMessage("Dados Atualizados com sucesso!", "Sucesso", DialogFX.SUCESS);
                 carregarTabela();
                 flag = 1;
                 desabilitarCampos();
             } else {
-                alert("Não foi possivel atualizar dados");
+                DialogFX.showMessage("Não foi possivel atualizar dados!", "Erro", DialogFX.ERRO);
             }
         } else {
-            alert("As senhas não correspondem");
+            DialogFX.showMessage("As senhas não correspondem", "Erro", DialogFX.ERRO);
         }
     }
 
@@ -187,20 +187,15 @@ public class FuncionarioController implements Initializable {
      */
     @FXML
     private void onDelete() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Mensagem");
-        alert.setHeaderText("");
-        alert.setContentText("Deseja excluir?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
+        if (DialogFX.showConfirmation("Deseja Excluir ?")) {
             this.funcionarioModel = tabela_funcionario.getItems().get(tabela_funcionario.getSelectionModel().getSelectedIndex());
 
             if (FuncionarioDAO.executeUpdates(funcionarioModel, FuncionarioDAO.DELETE)) {
                 tabela_funcionario.getItems().remove(tabela_funcionario.getSelectionModel().getSelectedIndex());
-                alert("Excluido com sucesso!");
+                DialogFX.showMessage("Excluido com sucesso", "Sucesso", DialogFX.SUCESS);
                 desabilitarCampos();
             } else {
-                alert("Não foi possivel excluir dados");
+                DialogFX.showMessage("Não foi possivel excluir dados", "ERRO", DialogFX.ERRO);
             }
         }
     }
@@ -234,20 +229,6 @@ public class FuncionarioController implements Initializable {
         bt_editar.setDisable(true);
         bt_excluir.setDisable(true);
 
-    }
-
-    /**
-     * Método que cria as Janelas de Dialog com Informação para usuario
-     * @deprecated Método deve ser Substituido pelo DialogFX
-     * @see DialogFX
-     * @param msg
-     */
-    private void alert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Mensagem");
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 
     /**

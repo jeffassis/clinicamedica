@@ -19,6 +19,7 @@ import model.bean.CidadeModel;
 import model.dao.BairroDAO;
 import model.dao.CidadeDAO;
 import util.ConverterDados;
+import util.DialogFX;
 
 /**
  * FXML Controller class
@@ -115,7 +116,7 @@ public class BairroController implements Initializable {
     private void onSave() {
         /*Verifica se nome esta vazia*/
         if (txt_nome.getText().length() == 0) {
-            alert("O campo nome não pode ser vazio");
+            DialogFX.showMessage("O campo nome não pode ser vazio", "Atenção", DialogFX.ATENCAO);
             return;
         }
         this.bairroModel = new BairroModel();
@@ -124,11 +125,11 @@ public class BairroController implements Initializable {
         bairroModel.setCidadeModel(cidade);
         if (BairroDAO.executeUpdates(bairroModel, BairroDAO.CREATE)) {
             limparCampos();
-            alert("Dados inseridos com sucesso!");
+            DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
             carregarTabela();
             desabilitarCampos();
         } else {
-            alert("Houve um erro ao inserir Dados");
+            DialogFX.showMessage("Houve um erro ao inserir Dados", "ERRO", DialogFX.ERRO);
         }
     }
 
@@ -137,20 +138,15 @@ public class BairroController implements Initializable {
      */
     @FXML
     private void onDelete() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Mensagem");
-        alert.setHeaderText("");
-        alert.setContentText("Deseja excluir?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
+        if (DialogFX.showConfirmation("Deseja Excluir?")) {
             this.bairroModel = tabela_bairro.getItems().get(tabela_bairro.getSelectionModel().getSelectedIndex());
 
             if (BairroDAO.executeUpdates(bairroModel, BairroDAO.DELETE)) {
                 tabela_bairro.getItems().remove(tabela_bairro.getSelectionModel().getSelectedIndex());
-                alert("Excluido com sucesso!");
+                DialogFX.showMessage("Dados excluidos com sucesso!", "Sucesso", DialogFX.SUCESS);
                 desabilitarCampos();
             } else {
-                alert("Não foi possivel excluir dados");
+                DialogFX.showMessage("Houve um erro ao excluir Dados", "ERRO", DialogFX.ERRO);
             }
         }
     }
@@ -180,20 +176,6 @@ public class BairroController implements Initializable {
         bt_novo.setDisable(false);
         bt_salvar.setDisable(true);
         bt_excluir.setDisable(true);
-    }
-
-    /**
-     * Método que cria as Janelas de Dialog com Informação para usuario
-     * @deprecated Método deve ser Substituido pelo DialogFX
-     * @see DialogFX
-     * @param msg
-     */
-    private void alert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Mensagem");
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 
     /**
