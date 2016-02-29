@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.bean.CidadeModel;
+import util.Log;
 
 /**
  *
@@ -66,6 +67,7 @@ public class CidadeDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(CidadeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(CidadeDAO.class.getName(), ex);
             return false;
         }
     }
@@ -109,6 +111,7 @@ public class CidadeDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(CidadeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(CidadeDAO.class.getName(), ex);
         }
         return listaCidade;
     }

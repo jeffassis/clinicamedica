@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.bean.MedicoModel;
+import util.Log;
 
 /**
  * Class de Acesso aos Dados do Objeto Medico
@@ -81,6 +82,7 @@ public class MedicoDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MedicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(MedicoDAO.class.getName(), ex);
             return false;
         }
     }
@@ -137,6 +139,7 @@ public class MedicoDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MedicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(MedicoDAO.class.getName(), ex);
         }
         return listaMedico;
     }

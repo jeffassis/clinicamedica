@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.bean.BairroModel;
 import model.bean.CidadeModel;
+import util.Log;
 
 /**
  *
@@ -67,6 +68,7 @@ public class BairroDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(BairroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(BairroDAO.class.getName(), ex);
             return false;
         }
     }
@@ -104,6 +106,7 @@ public class BairroDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(BairroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(BairroDAO.class.getName(), ex);
         }
         return listaBairro;
     }

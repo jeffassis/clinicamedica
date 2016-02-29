@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import util.Log;
 
 /**
  * Class Factory da Aplicação
@@ -35,6 +36,7 @@ public class ConnectionFactory {
             Class.forName(DRIVER);
             return DriverManager.getConnection(URL, USER, PASS);
         } catch (ClassNotFoundException | SQLException ex) {
+            Log.relatarExcecao(ConnectionFactory.class.getName(), ex);
             throw new RuntimeException("Erro na conexão: " + ex);
         }
     }
@@ -51,6 +53,7 @@ public class ConnectionFactory {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(ConnectionFactory.class.getName(), ex);
         }
     }
 
@@ -68,6 +71,7 @@ public class ConnectionFactory {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(ConnectionFactory.class.getName(), ex);
         }
     }
 
@@ -86,6 +90,7 @@ public class ConnectionFactory {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(ConnectionFactory.class.getName(), ex);
         }
     }
 }

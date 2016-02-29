@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import util.Log;
 
 /**
  * Class controller da Tela Principal
@@ -142,6 +143,7 @@ public class HomeController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class
                         .getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
             this.cadMedicoPalco.show();
@@ -172,6 +174,7 @@ public class HomeController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class
                         .getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
             this.cadPacientePalco.show();
@@ -200,6 +203,7 @@ public class HomeController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class
                         .getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
             this.cadFuncionarioPalco.show();
@@ -225,6 +229,7 @@ public class HomeController implements Initializable {
                 this.abriuAgendamento = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
             this.AgendamentoPalco.show();
@@ -249,6 +254,7 @@ public class HomeController implements Initializable {
                 this.abriuMeusPacientes = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
             this.MeusPacientesPalco.show();
@@ -273,6 +279,7 @@ public class HomeController implements Initializable {
                 this.abriuCadCidade = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
             this.cadCidadePalco.show();
@@ -299,6 +306,7 @@ public class HomeController implements Initializable {
                 this.abriuCadBairro = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
             this.cadBairroPalco.show();

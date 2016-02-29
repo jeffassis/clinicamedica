@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.bean.FuncionarioModel;
+import util.Log;
 
 /**
  * Class de Acesso aos Dados do Objeto Funcionario
@@ -81,6 +82,7 @@ public class FuncionarioDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(FuncionarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(FuncionarioDAO.class.getName(), ex);
             return false;
         }
     }
@@ -126,6 +128,7 @@ public class FuncionarioDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(FuncionarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(FuncionarioDAO.class.getName(), ex);
         }
         return listaFunc;
     }
