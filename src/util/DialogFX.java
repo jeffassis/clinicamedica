@@ -6,6 +6,8 @@
 package util;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -126,6 +128,9 @@ public class DialogFX {
                 /*Alteramos o icone da Janela*/
                 stage = (Stage) dialog.getDialogPane().getScene().getWindow();
                 stage.getIcons().add(icon);
+                
+                dialog.getButtonTypes().add(new ButtonType("OK", ButtonBar.ButtonData.CANCEL_CLOSE));
+                break;
             default:
                 dialog = new Alert(Alert.AlertType.NONE);
                 dialog.initStyle(StageStyle.UTILITY);
