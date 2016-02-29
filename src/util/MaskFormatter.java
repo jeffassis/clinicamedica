@@ -1,5 +1,6 @@
 package util;
 
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
@@ -11,10 +12,13 @@ import javafx.scene.input.KeyEvent;
 public class MaskFormatter {
 
     /*Declaração dos componentes.*/
-    private final TextField textField;
+    private TextField textField;
+    private DatePicker datePicker;
     /*Variavel que vai contem a mascara selecionada para caso seja exibido
     o formato da mascara.*/
     private int maskSelecionada;
+    /*Variavel para verificação se passou no construtor um DatePicker*/
+    private boolean usarDatePicker;
     /*Declaração de constantes que vão representar os tipos de mascaras*/
     /**
      * Máscara de telefone com 8 digitos. ex: (61) 9340-6012.
@@ -32,6 +36,14 @@ public class MaskFormatter {
      * Máscara de RG. EX: 00.000.000-0
      */
     public static final int RG = 3;
+    /**
+     * Máscara de DATA com barras. Ex: 01/02/2016
+     */
+    public static final int DATA_BARRA = 4;
+    /**
+     * Máscara de DATA com traços. Ex: 01-02-2016
+     */
+    public static final int DATA_TRACO = 5;
 
     /**
      * Passe o TextField que terá a mascara.
@@ -44,27 +56,52 @@ public class MaskFormatter {
     }
 
     /**
+     * Passe um DatePicker que terá a mascara.
+     *
+     * @param datePicker
+     */
+    public MaskFormatter(DatePicker datePicker) {
+        this.datePicker = datePicker;
+        /*Informa que voi passado um DatePicker*/
+        this.usarDatePicker = true;
+    }
+
+    /**
      * Passe o tipo da Mascara. Ex: setMask(MaskFormatter.TEL_8DIG);
      *
      * @param maskType
      */
     public void setMask(int maskType) {
         this.maskSelecionada = maskType;
-        switch (maskType) {
-            case TEL_8DIG:
-                maskTel8Dig();
-                break;
-            case TEL_9DIG:
-                maskTel9Dig();
-                break;
-            case CPF:
-                maskCpf();
-                break;
-            case RG:
-                maskRg();
-                break;
-            default:
-                break;
+        if (!usarDatePicker) {
+
+            switch (maskType) {
+                case TEL_8DIG:
+                    maskTel8Dig();
+                    break;
+                case TEL_9DIG:
+                    maskTel9Dig();
+                    break;
+                case CPF:
+                    maskCpf();
+                    break;
+                case RG:
+                    maskRg();
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch (maskType) {
+                case DATA_BARRA:
+                    maskDataBarra();
+                    break;
+                case DATA_TRACO:
+                    maskDataTraco();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -266,6 +303,76 @@ public class MaskFormatter {
 
     }
 
+    private void maskDataBarra() {
+        datePicker.getEditor().setOnKeyTyped((KeyEvent evento) -> {
+
+            if (!"0123456789".contains(evento.getCharacter())) {
+                evento.consume();
+            }
+
+            if (evento.getCharacter().trim().length() == 0) {
+                switch (datePicker.getEditor().getText().length()) {
+                    case 2:
+                        datePicker.getEditor().setText(datePicker.getEditor().getText().substring(0, 1));
+                        datePicker.getEditor().positionCaret(datePicker.getEditor().getText().length());
+                        break;
+                    case 5:
+                        datePicker.getEditor().setText(datePicker.getEditor().getText().substring(0, 4));
+                        datePicker.getEditor().positionCaret(datePicker.getEditor().getText().length());
+                        break;
+                }
+            } else if (datePicker.getEditor().getText().length() == 10) {
+                evento.consume();
+            }
+            switch (datePicker.getEditor().getText().length()) {
+                case 2:
+                    datePicker.getEditor().setText(datePicker.getEditor().getText() + "/");
+                    datePicker.getEditor().positionCaret(datePicker.getEditor().getText().length());
+                    break;
+                case 5:
+                    datePicker.getEditor().setText(datePicker.getEditor().getText() + "/");
+                    datePicker.getEditor().positionCaret(datePicker.getEditor().getText().length());
+                    break;
+            }
+
+        });
+    }
+
+    private void maskDataTraco() {
+        datePicker.getEditor().setOnKeyTyped((KeyEvent evento) -> {
+
+            if (!"0123456789".contains(evento.getCharacter())) {
+                evento.consume();
+            }
+
+            if (evento.getCharacter().trim().length() == 0) {
+                switch (datePicker.getEditor().getText().length()) {
+                    case 2:
+                        datePicker.getEditor().setText(datePicker.getEditor().getText().substring(0, 1));
+                        datePicker.getEditor().positionCaret(datePicker.getEditor().getText().length());
+                        break;
+                    case 5:
+                        datePicker.getEditor().setText(datePicker.getEditor().getText().substring(0, 4));
+                        datePicker.getEditor().positionCaret(datePicker.getEditor().getText().length());
+                        break;
+                }
+            } else if (datePicker.getEditor().getText().length() == 10) {
+                evento.consume();
+            }
+            switch (datePicker.getEditor().getText().length()) {
+                case 2:
+                    datePicker.getEditor().setText(datePicker.getEditor().getText()+"-");
+                    datePicker.getEditor().positionCaret(datePicker.getEditor().getText().length());
+                    break;
+                case 5:
+                    datePicker.getEditor().setText(datePicker.getEditor().getText()+"-");
+                    datePicker.getEditor().positionCaret(datePicker.getEditor().getText().length());
+                    break;
+            }
+
+        });
+    }
+
     /**
      * Exibi no componente o formato de máscara selecionado. Obs: Utilizar
      * somente depois do método setMask()
@@ -284,8 +391,46 @@ public class MaskFormatter {
             case RG:
                 textField.setPromptText("__.___.___-_");
                 break;
+            case DATA_BARRA:
+                datePicker.setPromptText("__/__/____");
+                break;
+            case DATA_TRACO:
+                datePicker.setPromptText("__-__-____");
+                break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * Adicione um TextField, forneça a mascara e se deseja que seja exibida a
+     * mascara.
+     *
+     * @param field
+     * @param maskType
+     * @param showMask
+     */
+    public void addComponente(TextField field, int maskType, boolean showMask) {
+        MaskFormatter formatter = new MaskFormatter(textField);
+        formatter.setMask(maskType);
+        if (showMask) {
+            formatter.showMask();
+        }
+    }
+
+    /**
+     * Adicione um DatePicker, forneça a mascara e se deseja que seja exibida a
+     * mascara.
+     *
+     * @param datePicker
+     * @param maskType
+     * @param showMask
+     */
+    public void addComponente(DatePicker datePicker, int maskType, boolean showMask) {
+        MaskFormatter formatter = new MaskFormatter(datePicker);
+        formatter.setMask(maskType);
+        if (showMask) {
+            formatter.showMask();
         }
     }
 }
