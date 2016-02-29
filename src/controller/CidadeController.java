@@ -110,11 +110,11 @@ public class CidadeController implements Initializable {
             cidadeModel.setSigla((String) cb_sigla.getSelectionModel().getSelectedItem());
             if (CidadeDAO.executeUpdates(cidadeModel, CidadeDAO.CREATE)) {
                 limparCampos();
-                alert("Dados inseridos com sucesso!");
+                DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
                 carregarTabela();
                 desabilitarCampos();
             } else {
-                alert("Houve um erro ao inserir Dados");
+                DialogFX.showMessage("Houve um erro ao inserir Dados", "ERRO", DialogFX.ERRO);
             }
         } else {
             /*Se a flag for 2 edita os dados do banco de dados*/
@@ -124,12 +124,12 @@ public class CidadeController implements Initializable {
             cidadeModel.setSigla((String) cb_sigla.getSelectionModel().getSelectedItem());
             if (CidadeDAO.executeUpdates(cidadeModel, CidadeDAO.UPDATE)) {
                 limparCampos();
-                alert("Dados Atualizados com sucesso!");
+                DialogFX.showMessage("Dados Atualizados com sucesso!", "Sucesso", DialogFX.SUCESS);
                 carregarTabela();
                 flag = 1;
                 desabilitarCampos();
             } else {
-                alert("Não foi possivel atualizar dados");
+                DialogFX.showMessage("Não foi possivel atualizar dados", "ERROR", DialogFX.ERRO);
             }
         }
     }
