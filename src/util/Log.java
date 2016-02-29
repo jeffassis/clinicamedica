@@ -44,7 +44,8 @@ public class Log {
             String arquivoDir = pastaLog.getAbsolutePath() + "/" + dataFormato.format(Calendar.getInstance().getTime()) + ".log";
             /*Classe responsavel por escrever o arquivo*/
             FileHandler escrever = new FileHandler(arquivoDir, true);
-            /*Colocamos o formato de saida como Simples*/
+            /*Precisamos informar como será escrito(formato) as exceções, Vamos Utilizar uma Classe já pronta para isso
+            a Classe SimpleFormatter*/
             escrever.setFormatter(new SimpleFormatter());
             /*Adicionamos ao nosso log a Classe que vai escrever a exceção que for gerada*/
             log.addHandler(escrever);
