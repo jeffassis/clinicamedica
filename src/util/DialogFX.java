@@ -7,6 +7,7 @@ package util;
 
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -22,6 +23,7 @@ public class DialogFX {
     /*Constantes representado o tipo de Alert*/
     public static final int ATENCAO = 1;
     public static final int ERRO = 2;
+    public static final int SUCESS = 3;
 
     /**
      * Exibi uma mensagem do tipo INFORMATION(informação)e não para a execução
@@ -108,10 +110,22 @@ public class DialogFX {
                 break;
             case ATENCAO:
                 dialog = new Alert(Alert.AlertType.WARNING);
+                stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(DialogFX.class.getResourceAsStream("/img/warning-icon.png")));
                 break;
             case ERRO:
                 dialog = new Alert(Alert.AlertType.ERROR);
+                stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(DialogFX.class.getResourceAsStream("/img/error-icon.png")));
                 break;
+            case SUCESS:
+                dialog = new Alert(Alert.AlertType.NONE);
+                /*Alteramos o icone(Imagem) que aparece junto com o Dialog*/
+                Image icon = new Image(DialogFX.class.getResourceAsStream("/img/sucess.png"));
+                dialog.setGraphic(new ImageView(icon));
+                /*Alteramos o icone da Janela*/
+                stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(icon);
             default:
                 dialog = new Alert(Alert.AlertType.NONE);
                 dialog.initStyle(StageStyle.UTILITY);
