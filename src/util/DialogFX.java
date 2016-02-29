@@ -8,6 +8,7 @@ package util;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Classe de Dialogs prontos.
@@ -16,9 +17,11 @@ import javafx.stage.Stage;
  */
 public class DialogFX {
 
+    /*Constante para apenas uso interno*/
+    private static final int INFOR = 0;
     /*Constantes representado o tipo de Alert*/
-    public static final int ATENCAO = 0;
-    public static final int ERRO = 1;
+    public static final int ATENCAO = 1;
+    public static final int ERRO = 2;
 
     /**
      * Exibi uma mensagem do tipo INFORMATION(informação)e não para a execução
@@ -27,15 +30,7 @@ public class DialogFX {
      * @param msg
      */
     public static void showMessage(String msg) {
-        Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-        dialog.setTitle("Informação");
-        dialog.setHeaderText("");
-        dialog.setContentText(msg);
-        /*Trocamos o Icone Padrão*/
-        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(DialogFX.class.getResourceAsStream("/img/information-icon.png")));
-
-        dialog.show();
+        createDialog(msg, "Informação", "", INFOR).show();
     }
 
     /**
@@ -46,15 +41,7 @@ public class DialogFX {
      * @param title
      */
     public static void showMessage(String msg, String title) {
-        Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-        dialog.setTitle(title);
-        dialog.setHeaderText("");
-        dialog.setContentText(msg);
-        /*Trocamos o Icone Padrão*/
-        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(DialogFX.class.getResourceAsStream("/img/information-icon.png")));
-
-        dialog.show();
+        createDialog(msg, title, "", INFOR).show();
     }
 
     /**
@@ -65,26 +52,7 @@ public class DialogFX {
      * @param dialogType
      */
     public static void showMessage(String msg, String title, int dialogType) {
-        Alert dialog;
-        Stage stage;
-        switch (dialogType) {
-            case ATENCAO:
-                dialog = new Alert(Alert.AlertType.WARNING);
-                break;
-            case ERRO:
-                dialog = new Alert(Alert.AlertType.ERROR);
-                break;
-            default:
-                dialog = new Alert(Alert.AlertType.INFORMATION);
-                stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image(DialogFX.class.getResourceAsStream("/img/information-icon.png")));
-                break;
-        }
-        dialog.setTitle(title);
-        dialog.setHeaderText("");
-        dialog.setContentText(msg);
-        dialog.show();
-
+        createDialog(msg, title, "", dialogType).show();
     }
 
     /**
@@ -94,15 +62,7 @@ public class DialogFX {
      * @param msg
      */
     public static void showMessageAndWait(String msg) {
-        Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-        dialog.setTitle("Informação");
-        dialog.setHeaderText("");
-        dialog.setContentText(msg);
-        /*Trocamos o Icone Padrão*/
-        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(DialogFX.class.getResourceAsStream("/img/information-icon.png")));
-
-        dialog.showAndWait();
+        createDialog(msg, "Informação", "", INFOR).showAndWait();
     }
 
     /**
@@ -113,17 +73,9 @@ public class DialogFX {
      * @param title
      */
     public static void showMessageAndWait(String msg, String title) {
-        Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-        dialog.setTitle(title);
-        dialog.setHeaderText("");
-        dialog.setContentText(msg);
-        /*Trocamos o Icone Padrão*/
-        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(DialogFX.class.getResourceAsStream("/img/information-icon.png")));
-
-        dialog.showAndWait();
+        createDialog(msg, title, "", INFOR).showAndWait();
     }
-    
+
     /**
      * Exibi uma mensagem e aguarda(Para execução de comandos).
      *
@@ -132,9 +84,28 @@ public class DialogFX {
      * @param dialogType
      */
     public static void showMessageAndWait(String msg, String title, int dialogType) {
+        createDialog(msg, title, "", dialogType).showAndWait();
+    }
+
+    /**
+     * Método criado para evitar repetições de código. Dúvidas olhe os commit
+     * anteriores e compare.
+     *
+     * @param msg
+     * @param title
+     * @param header
+     * @param dialogType
+     * @return
+     */
+    private static Alert createDialog(String msg, String title, String header, int dialogType) {
         Alert dialog;
         Stage stage;
         switch (dialogType) {
+            case INFOR:
+                dialog = new Alert(Alert.AlertType.INFORMATION);
+                stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(DialogFX.class.getResourceAsStream("/img/information-icon.png")));
+                break;
             case ATENCAO:
                 dialog = new Alert(Alert.AlertType.WARNING);
                 break;
@@ -142,16 +113,14 @@ public class DialogFX {
                 dialog = new Alert(Alert.AlertType.ERROR);
                 break;
             default:
-                dialog = new Alert(Alert.AlertType.INFORMATION);
-                stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-                stage.getIcons().add(new Image(DialogFX.class.getResourceAsStream("/img/information-icon.png")));
+                dialog = new Alert(Alert.AlertType.NONE);
+                dialog.initStyle(StageStyle.UTILITY);
                 break;
         }
         dialog.setTitle(title);
-        dialog.setHeaderText("");
+        dialog.setHeaderText(header);
         dialog.setContentText(msg);
-        dialog.showAndWait();
-
+        return dialog;
     }
 
 }
