@@ -102,7 +102,7 @@ public class CidadeController implements Initializable {
             /*Verifica se nome esta vazia*/
             /*Trocamos o length por isEmpty, pois o isEmpty verifica se está vázio*/
             if (txt_nome.getText().isEmpty()) {
-                DialogFX.showMessage("O campo não pode ser vazio!");
+                DialogFX.showMessage("O campo não pode ser vazio!","Campo Vazio",DialogFX.ATENCAO);
                 return;
             }
             this.cidadeModel = new CidadeModel();
@@ -169,20 +169,15 @@ public class CidadeController implements Initializable {
      */
     @FXML
     private void onDelete() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Mensagem");
-        alert.setHeaderText("");
-        alert.setContentText("Deseja excluir?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
+        if(DialogFX.showConfirmation("Deseja Excluir ?")){
             this.cidadeModel = tabela_cidade.getItems().get(tabela_cidade.getSelectionModel().getSelectedIndex());
 
             if (CidadeDAO.executeUpdates(cidadeModel, CidadeDAO.DELETE)) {
                 tabela_cidade.getItems().remove(tabela_cidade.getSelectionModel().getSelectedIndex());
-                alert("Excluido com sucesso!");
+                DialogFX.showMessage("Excluido com sucesso","Sucesso",DialogFX.SUCESS);
                 desabilitarCampos();
             } else {
-                alert("Não foi possivel excluir dados");
+                DialogFX.showMessage("Não foi possivel excluir dados","ERRO",DialogFX.ERRO);
             }
         }
     }
