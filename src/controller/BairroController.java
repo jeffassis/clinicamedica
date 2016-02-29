@@ -46,8 +46,6 @@ public class BairroController implements Initializable {
     @FXML
     private Button bt_salvar;
     @FXML
-    private Button bt_editar;
-    @FXML
     private Button bt_excluir;
 
     BairroModel bairroModel;
@@ -115,6 +113,11 @@ public class BairroController implements Initializable {
      */
     @FXML
     private void onSave() {
+        /*Verifica se nome esta vazia*/
+        if (txt_nome.getText().length() == 0) {
+            alert("O campo nome não pode ser vazio");
+            return;
+        }
         this.bairroModel = new BairroModel();
         bairroModel.setNome(txt_nome.getText().trim());
         CidadeModel cidade = cb_cidade.getSelectionModel().getSelectedItem();
@@ -127,15 +130,6 @@ public class BairroController implements Initializable {
         } else {
             alert("Houve um erro ao inserir Dados");
         }
-    }
-
-    /**
-     * Método para ação do botão editar
-     *
-     */
-    @FXML
-    private void onEdit() {
-
     }
 
     /**
@@ -168,7 +162,6 @@ public class BairroController implements Initializable {
     private void onNew() {
         bt_novo.setDisable(false);
         bt_salvar.setDisable(false);
-        bt_editar.setDisable(true);
         bt_excluir.setDisable(true);
         habilitarCampos();
         txt_nome.requestFocus();
@@ -186,7 +179,6 @@ public class BairroController implements Initializable {
         limparCampos();
         bt_novo.setDisable(false);
         bt_salvar.setDisable(true);
-        bt_editar.setDisable(true);
         bt_excluir.setDisable(true);
     }
 
@@ -219,7 +211,6 @@ public class BairroController implements Initializable {
     public void onClicked() {
         bt_novo.setDisable(false);
         bt_salvar.setDisable(true);
-        bt_editar.setDisable(false);
         bt_excluir.setDisable(false);
         limparCampos();
         txt_nome.setDisable(true);
@@ -241,7 +232,6 @@ public class BairroController implements Initializable {
         txt_nome.setDisable(true);
         cb_cidade.setDisable(true);
         bt_salvar.setDisable(true);
-        bt_editar.setDisable(true);
         bt_excluir.setDisable(true);
     }
 }

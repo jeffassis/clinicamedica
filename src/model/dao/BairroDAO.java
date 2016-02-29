@@ -43,7 +43,7 @@ public class BairroDAO {
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
                 case DELETE:
-                    sql = "delete from bairro where id_bairro";
+                    sql = "delete from bairro where id_bairro=?";
                     ps = conexao.prepareStatement(sql);
                     ps.setInt(1, bm.getCodigo());
                     ps.executeUpdate();
