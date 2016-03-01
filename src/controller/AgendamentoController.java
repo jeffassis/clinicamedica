@@ -2,6 +2,8 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,7 +23,8 @@ public class AgendamentoController implements Initializable {
     @FXML
     private ComboBox<MedicoModel> cb_medico;
     @FXML
-    private ComboBox cb_turno;
+    private ComboBox<String> cb_turno;
+    ObservableList<String> listaTurno = FXCollections.observableArrayList("Manhã", "Tarde");
     @FXML
     private DatePicker dpData;
 
@@ -30,6 +33,8 @@ public class AgendamentoController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        cb_turno.setItems(listaTurno);
+
         /*Utilizando a nossa Classe converter MedicoModel*/
         this.cb_medico.setConverter(new ConverterDados(ConverterDados.GET_MEDICO_NOME).getMedicoConverter());
     }

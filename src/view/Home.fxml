@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
@@ -14,12 +19,47 @@
         <menus>
           <Menu mnemonicParsing="false" text="Cadastros">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#cadMedico" text="Médicos" />
-                  <MenuItem fx:id="menuItemPacientes" mnemonicParsing="false" onAction="#cadPaciente" text="Pacientes" />
+              <MenuItem mnemonicParsing="false" onAction="#cadMedico" text="Médicos">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/doctor16.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
+                  <MenuItem fx:id="menuItemPacientes" mnemonicParsing="false" onAction="#cadPaciente" text="Pacientes">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/paciente16.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
                   <MenuItem fx:id="menuItemFuncionario" mnemonicParsing="false" onAction="#cadFuncionario" text="Funcionários" />
-                  <MenuItem fx:id="menuItemAgendamento" mnemonicParsing="false" onAction="#agendamento" text="Agendamento" />
-                  <MenuItem fx:id="menuItemCidade" mnemonicParsing="false" onAction="#cadCidade" text="Cidades" />
-                  <MenuItem fx:id="menuItemBairro" mnemonicParsing="false" onAction="#cadBairro" text="Bairros" />
+                  <MenuItem fx:id="menuItemAgendamento" mnemonicParsing="false" onAction="#agendamento" text="Agendamento">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/agendamento16.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
+                  <MenuItem fx:id="menuItemCidade" mnemonicParsing="false" onAction="#cadCidade" text="Cidades">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/city16.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
+                  <MenuItem fx:id="menuItemBairro" mnemonicParsing="false" onAction="#cadBairro" text="Bairros">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/bairro16.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -36,9 +76,61 @@
       </MenuBar>
    </top>
    <center>
-      <SplitPane dividerPositions="0.2024432809773124" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.18324607329842932" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="104.0" prefWidth="798.0">
+               <children>
+                  <ToolBar prefHeight="113.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <Button fx:id="bt_medico" contentDisplay="TOP" mnemonicParsing="false" onAction="#cadMedico" text="Medicos">
+                           <graphic>
+                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/doctor64.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#cadPaciente" prefHeight="64.0" prefWidth="64.0" text="Pacientes">
+                           <graphic>
+                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/paciente64.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#cadCidade" prefHeight="64.0" prefWidth="64.0" text="Cidades">
+                           <graphic>
+                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/city64.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#cadBairro" prefHeight="64.0" prefWidth="64.0" text="Bairro">
+                           <graphic>
+                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/bairro64.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#agendamento" prefHeight="92.0" prefWidth="92.0" text="Agendamento">
+                           <graphic>
+                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/agendamento64.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                    </items>
+                  </ToolBar>
+               </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
                   <SplitPane dividerPositions="0.23618090452261306" layoutX="156.0" layoutY="78.0" prefHeight="454.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
