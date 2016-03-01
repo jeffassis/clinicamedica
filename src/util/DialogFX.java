@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package util;
 
 import java.util.Optional;
@@ -160,9 +155,9 @@ public class DialogFX {
         /*Criamos os botões personalizados*/
         ButtonType btnSim = new ButtonType("Sim", ButtonBar.ButtonData.YES);
         ButtonType btnNao = new ButtonType("Não", ButtonBar.ButtonData.NO);
-        ButtonType btnCancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+       // ButtonType btnCancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
         /*Substituimos todos os botões do Dialog pelo o nosso*/
-        dialog.getButtonTypes().setAll(btnSim, btnNao, btnCancelar);
+        dialog.getButtonTypes().setAll(btnSim, btnNao);
         Optional<ButtonType> resultado = dialog.showAndWait();
         return resultado.get() == btnSim;
     }
@@ -178,8 +173,8 @@ public class DialogFX {
         Alert dialog = createDialog(question, title, "", CONFIRMACAO);
         ButtonType btnSim = new ButtonType("Sim", ButtonBar.ButtonData.YES);
         ButtonType btnNao = new ButtonType("Não", ButtonBar.ButtonData.NO);
-        ButtonType btnCancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
-        dialog.getButtonTypes().setAll(btnSim, btnNao, btnCancelar);
+        //ButtonType btnCancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.getButtonTypes().setAll(btnSim, btnNao);
         Optional<ButtonType> resultado = dialog.showAndWait();
         return resultado.get() == btnSim;
     }
