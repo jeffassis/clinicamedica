@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
+ * Class Bean que contém as regras de negocio encapsuladas
  *
  * @author jeff-
  */
@@ -26,6 +27,9 @@ public class PacienteModel {
     private CidadeModel cidadeModel;
     private BairroModel bairroModel;
 
+    /**
+     * Construtor que converte a variavel em SimpleProperty
+     */
     public PacienteModel() {
         this.codigo = new SimpleIntegerProperty();
         this.nome = new SimpleStringProperty();
@@ -41,6 +45,22 @@ public class PacienteModel {
         this.obs = new SimpleStringProperty();
     }
 
+    /**
+     * Construtor que passa as variaveis como proprio param SimpleProperty
+     *
+     * @param codigo
+     * @param nome
+     * @param nascimento
+     * @param endereco
+     * @param telefone
+     * @param cep
+     * @param documento
+     * @param sexo
+     * @param data_cliente
+     * @param tipo
+     * @param email
+     * @param obs
+     */
     public PacienteModel(int codigo, String nome, String nascimento, String endereco, String telefone, String cep, String documento, String sexo, String data_cliente, String tipo, String email, String obs) {
         this.codigo = new SimpleIntegerProperty(codigo);
         this.nome = new SimpleStringProperty(nome);
@@ -56,11 +76,18 @@ public class PacienteModel {
         this.obs = new SimpleStringProperty(obs);
     }
 
+    /**
+     * Construtor que passa 2 Class como parametros
+     *
+     * @param cidadeModel
+     * @param bairroModel
+     */
     public PacienteModel(CidadeModel cidadeModel, BairroModel bairroModel) {
         this.cidadeModel = cidadeModel;
         this.bairroModel = bairroModel;
     }
 
+    /*Getters e Setters não comuns..... */
     public IntegerProperty getCodigoProperty() {
         return this.codigo;
     }
@@ -220,5 +247,4 @@ public class PacienteModel {
     public String getObs() {
         return obs.get();
     }
-
 }

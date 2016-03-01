@@ -46,12 +46,68 @@ public class PacienteDAO {
                     ps = conexao.prepareStatement(sql);
                     ps.setString(1, pm.getNome());
                     ps.setString(2, pm.getNascimento());
-                    
+                    ps.setString(3, pm.getEndereco());
+                    ps.setString(4, pm.getTelefone());
+                    ps.setString(5, pm.getCep());
+                    ps.setString(6, pm.getDocumento());
+                    ps.setString(7, pm.getSexo());
+                    ps.setString(8, pm.getData_cliente());
+                    ps.setString(9, pm.getTipo());
+                    ps.setString(10, pm.getEmail());
+                    ps.setString(11, pm.getObs());
+                    ps.setInt(12, pm.getCidadeModel().getCodigo());
+                    ps.setInt(13, pm.getBairroModel().getCodigo());
+                    ps.executeUpdate();
+                    ConnectionFactory.closeConnection(conexao, ps);
+                    return true;
+                case DELETE:
+                    sql = "delete from paciente where id_paciente=?";
+                    ps = conexao.prepareStatement(sql);
+                    ps.setInt(1, pm.getCodigo());
+                    ps.executeUpdate();
+                    ConnectionFactory.closeConnection(conexao, ps);
+                    return true;
+                case UPDATE:
+                    sql = "update paciente set "
+                            + "nome_paciente=?,"
+                            + "nascimento_paciente=?,"
+                            + "endereco_paciente=?,"
+                            + "telefone_paciente=?,"
+                            + "cep_paciente=?,"
+                            + "documento_paciente=?,"
+                            + "sexo_paciente=?,"
+                            + "data_cliente_paciente=?,"
+                            + "tipo_paciente=?,"
+                            + "email_paciente=?,"
+                            + "obs_paciente=?,"
+                            + "id_codigo_cidade=?,"
+                            + "id_codigo_bairro=? "
+                            + "where id_paciente=?";
+                    ps = conexao.prepareStatement(sql);
+                    ps.setString(1, pm.getNome());
+                    ps.setString(2, pm.getNascimento());
+                    ps.setString(3, pm.getEndereco());
+                    ps.setString(4, pm.getTelefone());
+                    ps.setString(5, pm.getCep());
+                    ps.setString(6, pm.getDocumento());
+                    ps.setString(7, pm.getSexo());
+                    ps.setString(8, pm.getData_cliente());
+                    ps.setString(9, pm.getTipo());
+                    ps.setString(10, pm.getEmail());
+                    ps.setString(11, pm.getObs());
+                    ps.setInt(12, pm.getCidadeModel().getCodigo());
+                    ps.setInt(13, pm.getBairroModel().getCodigo());
+                    ps.setInt(14, pm.getCodigo());
+                    ps.executeUpdate();
+                    ConnectionFactory.closeConnection(conexao, ps);
+                    return true;
+                default:
+                    conexao.close();
+                    return false;
             }
         } catch (SQLException ex) {
             Logger.getLogger(PacienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-
 }

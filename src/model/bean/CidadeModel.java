@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
+ * Class Bean que contém as regras de negocio encapsuladas
  *
  * @author jeff-
  */
