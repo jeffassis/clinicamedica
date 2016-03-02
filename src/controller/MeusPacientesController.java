@@ -44,7 +44,6 @@ public class MeusPacientesController implements Initializable {
         this.enderecoColuna.setCellValueFactory(cellData -> cellData.getValue().getEnderecoProperty());
         this.telefoneColuna.setCellValueFactory(cellData -> cellData.getValue().getTelefoneProperty());
         this.emailColuna.setCellValueFactory(cellData -> cellData.getValue().getEmailProperty());
-
     }
 
     public void carregarTabela() {

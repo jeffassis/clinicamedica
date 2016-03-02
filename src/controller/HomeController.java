@@ -227,6 +227,7 @@ public class HomeController implements Initializable {
                 this.AgendamentoPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
                 this.AgendamentoPalco.show();
                 this.agendamentoController.iniciarProcessos();
+                this.agendamentoController.carregarTabela();
                 this.abriuAgendamento = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
@@ -236,6 +237,7 @@ public class HomeController implements Initializable {
             this.AgendamentoPalco.show();
             this.AgendamentoPalco.requestFocus();
             this.agendamentoController.iniciarProcessos();
+            this.agendamentoController.carregarTabela();
         }
     }
 

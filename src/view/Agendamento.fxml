@@ -9,47 +9,51 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="470.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AgendamentoController">
+<AnchorPane id="AnchorPane" prefHeight="517.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AgendamentoController">
    <children>
-      <HBox layoutX="41.0" layoutY="34.0" prefHeight="32.0" prefWidth="507.0">
+      <HBox layoutX="41.0" layoutY="34.0" prefHeight="32.0" prefWidth="521.0">
          <children>
-            <Label text="Paciente:">
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets top="5.0" />
-               </HBox.margin>
-            </Label>
-            <TextField>
+            <TextField fx:id="txt_busca">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" prefWidth="60.0" text="Buscar">
+            <Button fx:id="bt_buscar" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" text="Buscar">
                <HBox.margin>
                   <Insets left="8.0" right="5.0" />
                </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/search16.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
             <Label text="Turno:">
                <HBox.margin>
                   <Insets left="30.0" top="5.0" />
                </HBox.margin>
             </Label>
-            <ComboBox fx:id="cb_turno" prefWidth="150.0">
+            <ComboBox fx:id="cb_turno" prefHeight="25.0" prefWidth="141.0">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
             </ComboBox>
          </children>
       </HBox>
-      <TableView layoutX="41.0" layoutY="77.0" prefHeight="142.0" prefWidth="507.0">
+      <TableView fx:id="tabela_agenda" layoutX="41.0" layoutY="77.0" prefHeight="142.0" prefWidth="507.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="pacienteColuna" minWidth="160.0" prefWidth="-1.0" text="Pacientes" />
+          <TableColumn fx:id="medicoColuna" minWidth="160.0" prefWidth="-1.0" text="Médicos" />
+            <TableColumn fx:id="turnoColuna" minWidth="80.0" prefWidth="-1.0" text="Turno" />
+            <TableColumn fx:id="dataColuna" minWidth="80.0" prefWidth="-1.0" text="Data" />
+            <TableColumn fx:id="motivoColuna" minWidth="160.0" prefWidth="-1.0" text="Motivo" />
         </columns>
       </TableView>
       <HBox layoutX="36.0" layoutY="238.0" prefHeight="32.0" prefWidth="513.0">
@@ -59,30 +63,58 @@
                   <Insets top="5.0" />
                </HBox.margin>
             </Label>
-            <ComboBox fx:id="cb_medico" prefWidth="150.0">
+            <ComboBox fx:id="cb_medico" prefHeight="25.0" prefWidth="193.0">
                <HBox.margin>
-                  <Insets left="15.0" right="25.0" />
+                  <Insets left="5.0" />
                </HBox.margin>
             </ComboBox>
-            <Label text="Data:">
+            <Label text="Paciente:">
                <HBox.margin>
-                  <Insets left="65.0" right="8.0" top="5.0" />
+                  <Insets left="35.0" right="8.0" top="5.0" />
                </HBox.margin>
             </Label>
-            <DatePicker fx:id="dpData" />
+            <ComboBox fx:id="cb_paciente" prefHeight="25.0" prefWidth="179.0" />
          </children>
       </HBox>
-      <Label layoutX="36.0" layoutY="284.0" text="Motivo:" />
-      <TextArea layoutX="36.0" layoutY="309.0" prefHeight="78.0" prefWidth="507.0" />
-      <HBox layoutX="113.0" layoutY="413.0" prefHeight="25.0" prefWidth="354.0">
+      <Label layoutX="39.0" layoutY="330.0" text="Motivo:" />
+      <TextArea fx:id="txt_motivo" layoutX="39.0" layoutY="355.0" prefHeight="78.0" prefWidth="507.0" />
+      <HBox layoutX="36.0" layoutY="453.0" prefHeight="32.0" prefWidth="513.0">
          <children>
-            <Button mnemonicParsing="false" text="Finalizar Agendamento" />
-            <Button mnemonicParsing="false" text="Cancelar Agendamento">
+            <Button fx:id="bt_finalizar" mnemonicParsing="false" onAction="#onSave" prefHeight="25.0" prefWidth="165.0" text="Finalizar Agendamento">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/Ok16.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="bt_cancelar" mnemonicParsing="false" onAction="#onDelete" prefHeight="25.0" prefWidth="162.0" text="Cancelar Agendamento">
                <HBox.margin>
-                  <Insets left="70.0" />
+                  <Insets left="20.0" />
                </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/Cancelx16.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="bt_limpar" mnemonicParsing="false" onAction="#onClear" text="Limpar Campos">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/Clear16.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
       </HBox>
+      <DatePicker fx:id="dpData" layoutX="370.0" layoutY="304.0" prefHeight="25.0" prefWidth="179.0" />
+      <Label layoutX="330.0" layoutY="308.0" text="Data:" />
    </children>
 </AnchorPane>

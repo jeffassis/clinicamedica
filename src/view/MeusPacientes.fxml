@@ -47,9 +47,9 @@
                   <TableView fx:id="tabela_paciente" layoutX="76.0" layoutY="14.0" prefHeight="364.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="nomeColuna" minWidth="150.0" prefWidth="-1.0" text="Nome" />
-                      <TableColumn fx:id="codigoColuna" minWidth="90.0" prefWidth="-1.0" text="Matricula" />
+                      <TableColumn fx:id="codigoColuna" minWidth="70.0" prefWidth="-1.0" text="Matricula" />
                         <TableColumn fx:id="enderecoColuna" minWidth="150.0" prefWidth="-1.0" text="Endereço" />
-                        <TableColumn fx:id="telefoneColuna" prefWidth="75.0" text="Telefone" />
+                        <TableColumn fx:id="telefoneColuna" minWidth="100.0" prefWidth="-1.0" text="Telefone" />
                         <TableColumn fx:id="emailColuna" minWidth="150.0" prefWidth="-1.0" text="Email" />
                     </columns>
                   </TableView>
