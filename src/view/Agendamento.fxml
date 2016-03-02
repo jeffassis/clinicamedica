@@ -52,6 +52,7 @@
           <TableColumn fx:id="pacienteColuna" minWidth="160.0" prefWidth="-1.0" text="Pacientes" />
           <TableColumn fx:id="medicoColuna" minWidth="160.0" prefWidth="-1.0" text="Médicos" />
             <TableColumn fx:id="turnoColuna" minWidth="80.0" prefWidth="-1.0" text="Turno" />
+            <TableColumn fx:id="horarioColuna" minWidth="80.0" prefWidth="-1.0" text="Horario" />
             <TableColumn fx:id="dataColuna" minWidth="80.0" prefWidth="-1.0" text="Data" />
             <TableColumn fx:id="motivoColuna" minWidth="160.0" prefWidth="-1.0" text="Motivo" />
         </columns>
@@ -114,7 +115,9 @@
             </Button>
          </children>
       </HBox>
-      <DatePicker fx:id="dpData" layoutX="370.0" layoutY="304.0" prefHeight="25.0" prefWidth="179.0" />
-      <Label layoutX="330.0" layoutY="308.0" text="Data:" />
+      <DatePicker fx:id="dpData" layoutX="370.0" layoutY="292.0" prefHeight="25.0" prefWidth="179.0" />
+      <Label layoutX="330.0" layoutY="296.0" text="Data:" />
+      <ComboBox fx:id="cb_horario" layoutX="88.0" layoutY="292.0" prefWidth="150.0" />
+      <Label layoutX="36.0" layoutY="296.0" text="Horário:" />
    </children>
 </AnchorPane>

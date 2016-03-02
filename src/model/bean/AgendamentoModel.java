@@ -13,6 +13,7 @@ public class AgendamentoModel {
 
     private IntegerProperty codigo;
     private StringProperty turno;
+    private StringProperty horario;
     private StringProperty motivo;
     private StringProperty data;
     private MedicoModel medicoModel;
@@ -21,15 +22,29 @@ public class AgendamentoModel {
     public AgendamentoModel() {
         this.codigo = new SimpleIntegerProperty();
         this.turno = new SimpleStringProperty();
+        this.horario = new SimpleStringProperty();
         this.motivo = new SimpleStringProperty();
         this.data = new SimpleStringProperty();
     }
 
-    public AgendamentoModel(int codigo, String turno, String motivo, String data) {
+    public AgendamentoModel(int codigo, String turno, String horario, String motivo, String data) {
         this.codigo = new SimpleIntegerProperty(codigo);
         this.turno = new SimpleStringProperty(turno);
+        this.horario = new SimpleStringProperty(horario);
         this.motivo = new SimpleStringProperty(motivo);
         this.data = new SimpleStringProperty(data);
+    }
+
+    public StringProperty getHorarioProperty() {
+        return this.horario;
+    }
+
+    public void setHorario(String horario) {
+        this.horario.set(horario);
+    }
+
+    public String getHorario() {
+        return horario.get();
     }
 
     public AgendamentoModel(MedicoModel medicoModel, PacienteModel pacienteModel) {

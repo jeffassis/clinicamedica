@@ -35,6 +35,10 @@ public class AgendamentoController implements Initializable {
     @FXML
     private ComboBox<PacienteModel> cb_paciente;
     @FXML
+    private ComboBox<String> cb_horario;
+    ObservableList<String> listaHorario = FXCollections.observableArrayList("09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
+            "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00");
+    @FXML
     private ComboBox<String> cb_turno;
     ObservableList<String> listaTurno = FXCollections.observableArrayList("Manhã", "Tarde");
     @FXML
@@ -54,6 +58,8 @@ public class AgendamentoController implements Initializable {
     @FXML
     private TableColumn<AgendamentoModel, String> turnoColuna;
     @FXML
+    private TableColumn<AgendamentoModel, String> horarioColuna;
+    @FXML
     private TableColumn<AgendamentoModel, String> dataColuna;
     @FXML
     private TableColumn<AgendamentoModel, String> motivoColuna;
@@ -66,6 +72,7 @@ public class AgendamentoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cb_turno.setItems(listaTurno);
+        cb_horario.setItems(listaHorario);
 
         /**
          * Povoando a TableView
@@ -73,6 +80,7 @@ public class AgendamentoController implements Initializable {
         this.pacienteColuna.setCellValueFactory(cellData -> cellData.getValue().getPacienteModel().getNomeProperty());
         this.medicoColuna.setCellValueFactory(cellData -> cellData.getValue().getMedicoModel().getNomeProperty());
         this.turnoColuna.setCellValueFactory(cellData -> cellData.getValue().getTurnoProperty());
+        this.horarioColuna.setCellValueFactory(cellData -> cellData.getValue().getHorarioProperty());
         this.dataColuna.setCellValueFactory(cellData -> cellData.getValue().getDataProperty());
         this.motivoColuna.setCellValueFactory(cellData -> cellData.getValue().getMotivoProperty());
 
@@ -133,11 +141,12 @@ public class AgendamentoController implements Initializable {
                 && this.cb_paciente.getSelectionModel().getSelectedIndex() != -1) {
             this.agendamentoModel = new AgendamentoModel();
             agendamentoModel.setTurno((String) cb_turno.getSelectionModel().getSelectedItem());
+            agendamentoModel.setHorario((String) cb_horario.getSelectionModel().getSelectedItem());
             MedicoModel medico = cb_medico.getSelectionModel().getSelectedItem();
             agendamentoModel.setMedicoModel(medico);
             PacienteModel paciente = cb_paciente.getSelectionModel().getSelectedItem();
             agendamentoModel.setPacienteModel(paciente);
-            /*TODO não fiz a parte do DatePicker pois não sei implementar ainda com a Mask*/ 
+            /*TODO não fiz a parte do DatePicker pois não sei implementar ainda com a Mask*/
             agendamentoModel.setMotivo(txt_motivo.getText().trim());
             if (AgendamentoDAO.executeUpdates(agendamentoModel, AgendamentoDAO.CREATE)) {
                 DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
@@ -186,6 +195,7 @@ public class AgendamentoController implements Initializable {
         cb_turno.getSelectionModel().clearSelection();
         cb_medico.getSelectionModel().clearSelection();
         cb_paciente.getSelectionModel().clearSelection();
+        cb_horario.getSelectionModel().clearSelection();
         txt_motivo.setText("");
         dpData.getEditor().setText("");
     }

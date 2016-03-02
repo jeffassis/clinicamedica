@@ -36,16 +36,18 @@ public class AgendamentoDAO {
                     sql = "insert into agendamento("
                             + "turno_agenda,"
                             + "motivo_agenda,"
+                            + "horario_agenda,"
                             + "data_agenda,"
                             + "id_codigo_medico,"
                             + "id_codigo_paciente)"
-                            + "values(?,?,?,?,?)";
+                            + "values(?,?,?,?,?,?)";
                     ps = conexao.prepareStatement(sql);
                     ps.setString(1, am.getTurno());
                     ps.setString(2, am.getMotivo());
-                    ps.setString(3, am.getData());
-                    ps.setInt(4, am.getMedicoModel().getCodigo());
-                    ps.setInt(5, am.getPacienteModel().getCodigo());
+                    ps.setString(3, am.getHorario());
+                    ps.setString(4, am.getData());
+                    ps.setInt(5, am.getMedicoModel().getCodigo());
+                    ps.setInt(6, am.getPacienteModel().getCodigo());
                     ps.executeUpdate();
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
@@ -60,6 +62,7 @@ public class AgendamentoDAO {
                     sql = "update agendamento set "
                             + "turno_agenda=?,"
                             + "motivo_agenda=?,"
+                            + "horario_agenda=?,"
                             + "data_agenda=?,"
                             + "id_codigo_medico=?,"
                             + "id_codigo_paciente=? "
@@ -67,10 +70,11 @@ public class AgendamentoDAO {
                     ps = conexao.prepareStatement(sql);
                     ps.setString(1, am.getTurno());
                     ps.setString(2, am.getMotivo());
-                    ps.setString(3, am.getData());
-                    ps.setInt(4, am.getMedicoModel().getCodigo());
-                    ps.setInt(5, am.getPacienteModel().getCodigo());
-                    ps.setInt(6, am.getCodigo());
+                    ps.setString(3, am.getHorario());
+                    ps.setString(4, am.getData());
+                    ps.setInt(5, am.getMedicoModel().getCodigo());
+                    ps.setInt(6, am.getPacienteModel().getCodigo());
+                    ps.setInt(7, am.getCodigo());
                     ps.executeUpdate();
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
@@ -106,6 +110,7 @@ public class AgendamentoDAO {
                         agendamentoModel.setCodigo(rs.getInt("id_agenda"));
                         agendamentoModel.setTurno(rs.getString("turno_agenda"));
                         agendamentoModel.setMotivo(rs.getString("motivo_agenda"));
+                        agendamentoModel.setHorario(rs.getString("horario_agenda"));
                         agendamentoModel.setData(rs.getString("data_agenda"));
                         /*Colocamos a Medico*/
                         MedicoModel medico = new MedicoModel();
