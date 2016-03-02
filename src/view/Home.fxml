@@ -5,6 +5,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.TreeView?>
@@ -35,7 +36,15 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
-                  <MenuItem fx:id="menuItemFuncionario" mnemonicParsing="false" onAction="#cadFuncionario" text="Funcionários" />
+                  <MenuItem fx:id="menuItemFuncionario" mnemonicParsing="false" onAction="#cadFuncionario" text="Funcionários">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/User16.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="menuItemAgendamento" mnemonicParsing="false" onAction="#agendamento" text="Agendamento">
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
@@ -52,7 +61,7 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
-                  <MenuItem fx:id="menuItemBairro" mnemonicParsing="false" onAction="#cadBairro" text="Bairros">
+                  <MenuItem fx:id="menuItemBairro" mnemonicParsing="false" onAction="#cadBairro" text="Bairro">
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -82,7 +91,7 @@
                <children>
                   <ToolBar prefHeight="113.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
-                      <Button fx:id="bt_medico" contentDisplay="TOP" mnemonicParsing="false" onAction="#cadMedico" text="Medicos">
+                      <Button fx:id="bt_medico" contentDisplay="TOP" mnemonicParsing="false" onAction="#cadMedico" text="Médicos">
                            <graphic>
                               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -96,6 +105,15 @@
                               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../img/paciente64.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#cadFuncionario" prefHeight="90.0" prefWidth="87.0" text="Funcionários">
+                           <graphic>
+                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/User64.png" />
                                  </image>
                               </ImageView>
                            </graphic>

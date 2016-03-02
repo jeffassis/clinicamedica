@@ -1,7 +1,6 @@
 package controller;
 
 import java.net.URL;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -97,14 +96,14 @@ public class PacientesController implements Initializable {
         this.pacienteModel = new PacienteModel();
         pacienteModel.setNome(txt_nome.getText().trim());
         /*Não sei usar a conversão nova*/
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        pacienteModel.setNascimento(dp_nascimento.getValue().format(formatter));
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        //pacienteModel.setNascimento(dp_nascimento.getValue().format(formatter));
         pacienteModel.setEndereco(txt_endereco.getText().trim());
         pacienteModel.setTelefone(txt_telefone.getText().trim());
         pacienteModel.setCep(txt_cep.getText().trim());
         pacienteModel.setDocumento(txt_documento.getText().trim());
         pacienteModel.setSexo((String) cb_sexo.getSelectionModel().getSelectedItem());
-        pacienteModel.setData_cliente(dp_cliente.getValue().format(formatter));
+        //pacienteModel.setData_cliente(dp_cliente.getValue().format(formatter));
         pacienteModel.setTipo(txt_tipo.getText().trim());
         pacienteModel.setEmail(txt_email.getText().trim());
         pacienteModel.setObs(txt_observacoes.getText().trim());

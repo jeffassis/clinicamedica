@@ -51,9 +51,6 @@ public class HomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /**
-         * Testando a TreeView
-         */
         /*Declarando a TreeView com root Pai*/
         this.root = new TreeItem<>("Administração", new ImageView(icon));
         /*Deixa o TreeItem já aberto!*/
@@ -71,7 +68,7 @@ public class HomeController implements Initializable {
         this.nodeA2 = new TreeItem<>("Pacientes", new ImageView(icon));
         this.nodeA3 = new TreeItem<>("Funcionários", new ImageView(icon));
         this.nodeA4 = new TreeItem<>("Cidades", new ImageView(icon));
-        this.nodeA5 = new TreeItem<>("Bairros", new ImageView(icon));
+        this.nodeA5 = new TreeItem<>("Bairro", new ImageView(icon));
         /*Adicionando os filhos do nodeA*/
         nodeA.getChildren().addAll(nodeA1, nodeA2, nodeA3, nodeA4, nodeA5);
         /*Adicionando o Node Pai a TreeView*/
@@ -105,7 +102,7 @@ public class HomeController implements Initializable {
                     case "Cidades":
                         cadCidade();
                         break;
-                    case "Bairros":
+                    case "Bairro":
                         cadBairro();
                         break;
                     case "Meus Pacientes":
@@ -195,7 +192,7 @@ public class HomeController implements Initializable {
                 root = carregar.load();
                 Scene scene = new Scene(root);
                 this.funcionarioController = carregar.getController();
-                this.cadFuncionarioPalco.setTitle("Cadastro de Funcionarios");
+                this.cadFuncionarioPalco.setTitle("Cadastro de Funcionários");
                 this.cadFuncionarioPalco.setScene(scene);
                 this.cadFuncionarioPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
                 this.cadFuncionarioPalco.show();
@@ -256,6 +253,7 @@ public class HomeController implements Initializable {
                 this.MeusPacientesPalco.setScene(scene);
                 this.MeusPacientesPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
                 this.MeusPacientesPalco.show();
+                this.meusPacientesController.carregarTabela();
                 this.abriuMeusPacientes = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
@@ -263,6 +261,7 @@ public class HomeController implements Initializable {
             }
         } else {
             this.MeusPacientesPalco.show();
+            this.meusPacientesController.carregarTabela();
             this.MeusPacientesPalco.requestFocus();
         }
     }
