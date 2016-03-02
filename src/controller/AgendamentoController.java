@@ -137,6 +137,7 @@ public class AgendamentoController implements Initializable {
             agendamentoModel.setMedicoModel(medico);
             PacienteModel paciente = cb_paciente.getSelectionModel().getSelectedItem();
             agendamentoModel.setPacienteModel(paciente);
+            /*TODO não fiz a parte do DatePicker pois não sei implementar ainda com a Mask*/ 
             agendamentoModel.setMotivo(txt_motivo.getText().trim());
             if (AgendamentoDAO.executeUpdates(agendamentoModel, AgendamentoDAO.CREATE)) {
                 DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
