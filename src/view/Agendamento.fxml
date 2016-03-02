@@ -37,7 +37,7 @@
             </Button>
             <Label text="Turno:">
                <HBox.margin>
-                  <Insets left="30.0" top="5.0" />
+                  <Insets left="85.0" top="5.0" />
                </HBox.margin>
             </Label>
             <ComboBox fx:id="cb_turno" prefHeight="25.0" prefWidth="141.0">
@@ -51,8 +51,8 @@
         <columns>
           <TableColumn fx:id="pacienteColuna" minWidth="160.0" prefWidth="-1.0" text="Pacientes" />
           <TableColumn fx:id="medicoColuna" minWidth="160.0" prefWidth="-1.0" text="Médicos" />
-            <TableColumn fx:id="turnoColuna" minWidth="80.0" prefWidth="-1.0" text="Turno" />
-            <TableColumn fx:id="horarioColuna" minWidth="80.0" prefWidth="-1.0" text="Horario" />
+            <TableColumn fx:id="turnoColuna" minWidth="50.0" prefWidth="-1.0" text="Turno" />
+            <TableColumn fx:id="horarioColuna" minWidth="60.0" prefWidth="-1.0" text="Horario" />
             <TableColumn fx:id="dataColuna" minWidth="80.0" prefWidth="-1.0" text="Data" />
             <TableColumn fx:id="motivoColuna" minWidth="160.0" prefWidth="-1.0" text="Motivo" />
         </columns>

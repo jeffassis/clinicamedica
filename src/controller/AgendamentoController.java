@@ -138,7 +138,8 @@ public class AgendamentoController implements Initializable {
     @FXML
     private void onSave() {
         if (this.cb_medico.getSelectionModel().getSelectedIndex() != -1
-                && this.cb_paciente.getSelectionModel().getSelectedIndex() != -1) {
+                && this.cb_paciente.getSelectionModel().getSelectedIndex() != -1
+                && this.cb_turno.getSelectionModel().getSelectedIndex() != -1) {
             this.agendamentoModel = new AgendamentoModel();
             agendamentoModel.setTurno((String) cb_turno.getSelectionModel().getSelectedItem());
             agendamentoModel.setHorario((String) cb_horario.getSelectionModel().getSelectedItem());
@@ -154,7 +155,7 @@ public class AgendamentoController implements Initializable {
                 carregarTabela();
             }
         } else {
-            DialogFX.showMessage("Por favor verifique se você selecionou um Médico, ou um Paciente.", "ERRO", DialogFX.ERRO);
+            DialogFX.showMessage("Por favor verifique se você selecionou Médico, Turno e Paciente.", "Atenção", DialogFX.ATENCAO);
         }
     }
 
