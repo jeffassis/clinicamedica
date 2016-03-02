@@ -24,7 +24,7 @@ import util.ConverterDados;
 import util.DialogFX;
 
 /**
- * FXML Controller class
+ * FXML Controller Class Agendamento
  *
  * @author jeff-
  */
@@ -188,5 +188,4 @@ public class AgendamentoController implements Initializable {
         txt_motivo.setText("");
         dpData.getEditor().setText("");
     }
-
 }
