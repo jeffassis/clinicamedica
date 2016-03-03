@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import model.bean.PacienteModel;
 import model.dao.PacienteDAO;
+import util.DialogFX;
 
 /**
  * FXML Controller class
@@ -66,22 +67,27 @@ public class MeusPacientesController implements Initializable {
         thread.setDaemon(true);
         thread.start();
     }
+
     /**
      * Método que pega a referencia de HomeController.
-     * @param homeController 
+     *
+     * @param homeController
      */
-    public void pegarHomeReferencia(HomeController homeController){
+    public void pegarHomeReferencia(HomeController homeController) {
         this.homeController = homeController;
     }
-    
+
     @FXML
-    private void onMouseClick(MouseEvent evento){
-        if(evento.getClickCount() == 2){
-            /*Mandamos abrir a Tela paciente para editar*/
-            System.out.println(tabela_paciente.getItems().size());
-            this.homeController.cadPaciente(true, tabela_paciente);
+    private void onMouseClick(MouseEvent evento) {
+        if (tabela_paciente.getSelectionModel().getSelectedIndex() != -1) {
+            if (evento.getClickCount() == 2) {
+                /*Mandamos abrir a Tela paciente para editar*/
+                System.out.println(tabela_paciente.getItems().size());
+                this.homeController.cadPaciente(true, tabela_paciente);
+            }
+        } else {
+            DialogFX.showMessage("Por favor selecione um Paciente!", "Atenção", DialogFX.ATENCAO);
         }
-        
     }
 
     /**
@@ -90,5 +96,6 @@ public class MeusPacientesController implements Initializable {
     @FXML
     private void onRefresh() {
         carregarTabela();
+        tabela_paciente.getSelectionModel().clearSelection();
     }
 }
