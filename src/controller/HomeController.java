@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.bean.PacienteModel;
 import util.Log;
 
 /**
@@ -91,7 +92,8 @@ public class HomeController implements Initializable {
                         cadMedico();
                         break;
                     case "Pacientes":
-                        cadPaciente();
+                        /*Passamos null já que não vamos editar os dados*/
+                        cadPaciente(false, null);
                         break;
                     case "Funcionários":
                         cadFuncionario();
@@ -152,9 +154,14 @@ public class HomeController implements Initializable {
 
     /**
      * Método para chamar a GUI de Cadastro de Pacientes
+     *
+     * @param editar - Informar se a tela está sendo aberta para editar dados ao
+     * não.
+     * @param pacienteModel - Passar um paciente para edição, caso nao seja para
+     * editar passar null.
      */
     @FXML
-    private void cadPaciente() {
+    private void cadPaciente(boolean editar, PacienteModel pacienteModel) {
         if (!abriuCadPaciente) {
             FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Pacientes.fxml"));
             try {
@@ -166,8 +173,14 @@ public class HomeController implements Initializable {
                 this.cadPacientePalco.setTitle("Cadastro de Pacientes");
                 this.cadPacientePalco.setScene(scene);
                 this.cadPacientePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                /*Sabemos que quando for editar ele vai abrir a partir da Tela MeusPacientes, então podemos transforma ele como se
+                fosse um Jdialog em Swing lembra? ele vai travar a tela e nao vai ser possivel utilizar a tela anterior
+                antes de terminar com ela.*/
+                if (editar) {
+                    this.cadPacientePalco.initOwner(MeusPacientesPalco);
+                }
                 this.cadPacientePalco.show();
-                this.pacientesController.iniciarProcessos();
+                this.pacientesController.iniciarProcessos(editar, pacienteModel);
                 this.abriuCadPaciente = true;
 
             } catch (IOException ex) {
@@ -176,8 +189,11 @@ public class HomeController implements Initializable {
                 Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
+            if (editar) {
+                this.cadPacientePalco.initOwner(MeusPacientesPalco);
+            }
             this.cadPacientePalco.show();
-            this.pacientesController.iniciarProcessos();
+            this.pacientesController.iniciarProcessos(editar, pacienteModel);
             this.cadPacientePalco.requestFocus();
         }
     }
