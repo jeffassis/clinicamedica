@@ -10,12 +10,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.bean.PacienteModel;
 import util.Log;
 
 /**
@@ -95,7 +97,8 @@ public class HomeController implements Initializable {
                         cadMedico();
                         break;
                     case "Pacientes":
-                        cadPaciente();
+                        /*Passamos null já que não vamos editar os dados*/
+                        cadPaciente(false, null);
                         break;
                     case "Funcionários":
                         cadFuncionario();
@@ -156,9 +159,12 @@ public class HomeController implements Initializable {
 
     /**
      * Método para chamar a GUI de Cadastro de Pacientes
+     *
+     * @param editar - Informar se a tela está sendo aberta para editar dados ao
+     * não.
+     * @param tabela - Passar uma tabela de pacienteModel, caso não for editar passar null.
      */
-    @FXML
-    private void cadPaciente() {
+    public void cadPaciente(boolean editar, TableView<PacienteModel> tabela) {
         if (!abriuCadPaciente) {
             FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Pacientes.fxml"));
             try {
@@ -171,7 +177,7 @@ public class HomeController implements Initializable {
                 this.cadPacientePalco.setScene(scene);
                 this.cadPacientePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
                 this.cadPacientePalco.show();
-                this.pacientesController.iniciarProcessos();
+                this.pacientesController.iniciarProcessos(editar, tabela);
                 this.abriuCadPaciente = true;
 
             } catch (IOException ex) {
@@ -181,9 +187,17 @@ public class HomeController implements Initializable {
             }
         } else {
             this.cadPacientePalco.show();
-            this.pacientesController.iniciarProcessos();
+            this.pacientesController.iniciarProcessos(editar, tabela);
             this.cadPacientePalco.requestFocus();
         }
+    }
+    /**
+     * Método para chamar a GUI de Cadastro de Pacientes
+     */
+    @FXML
+    private void cadPaciente() {
+        /*Se modificamos o método, o fxml não encontra mais ele. Por isso fiz dessa forma amigo*/
+        cadPaciente(false, null);
     }
 
     @FXML
@@ -259,6 +273,8 @@ public class HomeController implements Initializable {
                 this.MeusPacientesPalco.setScene(scene);
                 this.MeusPacientesPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
                 this.MeusPacientesPalco.show();
+                /*Pegamos a referencia da HomeController*/
+                this.meusPacientesController.pegarHomeReferencia(this);
                 this.meusPacientesController.carregarTabela();
                 this.abriuMeusPacientes = true;
             } catch (IOException ex) {

@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.bean.BairroModel;
 import model.bean.CidadeModel;
@@ -43,6 +44,10 @@ public class PacientesController implements Initializable {
     @FXML
     private ComboBox<String> cb_sexo;
     ObservableList<String> listaSexo = FXCollections.observableArrayList("Feminino", "Masculino");
+    /*Essa variavel será nossa flag para saber se a tela foi aberta para editar ou não*/
+    private boolean editar;
+    /*Vamos precisar dessa Classe para atualizar o dados quando for usar o Paciente para editar*/
+    private TableView<PacienteModel> tabela;
 
     PacienteModel pacienteModel;
 
@@ -69,12 +74,18 @@ public class PacientesController implements Initializable {
     /**
      * Executa as funções iniciais como preencher o comboBox do Paciente
      * utilizando o Task já que pode ser um processo pesado
+     *
+     * @param editar - Passar um boolean informando se a tela foi aberta para
+     * editar ou não.
+     * @param tableView - Passa uma Tabela de Pacientes
      */
-    public void iniciarProcessos() {
+    public void iniciarProcessos(boolean editar, TableView<PacienteModel> tableView) {
         /*Para evitar uma exception de Thread temos que limpar o comboBox*/
         cb_cidade.getItems().clear();
         cb_bairro.getItems().clear();
-
+        /*Fazemos isso pois vamos precisar saber se no onSave estamos alterando ou salvando dados*/
+        this.editar = editar;
+        this.tabela = tableView;
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
@@ -82,10 +93,64 @@ public class PacientesController implements Initializable {
                 cb_bairro.setItems(BairroDAO.executeQuery(null, BairroDAO.QUERY_TODOS));
                 return null;
             }
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                /*Colocamos dentro do succeeded pq vamos precisar que os comboBox já estejam populados
+                pq se não ao comparar os dados que nem fazemos a baixo poderia da erro já que o banco pode demorar para responder.*/
+                /*Se foi aberto para editar*/
+                if (editar) {
+                    /*Para evitar qualquer tipo de exceção*/
+                    if (tabela != null) {
+                        /*Pegamos a referencia da Tabela*/
+                        habilitarCampos();
+                        /*Pegamos o paciente selecionado em outra tabela*/
+                        PacienteModel model = tabela.getSelectionModel().getSelectedItem();
+                        bt_novo.setDisable(true);
+                        bt_salvar.setDisable(false);
+                        /*Utilizei o Property pq ele tem o toString*/
+                        txt_matricula.setText(model.getCodigoProperty().getValue().toString());
+                        txt_nome.setText(model.getNome());
+                        /*Perceba como vamos adicionar a Data. É como se fosse um TextField*/
+                        dp_nascimento.getEditor().setText(model.getNascimento());
+                        txt_endereco.setText(model.getEndereco());
+                        txt_telefone.setText(model.getTelefone());
+                        for (int i = 0; i < cb_cidade.getItems().size(); i++) {
+                            /*Já que cada cidade tem um código, vamos comparar assim*/
+                            if (cb_cidade.getItems().get(i).getCodigo() == model.getCidadeModel().getCodigo()) {
+                                cb_cidade.getSelectionModel().select(i);
+                                break;
+                            }
+                        }
+                        for (int i = 0; i < cb_bairro.getItems().size(); i++) {
+                            if (cb_bairro.getItems().get(i).getCodigo() == model.getBairroModel().getCodigo()) {
+                                cb_bairro.getSelectionModel().select(i);
+                                break;
+                            }
+                        }
+                        txt_cep.setText(model.getCep());
+                        txt_documento.setText(model.getDocumento());
+                        for (int i = 0; i < cb_sexo.getItems().size(); i++) {
+                            if (cb_sexo.getItems().get(i).equals(model.getSexo())) {
+                                cb_sexo.getSelectionModel().select(i);
+                                break;
+                            }
+                        }
+                        dp_cliente.getEditor().setText(model.getData_cliente());
+                        txt_tipo.setText(model.getTipo());
+                        txt_email.setText(model.getEmail());
+                        txt_observacoes.setText(model.getObs());
+
+                    }
+                }
+            }
+
         };
         Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
+
     }
 
     /**
@@ -95,11 +160,15 @@ public class PacientesController implements Initializable {
     private void onSave() {
         this.pacienteModel = new PacienteModel();
         pacienteModel.setNome(txt_nome.getText().trim());
+        /*Não sei usar a conversão nova*/
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        //pacienteModel.setNascimento(dp_nascimento.getValue().format(formatter));
         pacienteModel.setEndereco(txt_endereco.getText().trim());
         pacienteModel.setTelefone(txt_telefone.getText().trim());
         pacienteModel.setCep(txt_cep.getText().trim());
         pacienteModel.setDocumento(txt_documento.getText().trim());
         pacienteModel.setSexo((String) cb_sexo.getSelectionModel().getSelectedItem());
+        //pacienteModel.setData_cliente(dp_cliente.getValue().format(formatter));
         pacienteModel.setTipo(txt_tipo.getText().trim());
         pacienteModel.setEmail(txt_email.getText().trim());
         pacienteModel.setObs(txt_observacoes.getText().trim());
@@ -127,11 +196,30 @@ public class PacientesController implements Initializable {
             /*Paramos a execução dessa linha usando o return, ou seja a proxima linha não será executada*/
             return;
         }
-        if (PacienteDAO.executeUpdates(pacienteModel, PacienteDAO.CREATE)) {
-            limparCampos();
-            DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
+        /*Verificamos se é para salvar como edição ou apenas adicionado um dado.*/
+        if (this.editar == true) {
+            /*Setamos o código já que é um paciente editado*/
+            this.pacienteModel.setCodigo(Integer.parseInt(txt_matricula.getText()));
+            if (PacienteDAO.executeUpdates(pacienteModel, PacienteDAO.UPDATE)) {
+                DialogFX.showMessage("Dados Alterados com sucesso com sucesso!", "Sucesso", DialogFX.SUCESS);
+                /*Trocamos pelo o editado, assim não precisamos buscar dnv no banco de Dados*/
+                tabela.getItems().set(pacienteModel.getCodigo() - 1, pacienteModel);
+                
+            } else {
+                DialogFX.showMessage("Não foi possivel alterar dados", "ERRO", DialogFX.ERRO);
+            }
 
-            desabilitarCampos();
+        } else if (editar == false) {
+            /*Muito cuidado com o if ao formatar o texto ele ficava jutando o else com o if, então tive q fazer dessa
+            maneira para não dá problema*/
+            if (PacienteDAO.executeUpdates(pacienteModel, PacienteDAO.CREATE)) {
+                limparCampos();
+                DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
+
+                desabilitarCampos();
+            } else {
+                DialogFX.showMessage("Não foi possivel inserir dados", "ERRO", DialogFX.ERRO);
+            }
         }
     }
 
@@ -152,6 +240,8 @@ public class PacientesController implements Initializable {
      */
     @FXML
     private void onCancel() {
+        /*Ao fazer isso desativamos o editar, ou seja ele só vai add*/
+        this.editar = false;
         desabilitarCampos();
         limparCampos();
         bt_novo.setDisable(false);
@@ -196,6 +286,11 @@ public class PacientesController implements Initializable {
         txt_observacoes.setDisable(false);
         cb_cidade.setDisable(false);
         cb_bairro.setDisable(false);
+    }
+    /*Falta implementar*/
+    @FXML
+    private void onLocalizar(){
+        
     }
 
     /**
