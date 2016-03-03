@@ -1,17 +1,27 @@
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import model.bean.BairroModel;
 import model.bean.CidadeModel;
 import model.bean.PacienteModel;
@@ -20,6 +30,7 @@ import model.dao.CidadeDAO;
 import model.dao.PacienteDAO;
 import util.ConverterDados;
 import util.DialogFX;
+import util.Log;
 import util.MaskFormatter;
 
 /**
@@ -50,6 +61,13 @@ public class PacientesController implements Initializable {
     private TableView<PacienteModel> tabela;
 
     PacienteModel pacienteModel;
+
+    /**
+     * Para ser usado no botao localicar
+     */
+    private boolean abriuMeusPacientes;
+    private Stage MeusPacientesPalco;
+    private MeusPacientesController meusPacientesController;
 
     /**
      * Initializes the controller class.
@@ -99,7 +117,7 @@ public class PacientesController implements Initializable {
                 super.succeeded();
                 /*Colocamos dentro do succeeded pq vamos precisar que os comboBox já estejam populados
                 pq se não ao comparar os dados que nem fazemos a baixo poderia da erro já que o banco pode demorar para responder.*/
-                /*Se foi aberto para editar*/
+ /*Se foi aberto para editar*/
                 if (editar) {
                     /*Para evitar qualquer tipo de exceção*/
                     if (tabela != null) {
@@ -160,15 +178,11 @@ public class PacientesController implements Initializable {
     private void onSave() {
         this.pacienteModel = new PacienteModel();
         pacienteModel.setNome(txt_nome.getText().trim());
-        /*Não sei usar a conversão nova*/
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        //pacienteModel.setNascimento(dp_nascimento.getValue().format(formatter));
         pacienteModel.setEndereco(txt_endereco.getText().trim());
         pacienteModel.setTelefone(txt_telefone.getText().trim());
         pacienteModel.setCep(txt_cep.getText().trim());
         pacienteModel.setDocumento(txt_documento.getText().trim());
         pacienteModel.setSexo((String) cb_sexo.getSelectionModel().getSelectedItem());
-        //pacienteModel.setData_cliente(dp_cliente.getValue().format(formatter));
         pacienteModel.setTipo(txt_tipo.getText().trim());
         pacienteModel.setEmail(txt_email.getText().trim());
         pacienteModel.setObs(txt_observacoes.getText().trim());
@@ -204,7 +218,7 @@ public class PacientesController implements Initializable {
                 DialogFX.showMessage("Dados Alterados com sucesso com sucesso!", "Sucesso", DialogFX.SUCESS);
                 /*Trocamos pelo o editado, assim não precisamos buscar dnv no banco de Dados*/
                 tabela.getItems().set(pacienteModel.getCodigo() - 1, pacienteModel);
-                
+
             } else {
                 DialogFX.showMessage("Não foi possivel alterar dados", "ERRO", DialogFX.ERRO);
             }
@@ -250,6 +264,38 @@ public class PacientesController implements Initializable {
     }
 
     /**
+     * Método de ação do botao localizar
+     */
+    @FXML
+    private void onLocalizar(ActionEvent event) {
+        if (!abriuMeusPacientes) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/MeusPacientes.fxml"));
+            try {
+                /*Linha de codigo que faz a janela sumir quando for acionado o botão*/
+                ((Node) event.getSource()).getScene().getWindow().hide();
+                this.MeusPacientesPalco = new Stage();
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.meusPacientesController = carregar.getController();
+                this.MeusPacientesPalco.setTitle("Meus Pacientes");
+                this.MeusPacientesPalco.setScene(scene);
+                this.MeusPacientesPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.MeusPacientesPalco.show();
+                this.meusPacientesController.carregarTabela();
+                this.abriuMeusPacientes = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
+            }
+        } else {
+            this.MeusPacientesPalco.show();
+            this.meusPacientesController.carregarTabela();
+            this.MeusPacientesPalco.requestFocus();
+        }
+    }
+
+    /**
      * Método que limpa os campos
      */
     private void limparCampos() {
@@ -286,11 +332,6 @@ public class PacientesController implements Initializable {
         txt_observacoes.setDisable(false);
         cb_cidade.setDisable(false);
         cb_bairro.setDisable(false);
-    }
-    /*Falta implementar*/
-    @FXML
-    private void onLocalizar(){
-        
     }
 
     /**

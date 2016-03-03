@@ -38,7 +38,7 @@ public class HomeController implements Initializable {
             abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadProcedimento, abriuGerarProcedimento;
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
     private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
-            MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadProcedimentoPalco, gerarProcedimentoPalco;
+                MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadProcedimentoPalco, gerarProcedimentoPalco;
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
     private PacientesController pacientesController;
