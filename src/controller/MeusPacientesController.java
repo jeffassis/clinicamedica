@@ -64,4 +64,11 @@ public class MeusPacientesController implements Initializable {
         thread.start();
     }
 
+    /**
+     * Atualiza a tabela com os pacientes
+     */
+    @FXML
+    private void onRefresh() {
+        carregarTabela();
+    }
 }
