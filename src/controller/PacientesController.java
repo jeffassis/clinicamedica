@@ -27,7 +27,7 @@ import util.MaskFormatter;
  * @author jeff-
  */
 public class PacientesController implements Initializable {
-
+    
     @FXML
     private DatePicker dp_nascimento, dp_cliente;
     @FXML
@@ -43,7 +43,7 @@ public class PacientesController implements Initializable {
     @FXML
     private ComboBox<String> cb_sexo;
     ObservableList<String> listaSexo = FXCollections.observableArrayList("Feminino", "Masculino");
-
+    
     PacienteModel pacienteModel;
 
     /**
@@ -62,7 +62,7 @@ public class PacientesController implements Initializable {
         /*Utilizando a nossa Classe converter CidadeModel*/
         this.cb_cidade.setConverter(new ConverterDados(ConverterDados.GET_CIDADE_NOME).getCidadeConverter());
         this.cb_bairro.setConverter(new ConverterDados(ConverterDados.GET_BAIRRO_NOME).getBairroConverter());
-
+        
         cb_sexo.setItems(listaSexo);
     }
 
@@ -74,7 +74,7 @@ public class PacientesController implements Initializable {
         /*Para evitar uma exception de Thread temos que limpar o comboBox*/
         cb_cidade.getItems().clear();
         cb_bairro.getItems().clear();
-
+        
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
@@ -111,10 +111,30 @@ public class PacientesController implements Initializable {
         pacienteModel.setCidadeModel(cidade);
         BairroModel bairro = cb_bairro.getSelectionModel().getSelectedItem();
         pacienteModel.setBairroModel(bairro);
+        /*Para pegamos a data ficou mais fácil, Imagina que o datepicker virou um TextField
+        primeiro vamos verificar se a datas fornecidas estão corretas*/
+        if (dp_nascimento.getEditor().getText().length() == 10) {
+            /*esse igual a 10 e a quantidade de caracteres que a data possui, se for 10
+            então a data está completa*/
+            if (dp_cliente.getEditor().getText().length() == 10) {
+                /*Se chegou aqui então ambos estão corretos, eu fiz por camada(if dentro de if) para que mostre onde está o erro de cada um.
+                Veja que pegamos como se fosse um texto digitado em um TextField, smp utilizando GetEditor primeiro*/
+                pacienteModel.setData_cliente(dp_cliente.getEditor().getText());
+                pacienteModel.setNascimento(dp_nascimento.getEditor().getText());
+            } else {
+                DialogFX.showMessage("Data do cliente não foi preenchida corretamente", "Erro encontrado", DialogFX.ATENCAO);
+                /*Paramos a execução dessa linha usando o return, ou seja a proxima linha não será executada*/
+                return;
+            }
+        } else {
+            DialogFX.showMessage("Data de nascimento não foi preenchida corretamente", "Erro encontrado", DialogFX.ATENCAO);
+            /*Paramos a execução dessa linha usando o return, ou seja a proxima linha não será executada*/
+            return;
+        }
         if (PacienteDAO.executeUpdates(pacienteModel, PacienteDAO.CREATE)) {
             limparCampos();
             DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
-
+            
             desabilitarCampos();
         }
     }
