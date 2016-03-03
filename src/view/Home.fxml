@@ -53,6 +53,8 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
+                  <MenuItem fx:id="menuItemProcedimento" mnemonicParsing="false" onAction="#cadProcedimento" text="Procedimento" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="menuItemCidade" mnemonicParsing="false" onAction="#cadCidade" text="Cidades">
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">

@@ -32,9 +32,11 @@ public class HomeController implements Initializable {
     Image icon = new Image(getClass().getResourceAsStream("/img/folder 16x16.png"));
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
-    private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento, abriuMeusPacientes, abriuCadCidade, abriuCadBairro;
+    private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento,
+            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadProcedimento;
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
-    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco, MeusPacientesPalco, cadCidadePalco, cadBairroPalco;
+    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
+            MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadProcedimentoPalco;
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
     private PacientesController pacientesController;
@@ -43,6 +45,7 @@ public class HomeController implements Initializable {
     private MeusPacientesController meusPacientesController;
     private CidadeController cidadeController;
     private BairroController bairroController;
+    private ProcedimentosController procedimentosController;
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC, nodeA1, nodeA2, nodeA3, nodeA4, nodeA5;
 
@@ -321,7 +324,32 @@ public class HomeController implements Initializable {
             this.cadBairroPalco.requestFocus();
             this.bairroController.carregarTabela();
             this.bairroController.iniciarProcessos();
+        }
+    }
 
+    @FXML
+    private void cadProcedimento() {
+        if (!abriuCadProcedimento) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Procedimentos.fxml"));
+            this.cadProcedimentoPalco = new Stage();
+            try {
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.procedimentosController = carregar.getController();
+                this.cadProcedimentoPalco.setTitle("Cadastros de Procedimentos");
+                this.cadProcedimentoPalco.setScene(scene);
+                this.cadProcedimentoPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.cadProcedimentoPalco.show();
+                this.procedimentosController.carregarTabela();
+                this.abriuCadProcedimento = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.cadProcedimentoPalco.show();
+            this.cadProcedimentoPalco.requestFocus();
+            this.procedimentosController.carregarTabela();
         }
     }
 

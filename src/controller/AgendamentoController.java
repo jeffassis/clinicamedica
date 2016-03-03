@@ -159,6 +159,7 @@ public class AgendamentoController implements Initializable {
                 agendamentoModel.setData(dpData.getEditor().getText());
             } else {
                 DialogFX.showMessage("Data do cliente não foi preenchida corretamente.", "Erro encontrado", DialogFX.ERRO);
+                return;
             }
             agendamentoModel.setMotivo(txt_motivo.getText().trim());
             if (AgendamentoDAO.executeUpdates(agendamentoModel, AgendamentoDAO.CREATE)) {
