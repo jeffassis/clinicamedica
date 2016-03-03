@@ -27,7 +27,7 @@ import util.MaskFormatter;
  * @author jeff-
  */
 public class PacientesController implements Initializable {
-    
+
     @FXML
     private DatePicker dp_nascimento, dp_cliente;
     @FXML
@@ -43,7 +43,7 @@ public class PacientesController implements Initializable {
     @FXML
     private ComboBox<String> cb_sexo;
     ObservableList<String> listaSexo = FXCollections.observableArrayList("Feminino", "Masculino");
-    
+
     PacienteModel pacienteModel;
 
     /**
@@ -62,7 +62,7 @@ public class PacientesController implements Initializable {
         /*Utilizando a nossa Classe converter CidadeModel*/
         this.cb_cidade.setConverter(new ConverterDados(ConverterDados.GET_CIDADE_NOME).getCidadeConverter());
         this.cb_bairro.setConverter(new ConverterDados(ConverterDados.GET_BAIRRO_NOME).getBairroConverter());
-        
+
         cb_sexo.setItems(listaSexo);
     }
 
@@ -74,7 +74,7 @@ public class PacientesController implements Initializable {
         /*Para evitar uma exception de Thread temos que limpar o comboBox*/
         cb_cidade.getItems().clear();
         cb_bairro.getItems().clear();
-        
+
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
@@ -95,15 +95,11 @@ public class PacientesController implements Initializable {
     private void onSave() {
         this.pacienteModel = new PacienteModel();
         pacienteModel.setNome(txt_nome.getText().trim());
-        /*Não sei usar a conversão nova*/
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        //pacienteModel.setNascimento(dp_nascimento.getValue().format(formatter));
         pacienteModel.setEndereco(txt_endereco.getText().trim());
         pacienteModel.setTelefone(txt_telefone.getText().trim());
         pacienteModel.setCep(txt_cep.getText().trim());
         pacienteModel.setDocumento(txt_documento.getText().trim());
         pacienteModel.setSexo((String) cb_sexo.getSelectionModel().getSelectedItem());
-        //pacienteModel.setData_cliente(dp_cliente.getValue().format(formatter));
         pacienteModel.setTipo(txt_tipo.getText().trim());
         pacienteModel.setEmail(txt_email.getText().trim());
         pacienteModel.setObs(txt_observacoes.getText().trim());
@@ -134,7 +130,7 @@ public class PacientesController implements Initializable {
         if (PacienteDAO.executeUpdates(pacienteModel, PacienteDAO.CREATE)) {
             limparCampos();
             DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
-            
+
             desabilitarCampos();
         }
     }

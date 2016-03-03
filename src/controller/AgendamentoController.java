@@ -22,6 +22,7 @@ import model.dao.MedicoDAO;
 import model.dao.PacienteDAO;
 import util.ConverterDados;
 import util.DialogFX;
+import util.MaskFormatter;
 
 /**
  * FXML Controller Class Agendamento
@@ -87,6 +88,12 @@ public class AgendamentoController implements Initializable {
         /*Utilizando a nossa Classe converterDados */
         this.cb_medico.setConverter(new ConverterDados(ConverterDados.GET_MEDICO_NOME).getMedicoConverter());
         this.cb_paciente.setConverter(new ConverterDados(ConverterDados.GET_PACIENTE_NOME).getPacienteConverter());
+
+        /**
+         * Colocando a Mascara no DatePicker
+         */
+        MaskFormatter formatter = new MaskFormatter(dpData);
+        formatter.addComponente(dpData, MaskFormatter.DATA_BARRA, true);
     }
 
     /**
@@ -147,7 +154,12 @@ public class AgendamentoController implements Initializable {
             agendamentoModel.setMedicoModel(medico);
             PacienteModel paciente = cb_paciente.getSelectionModel().getSelectedItem();
             agendamentoModel.setPacienteModel(paciente);
-            /*TODO não fiz a parte do DatePicker pois não sei implementar ainda com a Mask*/
+            /*Adicionado a Mascara no DatePicker e validando o mesmo*/
+            if (dpData.getEditor().getText().length() == 10) {
+                agendamentoModel.setData(dpData.getEditor().getText());
+            } else {
+                DialogFX.showMessage("Data do cliente não foi preenchida corretamente.", "Erro encontrado", DialogFX.ERRO);
+            }
             agendamentoModel.setMotivo(txt_motivo.getText().trim());
             if (AgendamentoDAO.executeUpdates(agendamentoModel, AgendamentoDAO.CREATE)) {
                 DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
