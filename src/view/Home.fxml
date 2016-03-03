@@ -45,14 +45,6 @@
                         </ImageView>
                      </graphic></MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="menuItemAgendamento" mnemonicParsing="false" onAction="#agendamento" text="Agendamento">
-                     <graphic>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/agendamento16.png" />
-                           </image>
-                        </ImageView>
-                     </graphic></MenuItem>
                   <MenuItem fx:id="menuItemProcedimento" mnemonicParsing="false" onAction="#cadProcedimento" text="Procedimentos">
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
@@ -61,7 +53,6 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
-                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="menuItemCidade" mnemonicParsing="false" onAction="#cadCidade" text="Cidades">
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
@@ -80,9 +71,17 @@
                      </graphic></MenuItem>
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Financeiro">
+          <Menu mnemonicParsing="false" text="Gerenciamento">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem fx:id="menuItemAgendamento" mnemonicParsing="false" onAction="#agendamento" text="Agendamento">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/agendamento16.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
+              <MenuItem mnemonicParsing="false" onAction="#gerarProcedimento" text="Gerar Procedimentos" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Relatórios">

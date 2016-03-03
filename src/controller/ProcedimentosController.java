@@ -10,9 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import model.bean.CidadeModel;
 import model.bean.ProcedimentosModel;
-import model.dao.CidadeDAO;
 import model.dao.ProcedimentoDAO;
 import util.DialogFX;
 

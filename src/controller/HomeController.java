@@ -33,10 +33,10 @@ public class HomeController implements Initializable {
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
     private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento,
-            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadProcedimento;
+            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadProcedimento, abriuGerarProcedimento;
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
     private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
-            MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadProcedimentoPalco;
+            MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadProcedimentoPalco, gerarProcedimentoPalco;
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
     private PacientesController pacientesController;
@@ -46,6 +46,7 @@ public class HomeController implements Initializable {
     private CidadeController cidadeController;
     private BairroController bairroController;
     private ProcedimentosController procedimentosController;
+    private GerarProcedimentoController gerarProcedimentoController;
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC, nodeA1, nodeA2, nodeA3, nodeA4, nodeA5;
 
@@ -350,6 +351,31 @@ public class HomeController implements Initializable {
             this.cadProcedimentoPalco.show();
             this.cadProcedimentoPalco.requestFocus();
             this.procedimentosController.carregarTabela();
+        }
+    }
+
+    @FXML
+    private void gerarProcedimento() {
+        if (!abriuGerarProcedimento) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/GerarProcedimento.fxml"));
+            try {
+                this.gerarProcedimentoPalco = new Stage();
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.gerarProcedimentoController = carregar.getController();
+                this.gerarProcedimentoPalco.setTitle("Gerenciamento de Procedimentos");
+                this.gerarProcedimentoPalco.setScene(scene);
+                this.gerarProcedimentoPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.gerarProcedimentoPalco.show();
+
+                this.abriuGerarProcedimento = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.gerarProcedimentoPalco.show();
+            this.gerarProcedimentoPalco.requestFocus();
         }
     }
 
