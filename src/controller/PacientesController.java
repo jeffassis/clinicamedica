@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.bean.BairroModel;
 import model.bean.CidadeModel;
@@ -45,6 +46,8 @@ public class PacientesController implements Initializable {
     ObservableList<String> listaSexo = FXCollections.observableArrayList("Feminino", "Masculino");
     /*Essa variavel será nossa flag para saber se a tela foi aberta para editar ou não*/
     private boolean editar;
+    /*Vamos precisar dessa Classe para atualizar o dados quando for usar o Paciente para editar*/
+    private TableView<PacienteModel> tabela;
 
     PacienteModel pacienteModel;
 
@@ -74,16 +77,15 @@ public class PacientesController implements Initializable {
      *
      * @param editar - Passar um boolean informando se a tela foi aberta para
      * editar ou não.
-     * @param model - Passar um Paciente para editar, caso não for para editar
-     * passar null.
+     * @param tableView - Passa uma Tabela de Pacientes
      */
-    public void iniciarProcessos(boolean editar, PacienteModel model) {
+    public void iniciarProcessos(boolean editar, TableView<PacienteModel> tableView) {
         /*Para evitar uma exception de Thread temos que limpar o comboBox*/
         cb_cidade.getItems().clear();
         cb_bairro.getItems().clear();
         /*Fazemos isso pois vamos precisar saber se no onSave estamos alterando ou salvando dados*/
         this.editar = editar;
-
+        this.tabela = tableView;
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
@@ -97,10 +99,14 @@ public class PacientesController implements Initializable {
                 super.succeeded();
                 /*Colocamos dentro do succeeded pq vamos precisar que os comboBox já estejam populados
                 pq se não ao comparar os dados que nem fazemos a baixo poderia da erro já que o banco pode demorar para responder.*/
- /*Se foi aberto para editar*/
+                /*Se foi aberto para editar*/
                 if (editar) {
                     /*Para evitar qualquer tipo de exceção*/
-                    if (model != null) {
+                    if (tabela != null) {
+                        /*Pegamos a referencia da Tabela*/
+                        habilitarCampos();
+                        /*Pegamos o paciente selecionado em outra tabela*/
+                        PacienteModel model = tabela.getSelectionModel().getSelectedItem();
                         bt_novo.setDisable(true);
                         bt_salvar.setDisable(false);
                         /*Utilizei o Property pq ele tem o toString*/
@@ -194,9 +200,12 @@ public class PacientesController implements Initializable {
         if (this.editar == true) {
             /*Setamos o código já que é um paciente editado*/
             this.pacienteModel.setCodigo(Integer.parseInt(txt_matricula.getText()));
-            if(PacienteDAO.executeUpdates(pacienteModel, PacienteDAO.UPDATE)){
+            if (PacienteDAO.executeUpdates(pacienteModel, PacienteDAO.UPDATE)) {
                 DialogFX.showMessage("Dados Alterados com sucesso com sucesso!", "Sucesso", DialogFX.SUCESS);
-            }else{
+                /*Trocamos pelo o editado, assim não precisamos buscar dnv no banco de Dados*/
+                tabela.getItems().set(pacienteModel.getCodigo() - 1, pacienteModel);
+                
+            } else {
                 DialogFX.showMessage("Não foi possivel alterar dados", "ERRO", DialogFX.ERRO);
             }
 
@@ -231,6 +240,8 @@ public class PacientesController implements Initializable {
      */
     @FXML
     private void onCancel() {
+        /*Ao fazer isso desativamos o editar, ou seja ele só vai add*/
+        this.editar = false;
         desabilitarCampos();
         limparCampos();
         bt_novo.setDisable(false);
@@ -275,6 +286,11 @@ public class PacientesController implements Initializable {
         txt_observacoes.setDisable(false);
         cb_cidade.setDisable(false);
         cb_bairro.setDisable(false);
+    }
+    /*Falta implementar*/
+    @FXML
+    private void onLocalizar(){
+        
     }
 
     /**

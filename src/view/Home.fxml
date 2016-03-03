@@ -53,6 +53,8 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
+                  <MenuItem fx:id="menuItemProcedimento" mnemonicParsing="false" onAction="#cadProcedimento" text="Procedimento" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="menuItemCidade" mnemonicParsing="false" onAction="#cadCidade" text="Cidades">
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
@@ -71,12 +73,12 @@
                      </graphic></MenuItem>
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="Financeiro">
             <items>
               <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="Relatórios">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
             </items>

@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 import model.bean.PacienteModel;
 import model.dao.PacienteDAO;
 
@@ -30,6 +31,8 @@ public class MeusPacientesController implements Initializable {
     private TableColumn<PacienteModel, String> telefoneColuna;
     @FXML
     private TableColumn<PacienteModel, String> emailColuna;
+    /*Vamos precisar dele para chamar a tela paciente para editar os dados*/
+    private HomeController homeController;
 
     /**
      * Initializes the controller class.
@@ -63,5 +66,29 @@ public class MeusPacientesController implements Initializable {
         thread.setDaemon(true);
         thread.start();
     }
+    /**
+     * Método que pega a referencia de HomeController.
+     * @param homeController 
+     */
+    public void pegarHomeReferencia(HomeController homeController){
+        this.homeController = homeController;
+    }
+    
+    @FXML
+    private void onMouseClick(MouseEvent evento){
+        if(evento.getClickCount() == 2){
+            /*Mandamos abrir a Tela paciente para editar*/
+            System.out.println(tabela_paciente.getItems().size());
+            this.homeController.cadPaciente(true, tabela_paciente);
+        }
+        
+    }
 
+    /**
+     * Atualiza a tabela com os pacientes
+     */
+    @FXML
+    private void onRefresh() {
+        carregarTabela();
+    }
 }

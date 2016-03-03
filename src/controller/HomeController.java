@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
@@ -33,9 +34,11 @@ public class HomeController implements Initializable {
     Image icon = new Image(getClass().getResourceAsStream("/img/folder 16x16.png"));
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
-    private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento, abriuMeusPacientes, abriuCadCidade, abriuCadBairro;
+    private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento,
+            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadProcedimento;
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
-    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco, MeusPacientesPalco, cadCidadePalco, cadBairroPalco;
+    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
+            MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadProcedimentoPalco;
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
     private PacientesController pacientesController;
@@ -44,6 +47,7 @@ public class HomeController implements Initializable {
     private MeusPacientesController meusPacientesController;
     private CidadeController cidadeController;
     private BairroController bairroController;
+    private ProcedimentosController procedimentosController;
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC, nodeA1, nodeA2, nodeA3, nodeA4, nodeA5;
 
@@ -157,11 +161,9 @@ public class HomeController implements Initializable {
      *
      * @param editar - Informar se a tela está sendo aberta para editar dados ao
      * não.
-     * @param pacienteModel - Passar um paciente para edição, caso nao seja para
-     * editar passar null.
+     * @param tabela - Passar uma tabela de pacienteModel, caso não for editar passar null.
      */
-    @FXML
-    private void cadPaciente(boolean editar, PacienteModel pacienteModel) {
+    public void cadPaciente(boolean editar, TableView<PacienteModel> tabela) {
         if (!abriuCadPaciente) {
             FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Pacientes.fxml"));
             try {
@@ -173,14 +175,8 @@ public class HomeController implements Initializable {
                 this.cadPacientePalco.setTitle("Cadastro de Pacientes");
                 this.cadPacientePalco.setScene(scene);
                 this.cadPacientePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                /*Sabemos que quando for editar ele vai abrir a partir da Tela MeusPacientes, então podemos transforma ele como se
-                fosse um Jdialog em Swing lembra? ele vai travar a tela e nao vai ser possivel utilizar a tela anterior
-                antes de terminar com ela.*/
-                if (editar) {
-                    this.cadPacientePalco.initOwner(MeusPacientesPalco);
-                }
                 this.cadPacientePalco.show();
-                this.pacientesController.iniciarProcessos(editar, pacienteModel);
+                this.pacientesController.iniciarProcessos(editar, tabela);
                 this.abriuCadPaciente = true;
 
             } catch (IOException ex) {
@@ -189,13 +185,18 @@ public class HomeController implements Initializable {
                 Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
-            if (editar) {
-                this.cadPacientePalco.initOwner(MeusPacientesPalco);
-            }
             this.cadPacientePalco.show();
-            this.pacientesController.iniciarProcessos(editar, pacienteModel);
+            this.pacientesController.iniciarProcessos(editar, tabela);
             this.cadPacientePalco.requestFocus();
         }
+    }
+    /**
+     * Método para chamar a GUI de Cadastro de Pacientes
+     */
+    @FXML
+    private void cadPaciente() {
+        /*Se modificamos o método, o fxml não encontra mais ele. Por isso fiz dessa forma amigo*/
+        cadPaciente(false, null);
     }
 
     @FXML
@@ -271,6 +272,8 @@ public class HomeController implements Initializable {
                 this.MeusPacientesPalco.setScene(scene);
                 this.MeusPacientesPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
                 this.MeusPacientesPalco.show();
+                /*Pegamos a referencia da HomeController*/
+                this.meusPacientesController.pegarHomeReferencia(this);
                 this.meusPacientesController.carregarTabela();
                 this.abriuMeusPacientes = true;
             } catch (IOException ex) {
@@ -337,7 +340,32 @@ public class HomeController implements Initializable {
             this.cadBairroPalco.requestFocus();
             this.bairroController.carregarTabela();
             this.bairroController.iniciarProcessos();
+        }
+    }
 
+    @FXML
+    private void cadProcedimento() {
+        if (!abriuCadProcedimento) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Procedimentos.fxml"));
+            this.cadProcedimentoPalco = new Stage();
+            try {
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.procedimentosController = carregar.getController();
+                this.cadProcedimentoPalco.setTitle("Cadastros de Procedimentos");
+                this.cadProcedimentoPalco.setScene(scene);
+                this.cadProcedimentoPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.cadProcedimentoPalco.show();
+                this.procedimentosController.carregarTabela();
+                this.abriuCadProcedimento = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.cadProcedimentoPalco.show();
+            this.cadProcedimentoPalco.requestFocus();
+            this.procedimentosController.carregarTabela();
         }
     }
 
