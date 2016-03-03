@@ -44,6 +44,8 @@ public class ProcedimentosController implements Initializable {
 
     ProcedimentosModel procedimentosModel;
 
+    int flag = 1;
+
     /**
      * Initializes the controller class.
      */
@@ -82,13 +84,32 @@ public class ProcedimentosController implements Initializable {
      */
     @FXML
     private void onSave() {
-        procedimentosModel = new ProcedimentosModel();
-        procedimentosModel.setDescricao(txt_descricao.getText().trim());
-        if (ProcedimentoDAO.executeUpdates(procedimentosModel, ProcedimentoDAO.CREATE)) {
-            DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
-            limparCampos();
-            carregarTabela();
-            desabilitarCampos();
+        if (txt_descricao.getText().isEmpty()) {
+            DialogFX.showMessage("O campo descrição não pode ser vazio!", "Campo vazio", DialogFX.ATENCAO);
+            return;
+        }
+        if (flag == 1) {
+            this.procedimentosModel = new ProcedimentosModel();
+            procedimentosModel.setDescricao(txt_descricao.getText().trim());
+            if (ProcedimentoDAO.executeUpdates(procedimentosModel, ProcedimentoDAO.CREATE)) {
+                DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
+                limparCampos();
+                carregarTabela();
+                desabilitarCampos();
+            }
+        } else {
+            this.procedimentosModel = new ProcedimentosModel();
+            procedimentosModel.setCodigo(Integer.parseInt(txt_codigo.getText().trim()));
+            procedimentosModel.setDescricao(txt_descricao.getText().trim());
+            if (ProcedimentoDAO.executeUpdates(procedimentosModel, ProcedimentoDAO.UPDATE)) {
+                limparCampos();
+                DialogFX.showMessage("Dados Atualizados com sucesso!", "Sucesso", DialogFX.SUCESS);
+                carregarTabela();
+                flag = 1;
+                desabilitarCampos();
+            } else {
+                DialogFX.showMessage("Não foi possivel atualizar dados", "ERROR", DialogFX.ERRO);
+            }
         }
     }
 
@@ -98,7 +119,17 @@ public class ProcedimentosController implements Initializable {
      */
     @FXML
     private void onEdit() {
-
+        if (tabela_procedimento.getSelectionModel().getSelectedIndex() != -1) {
+            this.bt_salvar.setDisable(false);
+            this.procedimentosModel = tabela_procedimento.getSelectionModel().getSelectedItem();
+            txt_codigo.setText(Integer.toString(procedimentosModel.getCodigo()));
+            txt_descricao.setText(procedimentosModel.getDescricao());
+        }
+        flag = 2;
+        /*Desabilita os botões excluir e editar */
+        this.bt_editar.setDisable(true);
+        this.bt_excluir.setDisable(true);
+        habilitarCampos();
     }
 
     /**
@@ -129,6 +160,7 @@ public class ProcedimentosController implements Initializable {
         bt_editar.setDisable(true);
         bt_excluir.setDisable(true);
         habilitarCampos();
+        flag = 1;
         txt_descricao.requestFocus();
     }
 

@@ -45,7 +45,7 @@ public class ProcedimentoDAO {
                     return true;
                 case UPDATE:
                     sql = "update procedimento set "
-                            + "descrica_procedimento=? "
+                            + "descricao_procedimento=? "
                             + "where id_procedimento=?";
                     ps = conexao.prepareStatement(sql);
                     ps.setString(1, pm.getDescricao());
