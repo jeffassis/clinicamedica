@@ -82,7 +82,6 @@ public class MeusPacientesController implements Initializable {
         if (tabela_paciente.getSelectionModel().getSelectedIndex() != -1) {
             if (evento.getClickCount() == 2) {
                 /*Mandamos abrir a Tela paciente para editar*/
-                System.out.println(tabela_paciente.getItems().size());
                 this.homeController.cadPaciente(true, tabela_paciente);
             }
         } else {
