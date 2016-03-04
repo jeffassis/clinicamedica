@@ -25,6 +25,7 @@ public class AgendamentoDAO {
     public static final int UPDATE = 2;
     public static final int QUERY_TODOS = 3;
     public static final int QUERY_NOME = 4;
+    public static final int QUERY_DATA = 5;
 
     public static boolean executeUpdates(AgendamentoModel am, int operacao) {
         Connection conexao = ConnectionFactory.getConnection();
@@ -103,6 +104,50 @@ public class AgendamentoDAO {
                             + "left join paciente on id_codigo_paciente = id_paciente "
                             + "order by id_agenda";
                     ps = conexao.prepareStatement(sql);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        /*Inicializamos o agendamento e colocamos os valores*/
+                        agendamentoModel = new AgendamentoModel();
+                        agendamentoModel.setCodigo(rs.getInt("id_agenda"));
+                        agendamentoModel.setTurno(rs.getString("turno_agenda"));
+                        agendamentoModel.setMotivo(rs.getString("motivo_agenda"));
+                        agendamentoModel.setHorario(rs.getString("horario_agenda"));
+                        agendamentoModel.setData(rs.getString("data_agenda"));
+                        /*Colocamos a Medico*/
+                        MedicoModel medico = new MedicoModel();
+                        medico.setCodigo(rs.getInt("id_medico"));
+                        medico.setNome(rs.getString("nome_medico"));
+                        medico.setCrm(rs.getString("crm_medico"));
+                        medico.setEspecialidade(rs.getString("especialidade_medico"));
+                        /*Colocamos o Paciente*/
+                        PacienteModel paciente = new PacienteModel();
+                        paciente.setCodigo(rs.getInt("id_paciente"));
+                        paciente.setNome(rs.getString("nome_paciente"));
+                        paciente.setNascimento(rs.getString("nascimento_paciente"));
+                        paciente.setEndereco(rs.getString("endereco_paciente"));
+                        paciente.setTelefone(rs.getString("telefone_paciente"));
+                        paciente.setCep(rs.getString("cep_paciente"));
+                        paciente.setDocumento(rs.getString("documento_paciente"));
+                        paciente.setSexo(rs.getString("sexo_paciente"));
+                        paciente.setData_cliente(rs.getString("data_cliente_paciente"));
+                        paciente.setTipo(rs.getString("tipo_paciente"));
+                        paciente.setEmail(rs.getString("email_paciente"));
+                        paciente.setObs(rs.getString("obs_paciente"));
+                        /*Adicionamos no AgendamentoModel*/
+                        agendamentoModel.setMedicoModel(medico);
+                        agendamentoModel.setPacienteModel(paciente);
+                        /*Adicionamos na Lista*/
+                        listaAgenda.add(agendamentoModel);
+                    }
+                    ConnectionFactory.closeConnection(conexao, ps, rs);
+                    return listaAgenda;
+                case QUERY_DATA:
+                    sql = "select * from agendamento "
+                            + "left join medico on id_codigo_medico = id_medico "
+                            + "left join paciente on id_codigo_paciente = id_paciente "
+                            + "where data_agenda = ?";
+                    ps = conexao.prepareStatement(sql);
+                    ps.setString(1, am.getData());
                     rs = ps.executeQuery();
                     while (rs.next()) {
                         /*Inicializamos o agendamento e colocamos os valores*/
