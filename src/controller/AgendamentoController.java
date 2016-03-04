@@ -1,6 +1,8 @@
 package controller;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -68,6 +70,8 @@ public class AgendamentoController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -92,7 +96,8 @@ public class AgendamentoController implements Initializable {
          * Colocando a Mascara no DatePicker
          */
         MaskFormatter formatter = new MaskFormatter(dpData);
-        formatter.addComponente(dpData, MaskFormatter.DATA_BARRA, true);
+        formatter.setMask(MaskFormatter.DATA_BARRA);
+        formatter.showMask();
         formatter.addComponente(dp_localiza, MaskFormatter.DATA_BARRA, true);
     }
 
@@ -104,6 +109,9 @@ public class AgendamentoController implements Initializable {
         /*Para evitar uma exception de Thread temos que limpar o comboBox*/
         cb_medico.getItems().clear();
         cb_paciente.getItems().clear();
+        /*Precisa formatar a data atual para o padrão que queremos*/
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dp_localiza.getEditor().setText(dateFormat.format(Calendar.getInstance().getTime()));
 
         Task task = new Task() {
             @Override
