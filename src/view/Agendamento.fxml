@@ -115,7 +115,7 @@
             </Button>
          </children>
       </HBox>
-      <DatePicker fx:id="dpData" layoutX="370.0" layoutY="292.0" prefHeight="25.0" prefWidth="179.0" />
+      <DatePicker fx:id="dpData" layoutX="370.0" onAction="#onDateSelected" layoutY="292.0" prefHeight="25.0" prefWidth="179.0" />
       <Label layoutX="330.0" layoutY="296.0" text="Data:" />
       <ComboBox fx:id="cb_horario" layoutX="88.0" layoutY="292.0" prefWidth="150.0" />
       <Label layoutX="36.0" layoutY="296.0" text="Horário:" />
