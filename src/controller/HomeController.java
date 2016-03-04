@@ -189,6 +189,8 @@ public class HomeController implements Initializable {
                 this.cadPacientePalco.show();
                 this.pacientesController.iniciarProcessos(editar, tabela);
                 this.abriuCadPaciente = true;
+                /*Pegamos a referencia dessa classe*/
+                this.pacientesController.getHomeController(this);
 
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class
@@ -268,9 +270,11 @@ public class HomeController implements Initializable {
             this.agendamentoController.carregarTabela();
         }
     }
-
+    /**
+     * Método que chama a Tela Meus pacientes.
+     */
     @FXML
-    private void meusPacientes() {
+    public void meusPacientes() {
         if (!abriuMeusPacientes) {
             FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/MeusPacientes.fxml"));
             try {
