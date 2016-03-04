@@ -59,6 +59,8 @@ public class PacientesController implements Initializable {
     private boolean editar;
     /*Vamos precisar dessa Classe para atualizar o dados quando for usar o Paciente para editar*/
     private TableView<PacienteModel> tabela;
+    /*Representande da Classe HomeControle*/
+    private HomeController controller;
 
     PacienteModel pacienteModel;
 
@@ -172,6 +174,15 @@ public class PacientesController implements Initializable {
     }
 
     /**
+     * Método que pega a referencia de HomeController.
+     *
+     * @param controller - Passe a Classe HomeController
+     */
+    public void getHomeController(HomeController controller) {
+        this.controller = controller;
+    }
+
+    /**
      * Método para acao do botao salvar
      */
     @FXML
@@ -268,31 +279,10 @@ public class PacientesController implements Initializable {
      */
     @FXML
     private void onLocalizar(ActionEvent event) {
-        if (!abriuMeusPacientes) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/MeusPacientes.fxml"));
-            try {
-                /*Linha de codigo que faz a janela sumir quando for acionado o botão*/
-                ((Node) event.getSource()).getScene().getWindow().hide();
-                this.MeusPacientesPalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.meusPacientesController = carregar.getController();
-                this.MeusPacientesPalco.setTitle("Meus Pacientes");
-                this.MeusPacientesPalco.setScene(scene);
-                this.MeusPacientesPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.MeusPacientesPalco.show();
-                this.meusPacientesController.carregarTabela();
-                this.abriuMeusPacientes = true;
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
-        } else {
-            this.MeusPacientesPalco.show();
-            this.meusPacientesController.carregarTabela();
-            this.MeusPacientesPalco.requestFocus();
-        }
+         /*Fecha a Janela*/
+        ((Node) event.getSource()).getScene().getWindow().hide();
+        /*Apenas pedimos para o Home exibir a Janela*/
+        this.controller.meusPacientes();
     }
 
     /**
