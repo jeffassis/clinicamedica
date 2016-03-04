@@ -38,7 +38,7 @@ public class HomeController implements Initializable {
             abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadProcedimento, abriuGerarProcedimento;
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
     private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
-                MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadProcedimentoPalco, gerarProcedimentoPalco;
+                MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadProcedimentoPalco, gerarProcedimentoPalco, primaryStage;
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
     private PacientesController pacientesController;
@@ -140,11 +140,14 @@ public class HomeController implements Initializable {
                 this.cadMedicoPalco.setTitle("Cadastro de Médicos");
                 this.cadMedicoPalco.setScene(scene);
                 this.cadMedicoPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                /*Informamos de onde ele veio que no caso é a tela Home, assim ele fica
+                dependende dela, se ela minimizar a todas depedendes dela tbm vão*/
+                this.cadMedicoPalco.initOwner(primaryStage);
                 this.cadMedicoPalco.show();
                 this.medicosController.carregarTabela();
                 /*informamos que a tela já foi aberta uma vez*/
                 this.abriuCadMedico = true;
-
+                
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class
                         .getName()).log(Level.SEVERE, null, ex);
@@ -155,6 +158,13 @@ public class HomeController implements Initializable {
             this.cadMedicoPalco.requestFocus();
             this.medicosController.carregarTabela();
         }
+    }
+    /**
+     * Método que pega a referencia do Stage principal de Home.
+     * @param primaryStage 
+     */
+    public void getTelaHome(Stage primaryStage){
+        this.primaryStage = primaryStage;
     }
 
     /**
