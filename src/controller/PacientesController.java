@@ -1,27 +1,19 @@
 package controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import model.bean.BairroModel;
 import model.bean.CidadeModel;
 import model.bean.PacienteModel;
@@ -30,7 +22,6 @@ import model.dao.CidadeDAO;
 import model.dao.PacienteDAO;
 import util.ConverterDados;
 import util.DialogFX;
-import util.Log;
 import util.MaskFormatter;
 
 /**
@@ -59,17 +50,10 @@ public class PacientesController implements Initializable {
     private boolean editar;
     /*Vamos precisar dessa Classe para atualizar o dados quando for usar o Paciente para editar*/
     private TableView<PacienteModel> tabela;
-    /*Representande da Classe HomeControle*/
+    /*Representante da Classe HomeControle*/
     private HomeController controller;
 
     PacienteModel pacienteModel;
-
-    /**
-     * Para ser usado no botao localicar
-     */
-    private boolean abriuMeusPacientes;
-    private Stage MeusPacientesPalco;
-    private MeusPacientesController meusPacientesController;
 
     /**
      * Initializes the controller class.
@@ -279,7 +263,7 @@ public class PacientesController implements Initializable {
      */
     @FXML
     private void onLocalizar(ActionEvent event) {
-         /*Fecha a Janela*/
+        /*Fecha a Janela*/
         ((Node) event.getSource()).getScene().getWindow().hide();
         /*Apenas pedimos para o Home exibir a Janela*/
         this.controller.meusPacientes();

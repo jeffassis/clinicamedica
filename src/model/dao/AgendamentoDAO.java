@@ -24,8 +24,7 @@ public class AgendamentoDAO {
     public static final int DELETE = 1;
     public static final int UPDATE = 2;
     public static final int QUERY_TODOS = 3;
-    public static final int QUERY_NOME = 4;
-    public static final int QUERY_DATA = 5;
+    public static final int QUERY_DATA = 4;
 
     public static boolean executeUpdates(AgendamentoModel am, int operacao) {
         Connection conexao = ConnectionFactory.getConnection();

@@ -38,7 +38,8 @@ public class HomeController implements Initializable {
             abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadProcedimento, abriuGerarProcedimento;
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
     private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
-                MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadProcedimentoPalco, gerarProcedimentoPalco, primaryStage;
+            MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadProcedimentoPalco,
+            gerarProcedimentoPalco, primaryStage;
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
     private PacientesController pacientesController;
@@ -50,7 +51,9 @@ public class HomeController implements Initializable {
     private ProcedimentosController procedimentosController;
     private GerarProcedimentoController gerarProcedimentoController;
     /*Declaração dos TreeItem*/
-    private TreeItem<String> root, nodeA, nodeB, nodeC, nodeA1, nodeA2, nodeA3, nodeA4, nodeA5;
+    private TreeItem<String> root, nodeA, nodeB, nodeC,
+            nodeA1, nodeA2, nodeA3, nodeA4, nodeA5, nodeA6,
+            nodeB1, nodeB2;
 
     /**
      * Initializes the controller class.
@@ -63,20 +66,27 @@ public class HomeController implements Initializable {
         root.setExpanded(true);
 
         this.nodeA = new TreeItem<>("Cadastros", new ImageView(icon));
-        this.nodeB = new TreeItem<>("Agendamento", new ImageView(icon));
-        this.nodeC = new TreeItem<>("Meus Pacientes", new ImageView(icon));
+        this.nodeB = new TreeItem<>("Gerenciamento", new ImageView(icon));
+        this.nodeC = new TreeItem<>("Relatórios", new ImageView(icon));
         /*Adicionando os filhos do root da TreeItem*/
         root.getChildren().addAll(nodeA, nodeB, nodeC);
         /*Deixa o TreeItem já aberto!*/
         nodeA.setExpanded(true);
+        nodeB.setExpanded(true);
 
         this.nodeA1 = new TreeItem<>("Médicos", new ImageView(icon));
         this.nodeA2 = new TreeItem<>("Pacientes", new ImageView(icon));
         this.nodeA3 = new TreeItem<>("Funcionários", new ImageView(icon));
-        this.nodeA4 = new TreeItem<>("Cidades", new ImageView(icon));
-        this.nodeA5 = new TreeItem<>("Bairro", new ImageView(icon));
+        this.nodeA4 = new TreeItem<>("Procedimentos", new ImageView(icon));
+        this.nodeA5 = new TreeItem<>("Cidades", new ImageView(icon));
+        this.nodeA6 = new TreeItem<>("Bairro", new ImageView(icon));
         /*Adicionando os filhos do nodeA*/
-        nodeA.getChildren().addAll(nodeA1, nodeA2, nodeA3, nodeA4, nodeA5);
+        nodeA.getChildren().addAll(nodeA1, nodeA2, nodeA3, nodeA4, nodeA5, nodeA6);
+
+        this.nodeB1 = new TreeItem<>("Meus Pacientes", new ImageView(icon));
+        this.nodeB2 = new TreeItem<>("Agendamentos", new ImageView(icon));
+        /*Adicionando os filhos do nodeB*/
+        nodeB.getChildren().addAll(nodeB1, nodeB2);
         /*Adicionando o Node Pai a TreeView*/
         treeView.setRoot(root);
     }
@@ -103,8 +113,8 @@ public class HomeController implements Initializable {
                     case "Funcionários":
                         cadFuncionario();
                         break;
-                    case "Agendamento":
-                        agendamento();
+                    case "Procedimentos":
+                        cadProcedimento();
                         break;
                     case "Cidades":
                         cadCidade();
@@ -114,6 +124,9 @@ public class HomeController implements Initializable {
                         break;
                     case "Meus Pacientes":
                         meusPacientes();
+                        break;
+                    case "Agendamentos":
+                        agendamento();
                         break;
                     default:
                         break;
@@ -147,7 +160,7 @@ public class HomeController implements Initializable {
                 this.medicosController.carregarTabela();
                 /*informamos que a tela já foi aberta uma vez*/
                 this.abriuCadMedico = true;
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class
                         .getName()).log(Level.SEVERE, null, ex);
@@ -159,11 +172,13 @@ public class HomeController implements Initializable {
             this.medicosController.carregarTabela();
         }
     }
+
     /**
      * Método que pega a referencia do Stage principal de Home.
-     * @param primaryStage 
+     *
+     * @param primaryStage
      */
-    public void getTelaHome(Stage primaryStage){
+    public void getTelaHome(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
@@ -172,7 +187,8 @@ public class HomeController implements Initializable {
      *
      * @param editar - Informar se a tela está sendo aberta para editar dados ao
      * não.
-     * @param tabela - Passar uma tabela de pacienteModel, caso não for editar passar null.
+     * @param tabela - Passar uma tabela de pacienteModel, caso não for editar
+     * passar null.
      */
     public void cadPaciente(boolean editar, TableView<PacienteModel> tabela) {
         if (!abriuCadPaciente) {
@@ -203,6 +219,7 @@ public class HomeController implements Initializable {
             this.cadPacientePalco.requestFocus();
         }
     }
+
     /**
      * Método para chamar a GUI de Cadastro de Pacientes
      */
@@ -210,6 +227,38 @@ public class HomeController implements Initializable {
     private void cadPaciente() {
         /*Se modificamos o método, o fxml não encontra mais ele. Por isso fiz dessa forma amigo*/
         cadPaciente(false, null);
+    }
+
+    /**
+     * Método que chama a Tela Meus pacientes.
+     */
+    @FXML
+    public void meusPacientes() {
+        if (!abriuMeusPacientes) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/MeusPacientes.fxml"));
+            try {
+                this.MeusPacientesPalco = new Stage();
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.meusPacientesController = carregar.getController();
+                this.MeusPacientesPalco.setTitle("Meus Pacientes");
+                this.MeusPacientesPalco.setScene(scene);
+                this.MeusPacientesPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.MeusPacientesPalco.show();
+                /*Pegamos a referencia da HomeController*/
+                this.meusPacientesController.pegarHomeReferencia(this);
+                this.meusPacientesController.carregarTabela();
+                this.abriuMeusPacientes = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
+            }
+        } else {
+            this.MeusPacientesPalco.show();
+            this.meusPacientesController.carregarTabela();
+            this.MeusPacientesPalco.requestFocus();
+        }
     }
 
     @FXML
@@ -268,37 +317,6 @@ public class HomeController implements Initializable {
             this.AgendamentoPalco.requestFocus();
             this.agendamentoController.iniciarProcessos();
             this.agendamentoController.carregarTabela();
-        }
-    }
-    /**
-     * Método que chama a Tela Meus pacientes.
-     */
-    @FXML
-    public void meusPacientes() {
-        if (!abriuMeusPacientes) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/MeusPacientes.fxml"));
-            try {
-                this.MeusPacientesPalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.meusPacientesController = carregar.getController();
-                this.MeusPacientesPalco.setTitle("Meus Pacientes");
-                this.MeusPacientesPalco.setScene(scene);
-                this.MeusPacientesPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.MeusPacientesPalco.show();
-                /*Pegamos a referencia da HomeController*/
-                this.meusPacientesController.pegarHomeReferencia(this);
-                this.meusPacientesController.carregarTabela();
-                this.abriuMeusPacientes = true;
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
-        } else {
-            this.MeusPacientesPalco.show();
-            this.meusPacientesController.carregarTabela();
-            this.MeusPacientesPalco.requestFocus();
         }
     }
 

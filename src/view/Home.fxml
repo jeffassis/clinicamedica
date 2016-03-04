@@ -73,6 +73,15 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Gerenciamento">
             <items>
+                  <MenuItem fx:id="menuItemMeusPacientes" mnemonicParsing="false" onAction="#meusPacientes" text="Meus Pacientes">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/clients16.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
                   <MenuItem fx:id="menuItemAgendamento" mnemonicParsing="false" onAction="#agendamento" text="Agendamento">
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">

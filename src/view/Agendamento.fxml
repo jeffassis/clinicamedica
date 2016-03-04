@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -18,23 +18,14 @@
    <children>
       <HBox layoutX="41.0" layoutY="34.0" prefHeight="32.0" prefWidth="521.0">
          <children>
-            <TextField fx:id="txt_busca">
+            <DatePicker fx:id="dp_localiza" onAction="#onDateSelected" prefHeight="25.0" prefWidth="198.0">
                <HBox.margin>
-                  <Insets left="5.0" />
+                  <Insets right="42.0" />
                </HBox.margin>
-            </TextField>
-            <Button fx:id="bt_buscar" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" text="Buscar">
-               <HBox.margin>
-                  <Insets left="8.0" right="5.0" />
-               </HBox.margin>
-               <graphic>
-                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/search16.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+               <tooltip>
+                  <Tooltip text="Localiza os Agendamentos salvos" />
+               </tooltip>
+            </DatePicker>
             <Label text="Turno:">
                <HBox.margin>
                   <Insets left="85.0" top="5.0" />
@@ -57,7 +48,7 @@
             <TableColumn fx:id="motivoColuna" minWidth="160.0" prefWidth="-1.0" text="Motivo" />
         </columns>
       </TableView>
-      <HBox layoutX="36.0" layoutY="238.0" prefHeight="32.0" prefWidth="513.0">
+      <HBox layoutX="42.0" layoutY="238.0" prefHeight="32.0" prefWidth="543.0" AnchorPane.leftAnchor="40.0">
          <children>
             <Label text="Médico:">
                <HBox.margin>
@@ -66,7 +57,7 @@
             </Label>
             <ComboBox fx:id="cb_medico" prefHeight="25.0" prefWidth="193.0">
                <HBox.margin>
-                  <Insets left="5.0" />
+                  <Insets left="3.0" />
                </HBox.margin>
             </ComboBox>
             <Label text="Paciente:">
@@ -77,7 +68,7 @@
             <ComboBox fx:id="cb_paciente" prefHeight="25.0" prefWidth="179.0" />
          </children>
       </HBox>
-      <Label layoutX="39.0" layoutY="330.0" text="Motivo:" />
+      <Label layoutX="43.0" layoutY="331.0" text="Motivo:" AnchorPane.leftAnchor="40.0" />
       <TextArea fx:id="txt_motivo" layoutX="39.0" layoutY="355.0" prefHeight="78.0" prefWidth="507.0" />
       <HBox layoutX="36.0" layoutY="453.0" prefHeight="32.0" prefWidth="513.0">
          <children>
@@ -115,9 +106,9 @@
             </Button>
          </children>
       </HBox>
-      <DatePicker fx:id="dpData" layoutX="370.0" onAction="#onDateSelected" layoutY="292.0" prefHeight="25.0" prefWidth="179.0" />
+      <DatePicker fx:id="dpData" layoutX="370.0" layoutY="292.0" prefHeight="25.0" prefWidth="179.0" />
       <Label layoutX="330.0" layoutY="296.0" text="Data:" />
       <ComboBox fx:id="cb_horario" layoutX="88.0" layoutY="292.0" prefWidth="150.0" />
-      <Label layoutX="36.0" layoutY="296.0" text="Horário:" />
+      <Label layoutX="42.0" layoutY="296.0" text="Horário:" AnchorPane.leftAnchor="40.0" />
    </children>
 </AnchorPane>

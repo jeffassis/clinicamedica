@@ -13,7 +13,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import model.bean.AgendamentoModel;
 import model.bean.MedicoModel;
 import model.bean.PacienteModel;
@@ -45,9 +44,9 @@ public class AgendamentoController implements Initializable {
     @FXML
     private DatePicker dpData;
     @FXML
-    private TextField txt_busca;
+    private DatePicker dp_localiza;
     @FXML
-    private Button bt_buscar, bt_finalizar, bt_cancelar;
+    private Button bt_finalizar, bt_cancelar;
     @FXML
     private TextArea txt_motivo;
     @FXML
@@ -94,6 +93,7 @@ public class AgendamentoController implements Initializable {
          */
         MaskFormatter formatter = new MaskFormatter(dpData);
         formatter.addComponente(dpData, MaskFormatter.DATA_BARRA, true);
+        formatter.addComponente(dp_localiza, MaskFormatter.DATA_BARRA, true);
     }
 
     /**
@@ -200,15 +200,17 @@ public class AgendamentoController implements Initializable {
     private void onClear() {
         limparCampos();
         tabela_agenda.getSelectionModel().clearSelection();
+        carregarTabela();
     }
+
     /**
      * Evento ao selecionar data.
      */
     @FXML
-    private void onDateSelected(){
+    private void onDateSelected() {
         /*Caso o cara preferiu digitar a digitar a data em vez de selecionar*/
-        if(dpData.getEditor().getText().length() == 10){
-            String dataSelecionada = dpData.getEditor().getText();
+        if (dp_localiza.getEditor().getText().length() == 10) {
+            String dataSelecionada = dp_localiza.getEditor().getText();
             AgendamentoModel am = new AgendamentoModel();
             am.setData(dataSelecionada);
             Task task = new Task() {
@@ -223,13 +225,12 @@ public class AgendamentoController implements Initializable {
                     tabela_agenda.getItems().clear();
                     tabela_agenda.setItems((ObservableList<AgendamentoModel>) getValue());
                 }
-                
-                
+
             };
             Thread t = new Thread(task);
             t.setDaemon(true);
             t.start();
-        }else{
+        } else {
             DialogFX.showMessage("Data não foi preenchida corretamente", "Atenção", DialogFX.ATENCAO);
         }
     }
