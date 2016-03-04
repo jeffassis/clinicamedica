@@ -1,5 +1,6 @@
 package aplicacao;
 
+import controller.HomeController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,16 +24,15 @@ public class Launch extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Home.fxml"));
-        Scene scene = new Scene(root);
-        primaryStage.setTitle("Tela Principal");
-        primaryStage.setScene(scene);
-        /*Adiciona o Icone*/
+        FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Home.fxml"));
+        Parent root = carregar.load();
+        Scene cena = new Scene(root);
+        primaryStage.setTitle("TelaPrincipal");
+        primaryStage.setScene(cena);
+        HomeController controller = carregar.getController();
+        /*Passamos a referencia da Stage principal*/
+        controller.getTelaHome(primaryStage);
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-        /*Deixa já maximizado*/
-        //primaryStage.setMaximized(true);
-        /*deixa em tela cheia*/
-        //primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 
