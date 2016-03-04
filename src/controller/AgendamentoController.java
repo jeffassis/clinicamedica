@@ -201,6 +201,38 @@ public class AgendamentoController implements Initializable {
         limparCampos();
         tabela_agenda.getSelectionModel().clearSelection();
     }
+    /**
+     * Evento ao selecionar data.
+     */
+    @FXML
+    private void onDateSelected(){
+        /*Caso o cara preferiu digitar a digitar a data em vez de selecionar*/
+        if(dpData.getEditor().getText().length() == 10){
+            String dataSelecionada = dpData.getEditor().getText();
+            AgendamentoModel am = new AgendamentoModel();
+            am.setData(dataSelecionada);
+            Task task = new Task() {
+                @Override
+                protected Object call() throws Exception {
+                    return AgendamentoDAO.executeQuery(am, AgendamentoDAO.QUERY_DATA);
+                }
+
+                @Override
+                protected void succeeded() {
+                    super.succeeded();
+                    tabela_agenda.getItems().clear();
+                    tabela_agenda.setItems((ObservableList<AgendamentoModel>) getValue());
+                }
+                
+                
+            };
+            Thread t = new Thread(task);
+            t.setDaemon(true);
+            t.start();
+        }else{
+            DialogFX.showMessage("Data não foi preenchida corretamente", "Atenção", DialogFX.ATENCAO);
+        }
+    }
 
     /**
      * Método que limpa os campos
