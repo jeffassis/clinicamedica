@@ -112,6 +112,7 @@ public class AgendamentoController implements Initializable {
         /*Precisa formatar a data atual para o padrão que queremos*/
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         dp_localiza.getEditor().setText(dateFormat.format(Calendar.getInstance().getTime()));
+        onDateSelected();
 
         Task task = new Task() {
             @Override
