@@ -2,11 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,13 +34,14 @@ public class HomeController implements Initializable {
     private TreeView<String> treeView;
     /*Colocando uma imagem de pasta na Itens da TreeView*/
     Image icon = new Image(getClass().getResourceAsStream("/img/folder 16x16.png"));
+    Image adm = new Image(getClass().getResourceAsStream("/img/folder16.png"));
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
     private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento,
-            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadProcedimento, abriuGerarProcedimento;
+            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadExame, abriuGerarProcedimento;
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
     private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
-            MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadProcedimentoPalco,
+            MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadExamePalco,
             gerarProcedimentoPalco, primaryStage;
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
@@ -52,7 +51,7 @@ public class HomeController implements Initializable {
     private MeusPacientesController meusPacientesController;
     private CidadeController cidadeController;
     private BairroController bairroController;
-    private ProcedimentosController procedimentosController;
+    private ExameController exameController;
     private GerarProcedimentoController gerarProcedimentoController;
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC,
@@ -68,13 +67,13 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         /*Declarando a TreeView com root Pai*/
-        this.root = new TreeItem<>("Administração", new ImageView(icon));
+        this.root = new TreeItem<>("Administração", new ImageView(adm));
         /*Deixa o TreeItem já aberto!*/
         root.setExpanded(true);
 
-        this.nodeA = new TreeItem<>("Cadastros", new ImageView(icon));
-        this.nodeB = new TreeItem<>("Gerenciamento", new ImageView(icon));
-        this.nodeC = new TreeItem<>("Relatórios", new ImageView(icon));
+        this.nodeA = new TreeItem<>("Cadastros", new ImageView(adm));
+        this.nodeB = new TreeItem<>("Gerenciamento", new ImageView(adm));
+        this.nodeC = new TreeItem<>("Relatórios", new ImageView(adm));
         /*Adicionando os filhos do root da TreeItem*/
         root.getChildren().addAll(nodeA, nodeB, nodeC);
         /*Deixa o TreeItem já aberto!*/
@@ -84,7 +83,7 @@ public class HomeController implements Initializable {
         this.nodeA1 = new TreeItem<>("Médicos", new ImageView(icon));
         this.nodeA2 = new TreeItem<>("Pacientes", new ImageView(icon));
         this.nodeA3 = new TreeItem<>("Funcionários", new ImageView(icon));
-        this.nodeA4 = new TreeItem<>("Procedimentos", new ImageView(icon));
+        this.nodeA4 = new TreeItem<>("Exame", new ImageView(icon));
         this.nodeA5 = new TreeItem<>("Cidades", new ImageView(icon));
         this.nodeA6 = new TreeItem<>("Bairro", new ImageView(icon));
         /*Adicionando os filhos do nodeA*/
@@ -120,8 +119,8 @@ public class HomeController implements Initializable {
                     case "Funcionários":
                         cadFuncionario();
                         break;
-                    case "Procedimentos":
-                        cadProcedimento();
+                    case "Exame":
+                        cadExame();
                         break;
                     case "Cidades":
                         cadCidade();
@@ -181,7 +180,8 @@ public class HomeController implements Initializable {
     }
 
     /**
-     * Método que pega a referencia do Stage principal de Home E Ajusta o SplitPane a cada Tela.
+     * Método que pega a referencia do Stage principal de Home E Ajusta o
+     * SplitPane a cada Tela.
      *
      * @param primaryStage
      */
@@ -194,10 +194,10 @@ public class HomeController implements Initializable {
             if (newValue) {
                 /*Se vc não entender muito bem o Divider position, abre o Scene Builder
                 e olha no SplitPanes que lá tem o Dividir Position ai vc vai ter a ideia*/
-                split_superior.setDividerPosition(0,0.14);
+                split_superior.setDividerPosition(0, 0.14);
                 split_lateral.setDividerPosition(0, 0.15);
-            }else{
-                split_superior.setDividerPosition(0,0.20);
+            } else {
+                split_superior.setDividerPosition(0, 0.20);
                 split_lateral.setDividerPosition(0, 0.23);
             }
         });
@@ -398,33 +398,33 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    private void cadProcedimento() {
-        if (!abriuCadProcedimento) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Procedimentos.fxml"));
-            this.cadProcedimentoPalco = new Stage();
+    private void cadExame() {
+        if (!abriuCadExame) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Exame.fxml"));
+            this.cadExamePalco = new Stage();
             try {
                 Parent root;
                 root = carregar.load();
                 Scene scene = new Scene(root);
-                this.procedimentosController = carregar.getController();
-                this.cadProcedimentoPalco.setTitle("Cadastros de Procedimentos");
-                this.cadProcedimentoPalco.setScene(scene);
-                this.cadProcedimentoPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.cadProcedimentoPalco.show();
-                this.procedimentosController.carregarTabela();
-                this.abriuCadProcedimento = true;
+                this.exameController = carregar.getController();
+                this.cadExamePalco.setTitle("Cadastros de Exame");
+                this.cadExamePalco.setScene(scene);
+                this.cadExamePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.cadExamePalco.show();
+                this.exameController.carregarTabela();
+                this.abriuCadExame = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            this.cadProcedimentoPalco.show();
-            this.cadProcedimentoPalco.requestFocus();
-            this.procedimentosController.carregarTabela();
+            this.cadExamePalco.show();
+            this.cadExamePalco.requestFocus();
+            this.exameController.carregarTabela();
         }
     }
 
     @FXML
-    private void gerarProcedimento() {
+    private void gerarAtendimento() {
         if (!abriuGerarProcedimento) {
             FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/GerarProcedimento.fxml"));
             try {

@@ -9,13 +9,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.bean.ProcedimentosModel;
+import model.bean.ExameModel;
 
 /**
  *
  * @author jeff-
  */
-public class ProcedimentoDAO {
+public class ExameDAO {
 
     /*Declaração das constantes estaticas para ser acessadas de qualquer lugar*/
     public static final int CREATE = 0;
@@ -23,30 +23,30 @@ public class ProcedimentoDAO {
     public static final int UPDATE = 2;
     public static final int QUERY_TODOS = 3;
 
-    public static boolean executeUpdates(ProcedimentosModel pm, int operacao) {
+    public static boolean executeUpdates(ExameModel pm, int operacao) {
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement ps;
         String sql;
         try {
             switch (operacao) {
                 case CREATE:
-                    sql = "insert into procedimento(descricao_procedimento)values(?)";
+                    sql = "insert into exame(descricao_exame)values(?)";
                     ps = conexao.prepareStatement(sql);
                     ps.setString(1, pm.getDescricao());
                     ps.executeUpdate();
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
                 case DELETE:
-                    sql = "delete from procedimento where id_procedimento=?";
+                    sql = "delete from exame where id_exame=?";
                     ps = conexao.prepareStatement(sql);
                     ps.setInt(1, pm.getCodigo());
                     ps.executeUpdate();
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
                 case UPDATE:
-                    sql = "update procedimento set "
-                            + "descricao_procedimento=? "
-                            + "where id_procedimento=?";
+                    sql = "update exame set "
+                            + "descricao_exame=? "
+                            + "where id_exame=?";
                     ps = conexao.prepareStatement(sql);
                     ps.setString(1, pm.getDescricao());
                     ps.setInt(2, pm.getCodigo());
@@ -58,35 +58,35 @@ public class ProcedimentoDAO {
                     return false;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ProcedimentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExameDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
 
-    public static ObservableList<ProcedimentosModel> executeQuery(ProcedimentosModel pm, int operacao) {
+    public static ObservableList<ExameModel> executeQuery(ExameModel pm, int operacao) {
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement ps;
         ResultSet rs;
         String sql;
-        ObservableList<ProcedimentosModel> listaProcedimento = FXCollections.observableArrayList();
-        ProcedimentosModel procedimentosModel;
+        ObservableList<ExameModel> listaProcedimento = FXCollections.observableArrayList();
+        ExameModel procedimentosModel;
         try {
             switch (operacao) {
                 case QUERY_TODOS:
-                    sql = "select * from procedimento order by id_procedimento";
+                    sql = "select * from exame order by id_exame";
                     ps = conexao.prepareStatement(sql);
                     rs = ps.executeQuery();
                     while (rs.next()) {
-                        procedimentosModel = new ProcedimentosModel();
-                        procedimentosModel.setCodigo(rs.getInt("id_procedimento"));
-                        procedimentosModel.setDescricao(rs.getString("descricao_procedimento"));
+                        procedimentosModel = new ExameModel();
+                        procedimentosModel.setCodigo(rs.getInt("id_exame"));
+                        procedimentosModel.setDescricao(rs.getString("descricao_exame"));
                         listaProcedimento.add(procedimentosModel);
                     }
                     ConnectionFactory.closeConnection(conexao, ps, rs);
                     return listaProcedimento;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ProcedimentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExameDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listaProcedimento;
     }

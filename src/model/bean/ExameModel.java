@@ -9,17 +9,17 @@ import javafx.beans.property.StringProperty;
  *
  * @author jeff-
  */
-public class ProcedimentosModel {
+public class ExameModel {
 
     private IntegerProperty codigo;
     private StringProperty descricao;
 
-    public ProcedimentosModel() {
+    public ExameModel() {
         this.codigo = new SimpleIntegerProperty();
         this.descricao = new SimpleStringProperty();
     }
 
-    public ProcedimentosModel(int codigo, String descricao) {
+    public ExameModel(int codigo, String descricao) {
         this.codigo = new SimpleIntegerProperty(codigo);
         this.descricao = new SimpleStringProperty(descricao);
     }
