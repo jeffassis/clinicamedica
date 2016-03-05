@@ -2,14 +2,18 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -54,6 +58,9 @@ public class HomeController implements Initializable {
     private TreeItem<String> root, nodeA, nodeB, nodeC,
             nodeA1, nodeA2, nodeA3, nodeA4, nodeA5, nodeA6,
             nodeB1, nodeB2;
+    /*Declaração dos nossos SplitPanes*/
+    @FXML
+    private SplitPane split_superior, split_lateral;
 
     /**
      * Initializes the controller class.
@@ -174,12 +181,26 @@ public class HomeController implements Initializable {
     }
 
     /**
-     * Método que pega a referencia do Stage principal de Home.
+     * Método que pega a referencia do Stage principal de Home E Ajusta o SplitPane a cada Tela.
      *
      * @param primaryStage
      */
     public void getTelaHome(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        /*Adicionamos um evento que é chamado toda a vez que a tela é maximizada ou minimizada
+        como é um evento observavel utilizando o MaximizedProperty*/
+        this.primaryStage.maximizedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            /*Se o novo valor for true, significa que está maximizado*/
+            if (newValue) {
+                /*Se vc não entender muito bem o Divider position, abre o Scene Builder
+                e olha no SplitPanes que lá tem o Dividir Position ai vc vai ter a ideia*/
+                split_superior.setDividerPosition(0,0.14);
+                split_lateral.setDividerPosition(0, 0.15);
+            }else{
+                split_superior.setDividerPosition(0,0.20);
+                split_lateral.setDividerPosition(0, 0.23);
+            }
+        });
     }
 
     /**
