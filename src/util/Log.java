@@ -56,7 +56,7 @@ public class Log {
             escrever.setFormatter(new SimpleFormatter());
             /*Adicionamos ao nosso log a Classe que vai escrever a exceção que for gerada*/
             log.addHandler(escrever);
-
+            
             /*Geramos o Log, passamos que será de Nivel Severe(Alto), e passamos a exceção para ele*/
             log.log(Level.SEVERE, null, ex);
 
