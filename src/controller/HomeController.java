@@ -450,6 +450,7 @@ public class HomeController implements Initializable {
                 this.abriuCadExame = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
             this.exameController.refresh();
@@ -476,13 +477,15 @@ public class HomeController implements Initializable {
                 this.precoExamePalco.setMaximized(false);
                 this.precoExamePalco.initOwner(primaryStage);
                 this.precoExamePalco.show();
-
+                this.precoExameController.carregarTabela();
                 this.abriuPrecoExame = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
             this.precoExamePalco.show();
+            this.precoExameController.carregarTabela();
             this.precoExamePalco.requestFocus();
         }
     }
@@ -505,6 +508,7 @@ public class HomeController implements Initializable {
                 this.abriuCadCategoria = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
             this.cadCategoriaPalco.show();
