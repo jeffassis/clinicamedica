@@ -43,12 +43,16 @@ public class MedicoDAO {
                     sql = "insert into medico("
                             + "nome_medico,"
                             + "crm_medico,"
-                            + "especialidade_medico)"
-                            + "values(?,?,?)";
+                            + "especialidade_medico,"
+                            + "telefone_medico,"
+                            + "celular_medico)"
+                            + "values(?,?,?,?,?)";
                     ps = conexao.prepareStatement(sql);
                     ps.setString(1, mm.getNome());
                     ps.setString(2, mm.getCrm());
                     ps.setString(3, mm.getEspecialidade());
+                    ps.setString(4, mm.getTelefone());
+                    ps.setString(5, mm.getCelular());
                     ps.executeUpdate();
                     ps.close();
                     conexao.close();
@@ -65,13 +69,17 @@ public class MedicoDAO {
                     sql = "update medico set "
                             + "nome_medico=?, "
                             + "crm_medico=?, "
-                            + "especialidade_medico=? "
+                            + "especialidade_medico=?,"
+                            + "telefone_medico=?,"
+                            + "celular_medico=? "
                             + "where id_medico=?";
                     ps = conexao.prepareStatement(sql);
                     ps.setString(1, mm.getNome());
                     ps.setString(2, mm.getCrm());
                     ps.setString(3, mm.getEspecialidade());
-                    ps.setInt(4, mm.getCodigo());
+                    ps.setString(4, mm.getTelefone());
+                    ps.setString(5, mm.getCelular());
+                    ps.setInt(6, mm.getCodigo());
                     ps.executeUpdate();
                     ps.close();
                     conexao.close();
@@ -113,6 +121,8 @@ public class MedicoDAO {
                         medicoModel.setNome(rs.getString("nome_medico"));
                         medicoModel.setCrm(rs.getString("crm_medico"));
                         medicoModel.setEspecialidade(rs.getString("especialidade_medico"));
+                        medicoModel.setTelefone(rs.getString("telefone_medico"));
+                        medicoModel.setCelular(rs.getString("celular_medico"));
                         listaMedico.add(medicoModel);
                     }
                     rs.close();
@@ -130,6 +140,8 @@ public class MedicoDAO {
                         medicoModel.setNome(rs.getString("nome_medico"));
                         medicoModel.setCrm(rs.getString("crm_medico"));
                         medicoModel.setEspecialidade(rs.getString("especialidade_medico"));
+                        medicoModel.setTelefone(rs.getString("telefone_medico"));
+                        medicoModel.setCelular(rs.getString("celular_medico"));
                         listaMedico.add(medicoModel);
                     }
                     rs.close();
