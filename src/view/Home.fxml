@@ -45,11 +45,11 @@
                         </ImageView>
                      </graphic></MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="menuItemProcedimento" mnemonicParsing="false" onAction="#cadProcedimento" text="Procedimentos">
+                  <MenuItem fx:id="menuItemProcedimento" mnemonicParsing="false" onAction="#cadExame" text="Exame">
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../img/procedimentos16.png" />
+                              <Image url="@../img/exame16.png" />
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
@@ -90,7 +90,14 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
-              <MenuItem mnemonicParsing="false" onAction="#gerarProcedimento" text="Gerar Procedimentos" />
+              <MenuItem mnemonicParsing="false" onAction="#gerarAtendimento" text="Atendimento">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/medical_material16.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Relatórios">
@@ -144,21 +151,21 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#cadBairro" prefHeight="64.0" prefWidth="64.0" text="Bairro">
-                           <graphic>
-                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/bairro64.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
                         <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#agendamento" prefHeight="92.0" prefWidth="92.0" text="Agendamento">
                            <graphic>
                               <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../img/agendamento64.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#gerarAtendimento" prefHeight="93.0" prefWidth="90.0" text="Atendimento">
+                           <graphic>
+                              <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/medical_material64.png" />
                                  </image>
                               </ImageView>
                            </graphic>

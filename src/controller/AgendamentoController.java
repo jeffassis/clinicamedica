@@ -70,6 +70,7 @@ public class AgendamentoController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -134,7 +135,7 @@ public class AgendamentoController implements Initializable {
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                return AgendamentoDAO.executeQuery(null, AgendamentoDAO.QUERY_TODOS);
+                return AgendamentoDAO.executeQuery(null, AgendamentoDAO.QUERY_DATA);
             }
 
             @Override
@@ -174,7 +175,7 @@ public class AgendamentoController implements Initializable {
             if (AgendamentoDAO.executeUpdates(agendamentoModel, AgendamentoDAO.CREATE)) {
                 DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
                 limparCampos();
-                carregarTabela();
+                iniciarProcessos();
             }
         } else {
             DialogFX.showMessage("Por favor verifique se você selecionou Médico, Turno e Paciente.", "Atenção", DialogFX.ATENCAO);

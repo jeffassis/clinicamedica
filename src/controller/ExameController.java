@@ -10,8 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import model.bean.ProcedimentosModel;
-import model.dao.ProcedimentoDAO;
+import model.bean.ExameModel;
+import model.dao.ExameDAO;
 import util.DialogFX;
 
 /**
@@ -19,18 +19,18 @@ import util.DialogFX;
  *
  * @author jeff-
  */
-public class ProcedimentosController implements Initializable {
+public class ExameController implements Initializable {
 
     @FXML
     private TextField txt_codigo;
     @FXML
     private TextField txt_descricao;
     @FXML
-    private TableView<ProcedimentosModel> tabela_procedimento;
+    private TableView<ExameModel> tabela_exame;
     @FXML
-    private TableColumn<ProcedimentosModel, Integer> codigoColuna;
+    private TableColumn<ExameModel, Integer> codigoColuna;
     @FXML
-    private TableColumn<ProcedimentosModel, String> procedimentoColuna;
+    private TableColumn<ExameModel, String> exameColuna;
     @FXML
     private Button bt_novo;
     @FXML
@@ -40,7 +40,7 @@ public class ProcedimentosController implements Initializable {
     @FXML
     private Button bt_excluir;
 
-    ProcedimentosModel procedimentosModel;
+    ExameModel exameModel;
 
     int flag = 1;
 
@@ -53,7 +53,7 @@ public class ProcedimentosController implements Initializable {
          * Carrega todos as colunas da tabela pegando os dados do BD
          */
         this.codigoColuna.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty().asObject());
-        this.procedimentoColuna.setCellValueFactory(cellData -> cellData.getValue().getDescricaoProperty());
+        this.exameColuna.setCellValueFactory(cellData -> cellData.getValue().getDescricaoProperty());
     }
 
     /**
@@ -63,13 +63,13 @@ public class ProcedimentosController implements Initializable {
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                return ProcedimentoDAO.executeQuery(null, ProcedimentoDAO.QUERY_TODOS);
+                return ExameDAO.executeQuery(null, ExameDAO.QUERY_TODOS);
             }
 
             @Override
             protected void succeeded() {
                 super.succeeded();
-                tabela_procedimento.setItems((ObservableList<ProcedimentosModel>) getValue());
+                tabela_exame.setItems((ObservableList<ExameModel>) getValue());
             }
         };
         Thread thread = new Thread(task);
@@ -87,19 +87,19 @@ public class ProcedimentosController implements Initializable {
             return;
         }
         if (flag == 1) {
-            this.procedimentosModel = new ProcedimentosModel();
-            procedimentosModel.setDescricao(txt_descricao.getText().trim());
-            if (ProcedimentoDAO.executeUpdates(procedimentosModel, ProcedimentoDAO.CREATE)) {
+            this.exameModel = new ExameModel();
+            exameModel.setDescricao(txt_descricao.getText().trim());
+            if (ExameDAO.executeUpdates(exameModel, ExameDAO.CREATE)) {
                 DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
                 limparCampos();
                 carregarTabela();
                 desabilitarCampos();
             }
         } else {
-            this.procedimentosModel = new ProcedimentosModel();
-            procedimentosModel.setCodigo(Integer.parseInt(txt_codigo.getText().trim()));
-            procedimentosModel.setDescricao(txt_descricao.getText().trim());
-            if (ProcedimentoDAO.executeUpdates(procedimentosModel, ProcedimentoDAO.UPDATE)) {
+            this.exameModel = new ExameModel();
+            exameModel.setCodigo(Integer.parseInt(txt_codigo.getText().trim()));
+            exameModel.setDescricao(txt_descricao.getText().trim());
+            if (ExameDAO.executeUpdates(exameModel, ExameDAO.UPDATE)) {
                 limparCampos();
                 DialogFX.showMessage("Dados Atualizados com sucesso!", "Sucesso", DialogFX.SUCESS);
                 carregarTabela();
@@ -117,11 +117,11 @@ public class ProcedimentosController implements Initializable {
      */
     @FXML
     private void onEdit() {
-        if (tabela_procedimento.getSelectionModel().getSelectedIndex() != -1) {
+        if (tabela_exame.getSelectionModel().getSelectedIndex() != -1) {
             this.bt_salvar.setDisable(false);
-            this.procedimentosModel = tabela_procedimento.getSelectionModel().getSelectedItem();
-            txt_codigo.setText(Integer.toString(procedimentosModel.getCodigo()));
-            txt_descricao.setText(procedimentosModel.getDescricao());
+            this.exameModel = tabela_exame.getSelectionModel().getSelectedItem();
+            txt_codigo.setText(Integer.toString(exameModel.getCodigo()));
+            txt_descricao.setText(exameModel.getDescricao());
         }
         flag = 2;
         /*Desabilita os botões excluir e editar */
@@ -136,10 +136,10 @@ public class ProcedimentosController implements Initializable {
     @FXML
     private void onDelete() {
         if (DialogFX.showConfirmation("Deseja Excluir ?")) {
-            this.procedimentosModel = tabela_procedimento.getItems().get(tabela_procedimento.getSelectionModel().getSelectedIndex());
+            this.exameModel = tabela_exame.getItems().get(tabela_exame.getSelectionModel().getSelectedIndex());
 
-            if (ProcedimentoDAO.executeUpdates(procedimentosModel, ProcedimentoDAO.DELETE)) {
-                tabela_procedimento.getItems().remove(tabela_procedimento.getSelectionModel().getSelectedIndex());
+            if (ExameDAO.executeUpdates(exameModel, ExameDAO.DELETE)) {
+                tabela_exame.getItems().remove(tabela_exame.getSelectionModel().getSelectedIndex());
                 DialogFX.showMessage("Excluido com sucesso", "Sucesso", DialogFX.SUCESS);
                 desabilitarCampos();
             } else {
@@ -168,7 +168,7 @@ public class ProcedimentosController implements Initializable {
     @FXML
     private void onCancel() {
         /* Desmarca qualquer registro que esteja selecionado na tabela*/
-        tabela_procedimento.getSelectionModel().clearSelection();
+        tabela_exame.getSelectionModel().clearSelection();
 
         desabilitarCampos();
         limparCampos();

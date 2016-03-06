@@ -8,8 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import model.bean.ProcedimentosModel;
-import model.dao.ProcedimentoDAO;
+import model.bean.ExameModel;
+import model.dao.ExameDAO;
 
 /**
  * FXML Controller class
@@ -19,11 +19,11 @@ import model.dao.ProcedimentoDAO;
 public class GerarProcedimentoController implements Initializable {
 
     @FXML
-    private TableView<ProcedimentosModel> tabela_procedimento;
+    private TableView<ExameModel> tabela_procedimento;
     @FXML
-    private TableColumn<ProcedimentosModel, Integer> codigoColuna;
+    private TableColumn<ExameModel, Integer> codigoColuna;
     @FXML
-    private TableColumn<ProcedimentosModel, String> procedimentoColuna;
+    private TableColumn<ExameModel, String> procedimentoColuna;
 
     /**
      * Initializes the controller class.
@@ -44,13 +44,13 @@ public class GerarProcedimentoController implements Initializable {
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                return ProcedimentoDAO.executeQuery(null, ProcedimentoDAO.QUERY_TODOS);
+                return ExameDAO.executeQuery(null, ExameDAO.QUERY_TODOS);
             }
 
             @Override
             protected void succeeded() {
                 super.succeeded();
-                tabela_procedimento.setItems((ObservableList<ProcedimentosModel>) getValue());
+                tabela_procedimento.setItems((ObservableList<ExameModel>) getValue());
             }
         };
         Thread thread = new Thread(task);
