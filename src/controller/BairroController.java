@@ -214,4 +214,11 @@ public class BairroController implements Initializable {
         bt_salvar.setDisable(true);
         bt_excluir.setDisable(true);
     }
+    /**
+     * Método reiniciar os dados da tela.
+     */
+    public void refresh(){
+        limparCampos();
+        desabilitarCampos();
+    }
 }

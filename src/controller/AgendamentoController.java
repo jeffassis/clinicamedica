@@ -256,4 +256,11 @@ public class AgendamentoController implements Initializable {
         txt_motivo.setText("");
         dpData.getEditor().setText("");
     }
+    
+    /**
+     * Método reiniciar os dados da tela.
+     */
+    public void refresh(){
+        limparCampos();
+    }
 }

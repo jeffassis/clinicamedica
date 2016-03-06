@@ -215,4 +215,13 @@ public class ExameController implements Initializable {
         bt_editar.setDisable(true);
         bt_excluir.setDisable(true);
     }
+    
+    /**
+     * Método reiniciar os dados da tela.
+     */
+    public void refresh(){
+     limparCampos();
+     desabilitarCampos();
+     flag = -1;
+    }
 }

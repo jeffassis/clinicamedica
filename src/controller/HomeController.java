@@ -173,6 +173,7 @@ public class HomeController implements Initializable {
                 Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
+            this.medicosController.refresh();
             this.cadMedicoPalco.show();
             this.cadMedicoPalco.requestFocus();
             this.medicosController.carregarTabela();
@@ -235,6 +236,8 @@ public class HomeController implements Initializable {
                 Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
+            /*Deixamos a tela como se estivesse abrindo pela primeira vez*/
+            this.pacientesController.refresh();
             this.cadPacientePalco.show();
             this.pacientesController.iniciarProcessos(editar, tabela);
             this.cadPacientePalco.requestFocus();
@@ -306,6 +309,7 @@ public class HomeController implements Initializable {
                 Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
+            this.funcionarioController.refresh();
             this.cadFuncionarioPalco.show();
             this.cadFuncionarioPalco.requestFocus();
             this.funcionarioController.carregarTabela();
@@ -334,6 +338,7 @@ public class HomeController implements Initializable {
                 Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
+            this.agendamentoController.refresh();
             this.AgendamentoPalco.show();
             this.AgendamentoPalco.requestFocus();
             this.agendamentoController.iniciarProcessos();
@@ -362,6 +367,7 @@ public class HomeController implements Initializable {
                 Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
+            this.cidadeController.refresh();
             this.cadCidadePalco.show();
             this.cadCidadePalco.requestFocus();
             this.cidadeController.carregarTabela();
@@ -390,6 +396,7 @@ public class HomeController implements Initializable {
                 Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
+            this.bairroController.refresh();
             this.cadBairroPalco.show();
             this.cadBairroPalco.requestFocus();
             this.bairroController.carregarTabela();
@@ -417,6 +424,7 @@ public class HomeController implements Initializable {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
+            this.exameController.refresh();
             this.cadExamePalco.show();
             this.cadExamePalco.requestFocus();
             this.exameController.carregarTabela();

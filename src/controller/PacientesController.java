@@ -328,4 +328,17 @@ public class PacientesController implements Initializable {
         bt_salvar.setDisable(true);
         bt_excluir.setDisable(true);
     }
+    /**
+     * Método reiniciar os dados da tela.
+     */
+    public void refresh(){
+        limparCampos();
+        desabilitarCampos();
+        this.dp_cliente.getEditor().setText("");
+        this.dp_nascimento.getEditor().setText("");
+        /*Volta os comboBox para nenhuma seleção*/
+        this.cb_sexo.getSelectionModel().clearSelection();
+        this.cb_bairro.getSelectionModel().clearSelection();
+        this.cb_cidade.getSelectionModel().clearSelection();
+    }
 }
