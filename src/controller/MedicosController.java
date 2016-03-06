@@ -121,9 +121,18 @@ public class MedicosController implements Initializable {
     private void onSave() {
         /*Verifica a flag. Se for 1 ela salva dados*/
         if (flag == 1) {
-            /*Verifica se nome do Medico esta vazia*/
+            /*Verifica se os campos Medico estam vazio*/
             if (txt_nome.getText().isEmpty()) {
-                DialogFX.showMessage("O campo não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
+                DialogFX.showMessage("O campo nome não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
+                return;
+            } else if (txt_tel1.getText().isEmpty()) {
+                DialogFX.showMessage("O campo telefone não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
+                return;
+            } else if (txt_celular.getText().isEmpty()) {
+                DialogFX.showMessage("O campo celular não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
+                return;
+            } else if (txt_crm.getText().isEmpty()) {
+                DialogFX.showMessage("O campo CRM não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
                 return;
             }
 
