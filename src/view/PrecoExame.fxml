@@ -15,12 +15,12 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="515.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GerarProcedimentoController">
+<AnchorPane id="AnchorPane" prefHeight="515.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PrecoExameController">
    <children>
-      <TableView fx:id="tabela_procedimento" layoutX="12.0" layoutY="64.0" prefHeight="145.0" prefWidth="581.0">
+      <TableView fx:id="tabela_exame" layoutX="12.0" layoutY="64.0" prefHeight="145.0" prefWidth="581.0">
         <columns>
           <TableColumn fx:id="codigoColuna" prefWidth="83.0" text="Código" />
-          <TableColumn fx:id="procedimentoColuna" prefWidth="592.0" text="Procedimentos" />
+          <TableColumn fx:id="exameColuna" prefWidth="592.0" text="Exames cadastrados no sistema" />
         </columns>
       </TableView>
       <TextField layoutX="46.0" layoutY="31.0" prefHeight="25.0" prefWidth="510.0" />
@@ -43,7 +43,7 @@
          <children>
             <Label text="Código:" />
             <Label text="Descrição:" GridPane.rowIndex="1" />
-            <Label text="Operadora:" GridPane.rowIndex="2" />
+            <Label text="Categorias:" GridPane.rowIndex="2" />
             <TextField GridPane.columnIndex="1" />
             <TextField prefHeight="25.0" prefWidth="500.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />

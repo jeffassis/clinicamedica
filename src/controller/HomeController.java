@@ -52,7 +52,7 @@ public class HomeController implements Initializable {
     private CidadeController cidadeController;
     private BairroController bairroController;
     private ExameController exameController;
-    private GerarProcedimentoController gerarProcedimentoController;
+    private PrecoExameController gerarProcedimentoController;
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC,
             nodeA1, nodeA2, nodeA3, nodeA4, nodeA5, nodeA6,

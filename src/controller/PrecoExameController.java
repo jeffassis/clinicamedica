@@ -16,14 +16,14 @@ import model.dao.ExameDAO;
  *
  * @author jeff-
  */
-public class GerarProcedimentoController implements Initializable {
+public class PrecoExameController implements Initializable {
 
     @FXML
-    private TableView<ExameModel> tabela_procedimento;
+    private TableView<ExameModel> tabela_exame;
     @FXML
     private TableColumn<ExameModel, Integer> codigoColuna;
     @FXML
-    private TableColumn<ExameModel, String> procedimentoColuna;
+    private TableColumn<ExameModel, String> exameColuna;
 
     /**
      * Initializes the controller class.
@@ -34,7 +34,7 @@ public class GerarProcedimentoController implements Initializable {
          * Carrega todos as colunas da tabela pegando os dados do BD
          */
         this.codigoColuna.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty().asObject());
-        this.procedimentoColuna.setCellValueFactory(cellData -> cellData.getValue().getDescricaoProperty());
+        this.exameColuna.setCellValueFactory(cellData -> cellData.getValue().getDescricaoProperty());
     }
 
     /**
@@ -50,7 +50,7 @@ public class GerarProcedimentoController implements Initializable {
             @Override
             protected void succeeded() {
                 super.succeeded();
-                tabela_procedimento.setItems((ObservableList<ExameModel>) getValue());
+                tabela_exame.setItems((ObservableList<ExameModel>) getValue());
             }
         };
         Thread thread = new Thread(task);
