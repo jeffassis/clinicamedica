@@ -64,7 +64,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Pela Operadora:" />
+            <Label text="Pela Categoria:" />
             <Label text="Pelo Paciente:" GridPane.rowIndex="1" />
             <TextField GridPane.columnIndex="1" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />

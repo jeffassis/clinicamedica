@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import model.bean.CategoriaModel;
 import model.bean.ExameModel;
 import model.dao.CategoriaDAO;
-import model.dao.CidadeDAO;
 import model.dao.ExameDAO;
 import util.ConverterDados;
 
@@ -101,13 +100,6 @@ public class PrecoExameController implements Initializable {
             exameModel = tabela_exame.getSelectionModel().getSelectedItem();
             txt_codigo.setText(Integer.toString(exameModel.getCodigo()));
             txt_descricao.setText(exameModel.getDescricao());
-
-            for (int i = 0; i < cb_categoria.getItems().size(); i++) {
-                if (cb_categoria.getItems().get(i).getCodigo() == exameModel.getCategoriaModel().getCodigo()) {
-                    cb_categoria.getSelectionModel().select(i);
-                    break;
-                }
-            }
         }
     }
 
