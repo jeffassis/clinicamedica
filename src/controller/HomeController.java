@@ -38,11 +38,13 @@ public class HomeController implements Initializable {
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
     private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento,
-            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadExame, abriuGerarProcedimento;
+            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadExame, abriuPrecoExame, abriuCadCategoria;
+
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
     private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
             MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadExamePalco,
-            gerarProcedimentoPalco, primaryStage;
+            precoExamePalco, primaryStage, cadCategoriaPalco;
+
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
     private PacientesController pacientesController;
@@ -52,7 +54,9 @@ public class HomeController implements Initializable {
     private CidadeController cidadeController;
     private BairroController bairroController;
     private ExameController exameController;
-    private PrecoExameController gerarProcedimentoController;
+    private PrecoExameController precoExameController;
+    private CategoriasController categoriasController;
+
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC,
             nodeA1, nodeA2, nodeA3, nodeA4, nodeA5, nodeA6,
@@ -456,30 +460,56 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    private void gerarAtendimento() {
-        if (!abriuGerarProcedimento) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/GerarProcedimento.fxml"));
+    private void precoExame() {
+        if (!abriuPrecoExame) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/PrecoExame.fxml"));
             try {
-                this.gerarProcedimentoPalco = new Stage();
+                this.precoExamePalco = new Stage();
                 Parent root;
                 root = carregar.load();
                 Scene scene = new Scene(root);
-                this.gerarProcedimentoController = carregar.getController();
-                this.gerarProcedimentoPalco.setTitle("Gerenciamento de Procedimentos");
-                this.gerarProcedimentoPalco.setScene(scene);
-                this.gerarProcedimentoPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.gerarProcedimentoPalco.setResizable(false);
-                this.gerarProcedimentoPalco.setMaximized(false);
-                this.gerarProcedimentoPalco.initOwner(primaryStage);
-                this.gerarProcedimentoPalco.show();
+                this.precoExameController = carregar.getController();
+                this.precoExamePalco.setTitle("Gerenciamento de Exames");
+                this.precoExamePalco.setScene(scene);
+                this.precoExamePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.precoExamePalco.setResizable(false);
+                this.precoExamePalco.setMaximized(false);
+                this.precoExamePalco.initOwner(primaryStage);
+                this.precoExamePalco.show();
 
-                this.abriuGerarProcedimento = true;
+                this.abriuPrecoExame = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            this.gerarProcedimentoPalco.show();
-            this.gerarProcedimentoPalco.requestFocus();
+            this.precoExamePalco.show();
+            this.precoExamePalco.requestFocus();
+        }
+    }
+
+    @FXML
+    private void cadCategoria() {
+        if (!abriuCadCategoria) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Categorias.fxml"));
+            try {
+                this.cadCategoriaPalco = new Stage();
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.categoriasController = carregar.getController();
+                this.cadCategoriaPalco.setTitle("Cadastro de Categorias");
+                this.cadCategoriaPalco.setScene(scene);
+                this.cadCategoriaPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.cadCategoriaPalco.show();
+                this.categoriasController.carregarTabela();
+                this.abriuCadCategoria = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.cadCategoriaPalco.show();
+            this.cadCategoriaPalco.requestFocus();
+            this.categoriasController.carregarTabela();
         }
     }
 
