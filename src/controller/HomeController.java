@@ -476,7 +476,7 @@ public class HomeController implements Initializable {
                 this.precoExamePalco.setMaximized(false);
                 this.precoExamePalco.initOwner(primaryStage);
                 this.precoExamePalco.show();
-
+                this.precoExameController.carregarTabela();
                 this.abriuPrecoExame = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
@@ -484,6 +484,7 @@ public class HomeController implements Initializable {
         } else {
             this.precoExamePalco.show();
             this.precoExamePalco.requestFocus();
+            this.precoExameController.carregarTabela();
         }
     }
 
