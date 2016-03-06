@@ -162,6 +162,9 @@ public class HomeController implements Initializable {
                 /*Informamos de onde ele veio que no caso é a tela Home, assim ele fica
                 dependende dela, se ela minimizar a todas depedendes dela tbm vão*/
                 this.cadMedicoPalco.initOwner(primaryStage);
+                /*Alteramos para que não seja maximizado e nem redimensionavel*/
+                this.cadMedicoPalco.setResizable(false);
+                this.cadMedicoPalco.setMaximized(false);
                 this.cadMedicoPalco.show();
                 this.medicosController.carregarTabela();
                 /*informamos que a tela já foi aberta uma vez*/
@@ -224,6 +227,9 @@ public class HomeController implements Initializable {
                 this.cadPacientePalco.setTitle("Cadastro de Pacientes");
                 this.cadPacientePalco.setScene(scene);
                 this.cadPacientePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.cadPacientePalco.setResizable(false);
+                this.cadPacientePalco.setMaximized(false);
+                this.cadPacientePalco.initOwner(primaryStage);
                 this.cadPacientePalco.show();
                 this.pacientesController.iniciarProcessos(editar, tabela);
                 this.abriuCadPaciente = true;
@@ -269,6 +275,9 @@ public class HomeController implements Initializable {
                 this.MeusPacientesPalco.setTitle("Meus Pacientes");
                 this.MeusPacientesPalco.setScene(scene);
                 this.MeusPacientesPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.MeusPacientesPalco.setResizable(false);
+                this.MeusPacientesPalco.setMaximized(false);
+                this.MeusPacientesPalco.initOwner(primaryStage);
                 this.MeusPacientesPalco.show();
                 /*Pegamos a referencia da HomeController*/
                 this.meusPacientesController.pegarHomeReferencia(this);
@@ -298,6 +307,9 @@ public class HomeController implements Initializable {
                 this.cadFuncionarioPalco.setTitle("Cadastro de Funcionários");
                 this.cadFuncionarioPalco.setScene(scene);
                 this.cadFuncionarioPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.cadFuncionarioPalco.setResizable(false);
+                this.cadFuncionarioPalco.setMaximized(false);
+                this.cadFuncionarioPalco.initOwner(primaryStage);
                 this.cadFuncionarioPalco.show();
                 this.funcionarioController.carregarTabela();
 
@@ -329,6 +341,9 @@ public class HomeController implements Initializable {
                 this.AgendamentoPalco.setTitle("Agendamento");
                 this.AgendamentoPalco.setScene(scene);
                 this.AgendamentoPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.AgendamentoPalco.setResizable(false);
+                this.AgendamentoPalco.setMaximized(false);
+                this.AgendamentoPalco.initOwner(primaryStage);
                 this.AgendamentoPalco.show();
                 this.agendamentoController.iniciarProcessos();
                 //this.agendamentoController.carregarTabela();
@@ -359,6 +374,9 @@ public class HomeController implements Initializable {
                 this.cadCidadePalco.setTitle("Cadastro de Cidades");
                 this.cadCidadePalco.setScene(scene);
                 this.cadCidadePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.cadCidadePalco.setResizable(false);
+                this.cadCidadePalco.setMaximized(false);
+                this.cadCidadePalco.initOwner(primaryStage);
                 this.cadCidadePalco.show();
                 this.cidadeController.carregarTabela();
                 this.abriuCadCidade = true;
@@ -387,6 +405,9 @@ public class HomeController implements Initializable {
                 this.cadBairroPalco.setTitle("Cadastro de Bairros");
                 this.cadBairroPalco.setScene(scene);
                 this.cadBairroPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.cadBairroPalco.setResizable(false);
+                this.cadBairroPalco.setMaximized(false);
+                this.cadBairroPalco.initOwner(primaryStage);
                 this.cadBairroPalco.show();
                 this.bairroController.carregarTabela();
                 this.bairroController.iniciarProcessos();
@@ -417,6 +438,9 @@ public class HomeController implements Initializable {
                 this.cadExamePalco.setTitle("Cadastros de Exame");
                 this.cadExamePalco.setScene(scene);
                 this.cadExamePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.cadExamePalco.setResizable(false);
+                this.cadExamePalco.setMaximized(false);
+                this.cadExamePalco.initOwner(primaryStage);
                 this.cadExamePalco.show();
                 this.exameController.carregarTabela();
                 this.abriuCadExame = true;
@@ -444,6 +468,9 @@ public class HomeController implements Initializable {
                 this.gerarProcedimentoPalco.setTitle("Gerenciamento de Procedimentos");
                 this.gerarProcedimentoPalco.setScene(scene);
                 this.gerarProcedimentoPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.gerarProcedimentoPalco.setResizable(false);
+                this.gerarProcedimentoPalco.setMaximized(false);
+                this.gerarProcedimentoPalco.initOwner(primaryStage);
                 this.gerarProcedimentoPalco.show();
 
                 this.abriuGerarProcedimento = true;
