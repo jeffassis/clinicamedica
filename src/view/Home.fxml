@@ -45,7 +45,14 @@
                         </ImageView>
                      </graphic></MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#cadCategoria" text="Categorias" />
+                  <MenuItem mnemonicParsing="false" onAction="#cadCategoria" text="Categorias">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/categoria16.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
                   <MenuItem fx:id="menuItemProcedimento" mnemonicParsing="false" onAction="#cadExame" text="Exame">
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">

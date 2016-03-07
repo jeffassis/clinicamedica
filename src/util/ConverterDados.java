@@ -2,6 +2,7 @@ package util;
 
 import javafx.util.StringConverter;
 import model.bean.BairroModel;
+import model.bean.CategoriaModel;
 import model.bean.CidadeModel;
 import model.bean.MedicoModel;
 import model.bean.PacienteModel;
@@ -37,6 +38,11 @@ public class ConverterDados {
      */
     public static final int GET_PACIENTE_CODIGO = 6;
     public static final int GET_PACIENTE_NOME = 7;
+    /**
+     * Retorna o código da Paciente
+     */
+    public static final int GET_CATEGORIA_CODIGO = 8;
+    public static final int GET_CATEGORIA_DESCRICAO = 9;
 
     /**
      * Passe um int estatico da Classe ConverterDados informando o tipo da
@@ -151,6 +157,33 @@ public class ConverterDados {
 
             @Override
             public PacienteModel fromString(String string) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
+        return convertido;
+    }
+
+    /**
+     * Retorna um toString proprio de PacienteModel
+     *
+     * @return
+     */
+    public StringConverter<CategoriaModel> getCategoriaConverter() {
+        StringConverter<CategoriaModel> convertido = new StringConverter<CategoriaModel>() {
+            @Override
+            public String toString(CategoriaModel object) {
+                switch (retorno) {
+                    case GET_CATEGORIA_CODIGO:
+                        return object.getCodigoProperty().getValue().toString();
+                    case GET_CATEGORIA_DESCRICAO:
+                        return object.getDescricao();
+                    default:
+                        return "";
+                }
+            }
+
+            @Override
+            public CategoriaModel fromString(String string) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         };

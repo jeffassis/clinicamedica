@@ -202,7 +202,7 @@ public class HomeController implements Initializable {
             if (newValue) {
                 /*Se vc não entender muito bem o Divider position, abre o Scene Builder
                 e olha no SplitPanes que lá tem o Dividir Position ai vc vai ter a ideia*/
-                split_superior.setDividerPosition(0, 0.14);
+                split_superior.setDividerPosition(0, 0.16);
                 split_lateral.setDividerPosition(0, 0.15);
             } else {
                 split_superior.setDividerPosition(0, 0.20);
@@ -478,6 +478,7 @@ public class HomeController implements Initializable {
                 this.precoExamePalco.initOwner(primaryStage);
                 this.precoExamePalco.show();
                 this.precoExameController.carregarTabela();
+                this.precoExameController.iniciarProcessos();
                 this.abriuPrecoExame = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
@@ -487,6 +488,7 @@ public class HomeController implements Initializable {
             this.precoExamePalco.show();
             this.precoExameController.carregarTabela();
             this.precoExamePalco.requestFocus();
+            this.precoExameController.iniciarProcessos();
         }
     }
 
