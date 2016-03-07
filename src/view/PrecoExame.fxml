@@ -86,7 +86,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Cancelar">
+            <Button mnemonicParsing="false" onAction="#onCancel" prefHeight="40.0" prefWidth="90.0" text="Cancelar">
                <graphic>
                   <ImageView fx:id="bt_cancelar" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -17,9 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.bean.BairroModel;
 import model.bean.ValorExameModel;
-import model.dao.BairroDAO;
 import model.dao.ValorExameDAO;
 import util.DialogFX;
 

@@ -158,7 +158,6 @@ public class PrecoExameController implements Initializable {
      */
     @FXML
     private void onCancel() {
-        tabela_exame.getSelectionModel().clearSelection();
-        limparCampos();
+
     }
 }
