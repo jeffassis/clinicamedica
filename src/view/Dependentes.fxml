@@ -32,7 +32,7 @@
                   <Insets left="250.0" right="5.0" />
                </padding>
             </Label>
-            <TextField fx:id="txt_valor" prefWidth="50.0" promptText="0,00" />
+            <TextField fx:id="txt_valor" editable="false" prefWidth="50.0" promptText="0,00" />
          </children>
       </HBox>
       <HBox layoutX="14.0" layoutY="432.0" spacing="10.0">
