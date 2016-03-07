@@ -39,12 +39,12 @@ public class HomeController implements Initializable {
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
     private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento,
             abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadExame, abriuPrecoExame,
-            abriuCadCategoria, abriuTabelaExame;
+            abriuCadCategoria, abriuTabelaExame, abriuDependentes;
 
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
     private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
             MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadExamePalco,
-            precoExamePalco, primaryStage, cadCategoriaPalco, tabelaExamePalco;
+            precoExamePalco, primaryStage, cadCategoriaPalco, tabelaExamePalco, cadDependentesPalco;
 
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
@@ -58,10 +58,11 @@ public class HomeController implements Initializable {
     private PrecoExameController precoExameController;
     private CategoriasController categoriasController;
     private TabelaExameController tabelaExameController;
+    private DependentesController dependentesController;
 
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC,
-            nodeA1, nodeA2, nodeA3, nodeA4, nodeA5, nodeA6,
+            nodeA1, nodeA2, nodeA3, nodeA4, nodeA5, nodeA6, nodeA7,
             nodeB1, nodeB2;
     /*Declaração dos nossos SplitPanes*/
     @FXML
@@ -92,8 +93,9 @@ public class HomeController implements Initializable {
         this.nodeA4 = new TreeItem<>("Exame", new ImageView(icon));
         this.nodeA5 = new TreeItem<>("Cidades", new ImageView(icon));
         this.nodeA6 = new TreeItem<>("Bairro", new ImageView(icon));
+        this.nodeA7 = new TreeItem<>("Dependentes", new ImageView(icon));
         /*Adicionando os filhos do nodeA*/
-        nodeA.getChildren().addAll(nodeA1, nodeA2, nodeA3, nodeA4, nodeA5, nodeA6);
+        nodeA.getChildren().addAll(nodeA1, nodeA2, nodeA3, nodeA4, nodeA5, nodeA6, nodeA7);
 
         this.nodeB1 = new TreeItem<>("Meus Pacientes", new ImageView(icon));
         this.nodeB2 = new TreeItem<>("Agendamentos", new ImageView(icon));
@@ -121,6 +123,9 @@ public class HomeController implements Initializable {
                     case "Pacientes":
                         /*Passamos null já que não vamos editar os dados*/
                         cadPaciente(false, null);
+                        break;
+                    case "Dependentes":
+                        cadDependentes();
                         break;
                     case "Funcionários":
                         cadFuncionario();
@@ -544,10 +549,42 @@ public class HomeController implements Initializable {
                 this.abriuTabelaExame = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
             this.tabelaExamePalco.show();
             this.tabelaExamePalco.requestFocus();
+        }
+    }
+
+    /**
+     * Método que exibir a Tela de Cadastro de Dependentes.
+     */
+    @FXML
+    public void cadDependentes() {
+        if (!abriuDependentes) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Dependentes.fxml"));
+            try {
+                this.cadDependentesPalco = new Stage();
+                Parent root = carregar.load();
+                Scene cena = new Scene(root);
+                this.dependentesController = carregar.getController();
+                this.cadDependentesPalco.setTitle("Cadastro de Dependentes");
+                this.cadDependentesPalco.setScene(cena);
+                this.cadDependentesPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/paciente64.png")));
+                this.cadDependentesPalco.setResizable(false);
+                this.cadDependentesPalco.setMaximized(false);
+                this.dependentesController.iniciarProcessos();
+                this.cadDependentesPalco.show();
+                this.abriuDependentes = true;
+
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
+            }
+        } else {
+            this.cadDependentesPalco.show();
+            this.dependentesController.iniciarProcessos();
         }
     }
 
