@@ -38,12 +38,13 @@ public class HomeController implements Initializable {
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
     private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento,
-            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadExame, abriuPrecoExame, abriuCadCategoria;
+            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadExame, abriuPrecoExame,
+            abriuCadCategoria, abriuTabelaExame;
 
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
     private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
             MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadExamePalco,
-            precoExamePalco, primaryStage, cadCategoriaPalco;
+            precoExamePalco, primaryStage, cadCategoriaPalco, tabelaExamePalco;
 
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
@@ -56,6 +57,7 @@ public class HomeController implements Initializable {
     private ExameController exameController;
     private PrecoExameController precoExameController;
     private CategoriasController categoriasController;
+    private TabelaExameController tabelaExameController;
 
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC,
@@ -505,6 +507,9 @@ public class HomeController implements Initializable {
                 this.cadCategoriaPalco.setTitle("Cadastro de Categorias");
                 this.cadCategoriaPalco.setScene(scene);
                 this.cadCategoriaPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.cadCategoriaPalco.setResizable(false);
+                this.cadCategoriaPalco.setMaximized(false);
+                this.cadCategoriaPalco.initOwner(primaryStage);
                 this.cadCategoriaPalco.show();
                 this.categoriasController.carregarTabela();
                 this.abriuCadCategoria = true;
@@ -516,6 +521,33 @@ public class HomeController implements Initializable {
             this.cadCategoriaPalco.show();
             this.cadCategoriaPalco.requestFocus();
             this.categoriasController.carregarTabela();
+        }
+    }
+
+    @FXML
+    private void tabelaExame() {
+        if (!abriuTabelaExame) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/TabelaExame.fxml"));
+            try {
+                this.tabelaExamePalco = new Stage();
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.tabelaExameController = carregar.getController();
+                this.tabelaExamePalco.setTitle("Tabela de preço de Exames");
+                this.tabelaExamePalco.setScene(scene);
+                this.tabelaExamePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.tabelaExamePalco.setResizable(false);
+                this.tabelaExamePalco.setMaximized(false);
+                this.tabelaExamePalco.initOwner(primaryStage);
+                this.tabelaExamePalco.show();
+                this.abriuTabelaExame = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.tabelaExamePalco.show();
+            this.tabelaExamePalco.requestFocus();
         }
     }
 

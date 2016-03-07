@@ -98,7 +98,7 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
-              <MenuItem mnemonicParsing="false" onAction="#precoExame" text="Preço dos Exames">
+              <MenuItem mnemonicParsing="false" onAction="#tabelaExame" text="Tabela exames">
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                            <image>
