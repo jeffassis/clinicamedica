@@ -44,8 +44,14 @@
             <Label text="Código:" />
             <Label text="Descrição:" GridPane.rowIndex="1" />
             <Label text="Categorias:" GridPane.rowIndex="2" />
-            <TextField fx:id="txt_codigo" GridPane.columnIndex="1" />
-            <TextField fx:id="txt_descricao" prefHeight="25.0" prefWidth="500.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txt_codigo" disable="true" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></TextField>
+            <TextField fx:id="txt_descricao" disable="true" prefHeight="25.0" prefWidth="500.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></TextField>
             <ComboBox fx:id="cb_categoria" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>

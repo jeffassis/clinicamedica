@@ -62,7 +62,7 @@ public class HomeController implements Initializable {
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC,
             nodeA1, nodeA2, nodeA3, nodeA4, nodeA5, nodeA6, nodeA7,
-            nodeB1, nodeB2;
+            nodeB1, nodeB2, nodeB3;
     /*Declaração dos nossos SplitPanes*/
     @FXML
     private SplitPane split_superior, split_lateral;
@@ -98,8 +98,9 @@ public class HomeController implements Initializable {
 
         this.nodeB1 = new TreeItem<>("Meus Pacientes", new ImageView(icon));
         this.nodeB2 = new TreeItem<>("Agendamentos", new ImageView(icon));
+        this.nodeB3 = new TreeItem<>("Tabela de Exames", new ImageView(icon));
         /*Adicionando os filhos do nodeB*/
-        nodeB.getChildren().addAll(nodeB1, nodeB2);
+        nodeB.getChildren().addAll(nodeB1, nodeB2, nodeB3);
         /*Adicionando o Node Pai a TreeView*/
         treeView.setRoot(root);
     }
@@ -143,6 +144,9 @@ public class HomeController implements Initializable {
                         break;
                     case "Agendamentos":
                         agendamento();
+                        break;
+                    case "Tabela de Exames":
+                        tabelaExame();
                         break;
                     default:
                         break;
@@ -513,6 +517,7 @@ public class HomeController implements Initializable {
                 this.tabelaExamePalco.setMaximized(false);
                 this.tabelaExamePalco.initOwner(primaryStage);
                 this.tabelaExamePalco.show();
+                this.tabelaExameController.carregarTabela();
                 this.abriuTabelaExame = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
@@ -521,6 +526,7 @@ public class HomeController implements Initializable {
         } else {
             this.tabelaExamePalco.show();
             this.tabelaExamePalco.requestFocus();
+            this.tabelaExameController.carregarTabela();
         }
     }
 
