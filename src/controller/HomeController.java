@@ -38,13 +38,13 @@ public class HomeController implements Initializable {
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
     private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento,
-            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadExame, abriuPrecoExame,
+            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadExame,
             abriuCadCategoria, abriuTabelaExame;
 
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
     private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
             MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadExamePalco,
-            precoExamePalco, primaryStage, cadCategoriaPalco, tabelaExamePalco;
+            primaryStage, cadCategoriaPalco, tabelaExamePalco;
 
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
@@ -55,7 +55,6 @@ public class HomeController implements Initializable {
     private CidadeController cidadeController;
     private BairroController bairroController;
     private ExameController exameController;
-    private PrecoExameController precoExameController;
     private CategoriasController categoriasController;
     private TabelaExameController tabelaExameController;
 
@@ -458,37 +457,6 @@ public class HomeController implements Initializable {
             this.cadExamePalco.show();
             this.cadExamePalco.requestFocus();
             this.exameController.carregarTabela();
-        }
-    }
-
-    @FXML
-    private void precoExame() {
-        if (!abriuPrecoExame) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/PrecoExame.fxml"));
-            try {
-                this.precoExamePalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.precoExameController = carregar.getController();
-                this.precoExamePalco.setTitle("Gerenciamento de Exames");
-                this.precoExamePalco.setScene(scene);
-                this.precoExamePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.precoExamePalco.setResizable(false);
-                this.precoExamePalco.setMaximized(false);
-                this.precoExamePalco.initOwner(primaryStage);
-                this.precoExamePalco.show();
-                this.precoExameController.carregarTabela();
-                this.precoExameController.iniciarProcessos();
-                this.abriuPrecoExame = true;
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            this.precoExamePalco.show();
-            this.precoExamePalco.requestFocus();
-            this.precoExameController.carregarTabela();
-            this.precoExameController.iniciarProcessos();
         }
     }
 
