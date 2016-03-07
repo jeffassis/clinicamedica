@@ -12,9 +12,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.bean.CategoriaModel;
 import model.bean.ExameModel;
+import model.bean.ValorExameModel;
 import model.dao.CategoriaDAO;
 import model.dao.ExameDAO;
+import model.dao.ValorExameDAO;
 import util.ConverterDados;
+import util.DialogFX;
 
 /**
  * FXML Controller class
@@ -28,6 +31,10 @@ public class PrecoExameController implements Initializable {
     @FXML
     private TextField txt_descricao;
     @FXML
+    private TextField txt_valor_categoria;
+    @FXML
+    private TextField txt_valor_exame;
+    @FXML
     private TableView<ExameModel> tabela_exame;
     @FXML
     private TableColumn<ExameModel, Integer> codigoColuna;
@@ -37,6 +44,8 @@ public class PrecoExameController implements Initializable {
     private ComboBox<CategoriaModel> cb_categoria;
 
     private ExameModel exameModel;
+
+    private ValorExameModel valorExameModel;
 
     /**
      * Initializes the controller class.
@@ -103,4 +112,46 @@ public class PrecoExameController implements Initializable {
         }
     }
 
+    @FXML
+    private void onSave() {
+        if (this.cb_categoria.getSelectionModel().getSelectedIndex() != -1
+                && tabela_exame.getSelectionModel().getSelectedIndex() != -1) {
+            this.exameModel = new ExameModel();
+            exameModel.setCodigo(Integer.valueOf(txt_codigo.getText().trim()));
+            exameModel.setDescricao(txt_descricao.getText().trim());
+
+            this.valorExameModel = new ValorExameModel();
+            valorExameModel.setExameModel(exameModel);
+            valorExameModel.setValor_categoria(Double.valueOf(txt_valor_categoria.getText().trim()));
+            valorExameModel.setValor_exame(Double.valueOf(txt_valor_exame.getText().trim()));
+            CategoriaModel categoria = cb_categoria.getSelectionModel().getSelectedItem();
+            valorExameModel.setCategoriaModel(categoria);
+            if (ValorExameDAO.executeUpdates(valorExameModel, ValorExameDAO.CREATE)) {
+                limparCampos();
+                DialogFX.showMessage("Preço inserido com sucesso!", "Sucesso", DialogFX.SUCESS);
+            }
+        } else {
+            DialogFX.showMessage("Por favor verifique se você selecionou uma categoria ou exame.", "Atenção", DialogFX.ATENCAO);
+        }
+    }
+
+    /**
+     * Método que limpa os campos
+     */
+    private void limparCampos() {
+        txt_codigo.setText("");
+        txt_descricao.setText("");
+        cb_categoria.getSelectionModel().clearSelection();
+        txt_valor_categoria.setText("");
+        txt_valor_exame.setText("");
+    }
+
+    /**
+     * Método para ação do botão cancelar
+     */
+    @FXML
+    private void onCancel() {
+        tabela_exame.getSelectionModel().clearSelection();
+        limparCampos();
+    }
 }
