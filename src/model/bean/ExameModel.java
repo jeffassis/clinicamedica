@@ -14,12 +14,6 @@ public class ExameModel {
     private IntegerProperty codigo;
     private StringProperty descricao;
 
-    private CategoriaModel categoriaModel;
-
-    public ExameModel(CategoriaModel categoriaModel) {
-        this.categoriaModel = categoriaModel;
-    }
-
     public ExameModel() {
         this.codigo = new SimpleIntegerProperty();
         this.descricao = new SimpleStringProperty();
@@ -52,14 +46,6 @@ public class ExameModel {
 
     public String getDescricao() {
         return descricao.get();
-    }
-
-    public CategoriaModel getCategoriaModel() {
-        return categoriaModel;
-    }
-
-    public void setCategoriaModel(CategoriaModel categoriaModel) {
-        this.categoriaModel = categoriaModel;
     }
 
 }

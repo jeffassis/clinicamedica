@@ -17,6 +17,8 @@ public class MedicoModel {
     private StringProperty nome;
     private StringProperty crm;
     private StringProperty especialidade;
+    private StringProperty telefone;
+    private StringProperty celular;
 
     /**
      * Construtor que converte as variaveis para SimpleProperty
@@ -26,6 +28,8 @@ public class MedicoModel {
         this.nome = new SimpleStringProperty();
         this.crm = new SimpleStringProperty();
         this.especialidade = new SimpleStringProperty();
+        this.telefone = new SimpleStringProperty();
+        this.celular = new SimpleStringProperty();
     }
 
     /**
@@ -36,11 +40,13 @@ public class MedicoModel {
      * @param crm
      * @param especialidade
      */
-    public MedicoModel(int codigo, String nome, String crm, String especialidade) {
+    public MedicoModel(int codigo, String nome, String crm, String especialidade, String telefone, String celular) {
         this.codigo = new SimpleIntegerProperty(codigo);
         this.nome = new SimpleStringProperty(nome);
         this.crm = new SimpleStringProperty(crm);
         this.especialidade = new SimpleStringProperty(especialidade);
+        this.telefone = new SimpleStringProperty(telefone);
+        this.celular = new SimpleStringProperty(celular);
     }
 
     // Getters e Setters não comuns e utilizando Property .....
@@ -90,5 +96,29 @@ public class MedicoModel {
 
     public String getEspecialidade() {
         return especialidade.get();
+    }
+
+    public StringProperty getTelefoneProperty() {
+        return this.telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone.set(telefone);
+    }
+
+    public StringProperty getCelularProperty() {
+        return this.celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular.set(celular);
+    }
+
+    public String getTelefone() {
+        return telefone.get();
+    }
+
+    public String getCelular() {
+        return celular.get();
     }
 }

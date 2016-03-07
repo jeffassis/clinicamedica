@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import model.bean.MedicoModel;
 import model.dao.MedicoDAO;
 import util.DialogFX;
+import util.MaskFormatter;
 
 /**
  * FXML Controller class
@@ -29,6 +30,10 @@ public class MedicosController implements Initializable {
     private TextField txt_nome;
     @FXML
     private TextField txt_crm;
+    @FXML
+    private TextField txt_tel1;
+    @FXML
+    private TextField txt_celular;
     /*Preenchendo o ComboBox Manualmente */
     @FXML
     private ComboBox cb_especialidade;
@@ -76,6 +81,16 @@ public class MedicosController implements Initializable {
         this.nomeColuna.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
         this.crmColuna.setCellValueFactory(cellData -> cellData.getValue().getCrmProperty());
         this.especialidadeColuna.setCellValueFactory(cellData -> cellData.getValue().getEspecialidadeProperty());
+        /**
+         * Máscaras dos telefones
+         */
+        MaskFormatter formatter1 = new MaskFormatter(txt_tel1);
+        MaskFormatter formatter2 = new MaskFormatter(txt_celular);
+        formatter1.setMask(MaskFormatter.TEL_8DIG);
+        formatter2.setMask(MaskFormatter.TEL_9DIG);
+        /*Amostrar o desenho da mascara*/
+        formatter1.showMask();
+        formatter2.showMask();
     }
 
     /**
@@ -106,9 +121,18 @@ public class MedicosController implements Initializable {
     private void onSave() {
         /*Verifica a flag. Se for 1 ela salva dados*/
         if (flag == 1) {
-            /*Verifica se nome do Medico esta vazia*/
+            /*Verifica se os campos Medico estam vazio*/
             if (txt_nome.getText().isEmpty()) {
-                DialogFX.showMessage("O campo não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
+                DialogFX.showMessage("O campo nome não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
+                return;
+            } else if (txt_tel1.getText().isEmpty()) {
+                DialogFX.showMessage("O campo telefone não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
+                return;
+            } else if (txt_celular.getText().isEmpty()) {
+                DialogFX.showMessage("O campo celular não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
+                return;
+            } else if (txt_crm.getText().isEmpty()) {
+                DialogFX.showMessage("O campo CRM não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
                 return;
             }
 
@@ -116,6 +140,8 @@ public class MedicosController implements Initializable {
             medicoModel.setNome(txt_nome.getText().trim());
             medicoModel.setCrm(txt_crm.getText().trim());
             medicoModel.setEspecialidade((String) cb_especialidade.getSelectionModel().getSelectedItem());
+            medicoModel.setTelefone(txt_tel1.getText().trim());
+            medicoModel.setCelular(txt_celular.getText().trim());
             if (MedicoDAO.executeUpdates(medicoModel, MedicoDAO.CREATE)) {
                 limparCampos();
                 DialogFX.showMessage("Dados inseridos com sucesso!", "Sucesso", DialogFX.SUCESS);
@@ -131,6 +157,8 @@ public class MedicosController implements Initializable {
             medicoModel.setNome(txt_nome.getText().trim());
             medicoModel.setCrm(txt_crm.getText().trim());
             medicoModel.setEspecialidade((String) cb_especialidade.getSelectionModel().getSelectedItem());
+            medicoModel.setTelefone(txt_tel1.getText().trim());
+            medicoModel.setCelular(txt_celular.getText().trim());
             if (MedicoDAO.executeUpdates(medicoModel, MedicoDAO.UPDATE)) {
                 limparCampos();
                 DialogFX.showMessage("Dados Atualizados com sucesso!", "Sucesso", DialogFX.SUCESS);
@@ -157,6 +185,8 @@ public class MedicosController implements Initializable {
             txt_codigo.setText(Integer.toString(medicoModel.getCodigo()));
             txt_nome.setText(medicoModel.getNome());
             txt_crm.setText(medicoModel.getCrm());
+            txt_tel1.setText(medicoModel.getTelefone());
+            txt_celular.setText(medicoModel.getCelular());
             /*Utilizamos o for para descobrir qual posição é igual ao dado retornado
              de especialidade*/
             for (int i = 0; i < cb_especialidade.getItems().size(); i++) {
@@ -229,6 +259,8 @@ public class MedicosController implements Initializable {
         txt_codigo.setText("");
         txt_nome.setText("");
         txt_crm.setText("");
+        txt_tel1.setText("");
+        txt_celular.setText("");
         cb_especialidade.getSelectionModel().clearSelection();
     }
 
@@ -244,6 +276,8 @@ public class MedicosController implements Initializable {
         limparCampos();
         txt_nome.setDisable(true);
         txt_crm.setDisable(true);
+        txt_tel1.setDisable(true);
+        txt_celular.setDisable(true);
         cb_especialidade.setDisable(true);
     }
 
@@ -253,6 +287,8 @@ public class MedicosController implements Initializable {
     private void habilitarCampos() {
         txt_nome.setDisable(false);
         txt_crm.setDisable(false);
+        txt_tel1.setDisable(false);
+        txt_celular.setDisable(false);
         cb_especialidade.setDisable(false);
     }
 
@@ -262,15 +298,18 @@ public class MedicosController implements Initializable {
     private void desabilitarCampos() {
         txt_nome.setDisable(true);
         txt_crm.setDisable(true);
+        txt_tel1.setDisable(true);
+        txt_celular.setDisable(true);
         cb_especialidade.setDisable(true);
         bt_salvar.setDisable(true);
         bt_editar.setDisable(true);
         bt_excluir.setDisable(true);
     }
+
     /**
      * Método reiniciar os dados da tela.
      */
-    public void refresh(){
+    public void refresh() {
         limparCampos();
         desabilitarCampos();
         flag = 1;
