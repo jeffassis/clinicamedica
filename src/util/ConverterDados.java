@@ -6,6 +6,7 @@ import model.bean.CategoriaModel;
 import model.bean.CidadeModel;
 import model.bean.MedicoModel;
 import model.bean.PacienteModel;
+import model.dao.PacienteDAO;
 
 /**
  *
@@ -64,14 +65,19 @@ public class ConverterDados {
         StringConverter<MedicoModel> convertido = new StringConverter<MedicoModel>() {
             @Override
             public String toString(MedicoModel object) {
-                switch (retorno) {
-                    case GET_MEDICO_CODIGO:
-                        return object.getCodigoProperty().getValue().toString();
-                    case GET_MEDICO_NOME:
-                        return object.getNome();
-                    default:
-                        return "";
+                if (object != null) {
+                    switch (retorno) {
+                        case GET_MEDICO_CODIGO:
+                            return object.getCodigoProperty().getValue().toString();
+                        case GET_MEDICO_NOME:
+                            return object.getNome();
+                        default:
+                            return "";
+                    }
+                } else {
+                    return "";
                 }
+
             }
 
             @Override
@@ -91,14 +97,19 @@ public class ConverterDados {
         StringConverter<CidadeModel> convertido = new StringConverter<CidadeModel>() {
             @Override
             public String toString(CidadeModel object) {
-                switch (retorno) {
-                    case GET_CIDADE_CODIGO:
-                        return object.getCodigoProperty().getValue().toString();
-                    case GET_CIDADE_NOME:
-                        return object.getNome();
-                    default:
-                        return "";
+                if (object != null) {
+                    switch (retorno) {
+                        case GET_CIDADE_CODIGO:
+                            return object.getCodigoProperty().getValue().toString();
+                        case GET_CIDADE_NOME:
+                            return object.getNome();
+                        default:
+                            return "";
+                    }
+                } else {
+                    return "";
                 }
+
             }
 
             @Override
@@ -118,13 +129,17 @@ public class ConverterDados {
         StringConverter<BairroModel> convertido = new StringConverter<BairroModel>() {
             @Override
             public String toString(BairroModel object) {
-                switch (retorno) {
-                    case GET_BAIRRO_CODIGO:
-                        return object.getCodigoProperty().getValue().toString();
-                    case GET_BAIRRO_NOME:
-                        return object.getNome();
-                    default:
-                        return "";
+                if (object != null) {
+                    switch (retorno) {
+                        case GET_BAIRRO_CODIGO:
+                            return object.getCodigoProperty().getValue().toString();
+                        case GET_BAIRRO_NOME:
+                            return object.getNome();
+                        default:
+                            return "";
+                    }
+                } else {
+                    return "";
                 }
             }
 
@@ -145,20 +160,28 @@ public class ConverterDados {
         StringConverter<PacienteModel> convertido = new StringConverter<PacienteModel>() {
             @Override
             public String toString(PacienteModel object) {
-                switch (retorno) {
-                    case GET_PACIENTE_CODIGO:
-                        return object.getCodigoProperty().getValue().toString();
-                    case GET_PACIENTE_NOME:
-                        return object.getNome();
-                    default:
-                        return "";
+                if (object != null) {
+                    switch (retorno) {
+                        case GET_PACIENTE_CODIGO:
+                            return object.getCodigoProperty().getValue().toString();
+                        case GET_PACIENTE_NOME:
+                            return object.getNome();
+                        default:
+                            return "";
+                    }
+                } else {
+                    return "";
                 }
             }
 
             @Override
             public PacienteModel fromString(String string) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                /*Necessario para evitar a exceção utilizando o AutoComplete no comboBox*/
+                PacienteModel pm = new PacienteModel();
+                pm.setNome(string);
+                return PacienteDAO.executeQuery(pm, PacienteDAO.QUERY_NOME).get(0);
             }
+            
         };
         return convertido;
     }
@@ -172,13 +195,17 @@ public class ConverterDados {
         StringConverter<CategoriaModel> convertido = new StringConverter<CategoriaModel>() {
             @Override
             public String toString(CategoriaModel object) {
-                switch (retorno) {
-                    case GET_CATEGORIA_CODIGO:
-                        return object.getCodigoProperty().getValue().toString();
-                    case GET_CATEGORIA_DESCRICAO:
-                        return object.getDescricao();
-                    default:
-                        return "";
+                if (object != null) {
+                    switch (retorno) {
+                        case GET_CATEGORIA_CODIGO:
+                            return object.getCodigoProperty().getValue().toString();
+                        case GET_CATEGORIA_DESCRICAO:
+                            return object.getDescricao();
+                        default:
+                            return "";
+                    }
+                } else {
+                    return "";
                 }
             }
 
