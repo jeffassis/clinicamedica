@@ -20,6 +20,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import model.bean.PacienteModel;
 import model.dao.PacienteDAO;
+import util.AutoCompleteComboBox;
 import util.ConverterDados;
 
 /**
@@ -41,6 +42,8 @@ public class DependentesController implements Initializable {
     private DatePicker dp_nascimento1, dp_nascimento2, dp_nascimento3, dp_nascimento4, dp_nascimento5;
     @FXML
     private Button bt_salvar, bt_limpar, bt_cancelar;
+    /*Classe que vai transforma o comboBox em autoComplete*/
+    private AutoCompleteComboBox autoComplete;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,16 +57,23 @@ public class DependentesController implements Initializable {
         cb_parent5.setItems(parentesco);
         /*Qual o dado que será mostrado no combo*/
         cb_paciente.setConverter(new ConverterDados(ConverterDados.GET_PACIENTE_NOME).getPacienteConverter());
+        /*Passamos o ComboBox para o construtor, mas falta utilizar o método saveDate() para ter efeito*/
+        this.autoComplete = new AutoCompleteComboBox(cb_paciente);
     }
-
+    /**
+     * Inicializa Processos importantes.
+     */
     public void iniciarProcessos() {
         /*Para evitar exceções*/
         cb_paciente.getItems().clear();
+        
 
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
                 cb_paciente.setItems(PacienteDAO.executeQuery(null, PacienteDAO.QUERY_TODOS));
+                /*Esse método que coloca o autoComplete em ação so deve ser chamado apos os dados estarem no comboBox*/
+                autoComplete.saveData();
                 return null;
             }
         };
