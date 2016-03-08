@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import model.bean.BairroModel;
 import model.bean.CidadeModel;
 import model.bean.PacienteModel;
+import util.Log;
 
 /**
  *
@@ -25,7 +26,7 @@ public class PacienteDAO {
     public static final int UPDATE = 2;
     public static final int QUERY_TODOS = 3;
     public static final int QUERY_NOME = 4;
-
+    
     public static boolean executeUpdates(PacienteModel pm, int operacao) {
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement ps;
@@ -112,10 +113,11 @@ public class PacienteDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(PacienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(PacienteDAO.class.getName(), ex);
         }
         return false;
     }
-
+    
     public static ObservableList<PacienteModel> executeQuery(PacienteModel pm, int operacao) {
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement ps;
@@ -165,9 +167,51 @@ public class PacienteDAO {
                     }
                     ConnectionFactory.closeConnection(conexao, ps, rs);
                     return listaPaciente;
+                case QUERY_NOME:
+                    sql = "select * from paciente "
+                            + "left join cidade on id_codigo_cidade = id_cidade "
+                            + "left join bairro on id_codigo_bairro = id_bairro "
+                            + "where nome_paciente = ?";
+                    ps = conexao.prepareStatement(sql);
+                    ps.setString(1, pm.getNome());
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        /*Inicializamos o paciente e colocamos os valores*/
+                        pacienteModel = new PacienteModel();
+                        pacienteModel.setCodigo(rs.getInt("id_paciente"));
+                        pacienteModel.setNome(rs.getString("nome_paciente"));
+                        pacienteModel.setNascimento(rs.getString("nascimento_paciente"));
+                        pacienteModel.setEndereco(rs.getString("endereco_paciente"));
+                        pacienteModel.setTelefone(rs.getString("telefone_paciente"));
+                        pacienteModel.setCep(rs.getString("cep_paciente"));
+                        pacienteModel.setDocumento(rs.getString("documento_paciente"));
+                        pacienteModel.setSexo(rs.getString("sexo_paciente"));
+                        pacienteModel.setData_cliente(rs.getString("data_cliente_paciente"));
+                        pacienteModel.setTipo(rs.getString("tipo_paciente"));
+                        pacienteModel.setEmail(rs.getString("email_paciente"));
+                        pacienteModel.setObs(rs.getString("obs_paciente"));
+                        /*Colocamos a Cidade*/
+                        CidadeModel cidadeModel = new CidadeModel();
+                        cidadeModel.setCodigo(rs.getInt("id_cidade"));
+                        cidadeModel.setNome(rs.getString("nome_cidade"));
+                        cidadeModel.setSigla(rs.getString("sigla_cidade"));
+                        /*Colocamos o Bairro*/
+                        BairroModel bairroModel = new BairroModel();
+                        bairroModel.setCodigo(rs.getInt("id_bairro"));
+                        bairroModel.setNome(rs.getString("nome_bairro"));
+                        bairroModel.setCidadeModel(cidadeModel);
+                        /*Adicionamos no PacienteModel*/
+                        pacienteModel.setCidadeModel(cidadeModel);
+                        pacienteModel.setBairroModel(bairroModel);
+                        /*Adicionamos na Lista*/
+                        listaPaciente.add(pacienteModel);
+                    }
+                    ConnectionFactory.closeConnection(conexao, ps, rs);
+                    return listaPaciente;
             }
         } catch (SQLException ex) {
             Logger.getLogger(PacienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(PacienteDAO.class.getName(), ex);
         }
         return listaPaciente;
     }
