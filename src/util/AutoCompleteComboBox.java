@@ -75,7 +75,7 @@ public class AutoCompleteComboBox implements EventHandler<KeyEvent> {
             ObservableList lista = FXCollections.observableArrayList();
             for (int i = 0; i < dados.size(); i++) {
                 /*Como não sabemos qual o tipo do combobox, usamos o getConverter para retornar a StringConverter que foi adicionado nele
-                por meio da Classe ConverterDados, tento essa String podemos comparar as Inicias dos nome, com o nome digitado no comboBox
+                por meio da Classe ConverterDados, tendo essa String podemos comparar as Inicias dos nome, com o nome digitado no comboBox
                 utilizamos o metodo toLowerCase que transforma todas as letras em maiusculas.*/
                 if (comboBox.getConverter().toString(dados.get(i)).toLowerCase().startsWith(comboBox.getEditor().getText().trim().toLowerCase())) {
                     /*os Nome que tiveram as mesmas inicias serao adicionadas a lista*/
