@@ -40,7 +40,7 @@ public class AutoCompleteComboBox implements EventHandler<KeyEvent> {
         /*Salvamos os dados originais*/
         dados = comboBox.getItems();
         /*Informamos que o comboBox é editavel para o usuario digitar o nome*/
-        //this.comboBox.setEditable(true);
+        this.comboBox.setEditable(true);
     }
 
     /**
