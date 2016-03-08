@@ -12,9 +12,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.bean.ValorExameModel;
@@ -46,6 +48,8 @@ public class TabelaExameController implements Initializable {
     private TableColumn<ValorExameModel, Double> valor_exameColuna;
     @FXML
     private TableColumn<ValorExameModel, Double> valor_categoriaColuna;
+    @FXML
+    private Button bt_excluir;
 
     ValorExameModel valorExameModel;
 
@@ -63,6 +67,8 @@ public class TabelaExameController implements Initializable {
         this.valor_exameColuna.setCellValueFactory(cellData -> cellData.getValue().getValor_exameProperty().asObject());
         this.valor_categoriaColuna.setCellValueFactory(cellData -> cellData.getValue().getValor_categoriaProperty().asObject());
 
+        /*Botao editar so fica ativado quando tem alguma coisa selecionada na TableView*/
+        bt_excluir.disableProperty().bind(tabela_valor_exame.getSelectionModel().selectedItemProperty().isNull());
     }
 
     /**
@@ -114,6 +120,21 @@ public class TabelaExameController implements Initializable {
             this.precoExamePalco.requestFocus();
             this.precoExameController.carregarTabela();
             this.precoExameController.iniciarProcessos();
+        }
+    }
+
+    /**
+     *
+     * @param evento
+     */
+    @FXML
+    private void onMouseClick(MouseEvent evento) {
+        if (tabela_valor_exame.getSelectionModel().getSelectedIndex() != -1) {
+            if (evento.getClickCount() == 2) {
+                this.precoExame();
+            }
+        } else {
+            DialogFX.showMessage("Por favor selecione um Exame!", "Atenção", DialogFX.ATENCAO);
         }
     }
 

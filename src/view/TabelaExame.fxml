@@ -26,7 +26,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="bt_excluir" mnemonicParsing="false" onAction="#onDelete" prefWidth="90.0" text="Excluir">
+                        <Button fx:id="bt_excluir" disable="true" mnemonicParsing="false" onAction="#onDelete" prefWidth="90.0" text="Excluir">
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -59,7 +59,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <TableView fx:id="tabela_valor_exame" layoutX="46.0" layoutY="40.0" prefHeight="350.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tabela_valor_exame" layoutX="46.0" layoutY="40.0" onMouseClicked="#onMouseClick" prefHeight="350.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="codigoColuna" prefWidth="61.0" text="Código" />
                       <TableColumn fx:id="exameColuna" prefWidth="381.0" text="Exame" />
