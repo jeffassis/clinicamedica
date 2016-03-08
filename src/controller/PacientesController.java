@@ -38,7 +38,7 @@ public class PacientesController implements Initializable {
     @FXML
     private TextField txt_cep, txt_documento, txt_tipo, txt_email, txt_observacoes;
     @FXML
-    private Button bt_novo, bt_salvar, bt_excluir, bt_localizar, bt_imprimir, bt_cancelar;
+    private Button bt_novo, bt_salvar, bt_localizar, bt_imprimir, bt_cancelar;
     @FXML
     private ComboBox<CidadeModel> cb_cidade;
     @FXML
@@ -239,7 +239,6 @@ public class PacientesController implements Initializable {
     private void onNew() {
         bt_novo.setDisable(false);
         bt_salvar.setDisable(false);
-        bt_excluir.setDisable(true);
         habilitarCampos();
         txt_nome.requestFocus();
     }
@@ -255,7 +254,6 @@ public class PacientesController implements Initializable {
         limparCampos();
         bt_novo.setDisable(false);
         bt_salvar.setDisable(true);
-        bt_excluir.setDisable(true);
     }
 
     /**
@@ -326,12 +324,12 @@ public class PacientesController implements Initializable {
         cb_cidade.setDisable(true);
         cb_bairro.setDisable(true);
         bt_salvar.setDisable(true);
-        bt_excluir.setDisable(true);
     }
+
     /**
      * Método reiniciar os dados da tela.
      */
-    public void refresh(){
+    public void refresh() {
         limparCampos();
         desabilitarCampos();
         this.dp_cliente.getEditor().setText("");
