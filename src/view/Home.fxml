@@ -106,11 +106,13 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Pagamento Mensalidade" />
             </items>
           </Menu>
-            <Menu fx:id="menuConsulta" mnemonicParsing="false" text="Consultar">
+            <Menu fx:id="menuConsulta" mnemonicParsing="false" text="Consultas">
               <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Mensalidades" />
+                  <MenuItem mnemonicParsing="false" text="Historico de Exames Paciente" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Relatórios">
