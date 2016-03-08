@@ -2,10 +2,13 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -46,6 +49,8 @@ public class PrecoExameController implements Initializable {
     private ExameModel exameModel;
 
     private ValorExameModel valorExameModel;
+
+    int flag = 1;
 
     /**
      * Initializes the controller class.
@@ -103,17 +108,22 @@ public class PrecoExameController implements Initializable {
         thread.start();
     }
 
+    /**
+     * Método que
+     *
+     */
     @FXML
-    private void clickEdit() {
-        if (tabela_exame.getSelectionModel().getSelectedIndex() != -1) {
-            exameModel = tabela_exame.getSelectionModel().getSelectedItem();
-            txt_codigo.setText(Integer.toString(exameModel.getCodigo()));
-            txt_descricao.setText(exameModel.getDescricao());
+    public void clickEdit(TableView<ValorExameModel> tabela) {
+        if (tabela.getSelectionModel().getSelectedIndex() != -1) {
+            valorExameModel = tabela.getSelectionModel().getSelectedItem();
+            this.exameModel = new ExameModel();
+            txt_codigo.setText(Integer.toString(valorExameModel.getCodigo()));
+            //txt_descricao.setText(valorExameModel.getDescricao());
         }
     }
 
     @FXML
-    private void onSave() {
+    private void onSave(ActionEvent event) {
         if (txt_valor_categoria.getText().isEmpty()) {
             DialogFX.showMessage("O valor de categoria não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
             return;
@@ -134,6 +144,7 @@ public class PrecoExameController implements Initializable {
             CategoriaModel categoria = cb_categoria.getSelectionModel().getSelectedItem();
             valorExameModel.setCategoriaModel(categoria);
             if (ValorExameDAO.executeUpdates(valorExameModel, ValorExameDAO.CREATE)) {
+                ((Node) event.getSource()).getScene().getWindow().hide();
                 limparCampos();
                 DialogFX.showMessage("Preço inserido com sucesso!", "Sucesso", DialogFX.SUCESS);
             }
@@ -157,7 +168,8 @@ public class PrecoExameController implements Initializable {
      * Método para ação do botão cancelar
      */
     @FXML
-    private void onCancel() {
-
+    private void onCancel(ActionEvent event) {
+        limparCampos();
+        ((Node) event.getSource()).getScene().getWindow().hide();
     }
 }
