@@ -44,8 +44,14 @@
             <Label text="Código:" />
             <Label text="Descrição:" GridPane.rowIndex="1" />
             <Label text="Categorias:" GridPane.rowIndex="2" />
-            <TextField fx:id="txt_codigo" GridPane.columnIndex="1" />
-            <TextField fx:id="txt_descricao" prefHeight="25.0" prefWidth="500.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txt_codigo" disable="true" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></TextField>
+            <TextField fx:id="txt_descricao" disable="true" prefHeight="25.0" prefWidth="500.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></TextField>
             <ComboBox fx:id="cb_categoria" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
@@ -70,9 +76,9 @@
             <TextField fx:id="txt_valor_exame" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <HBox layoutX="20.0" layoutY="456.0" spacing="15.0">
+      <HBox layoutX="20.0" layoutY="456.0" spacing="15.0" AnchorPane.leftAnchor="20.0">
          <children>
-            <Button fx:id="bt_salvar" mnemonicParsing="false" onAction="#onSave" prefHeight="30.0" prefWidth="85.0" text="Salvar">
+            <Button fx:id="bt_ok" mnemonicParsing="false" onAction="#onSave" prefHeight="40.0" prefWidth="90.0" text="OK">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -80,24 +86,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" text="Excluir">
-               <graphic>
-                  <ImageView fx:id="bt_excluir" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/delete16.png" />
-                     </image>
-                  </ImageView>
-               </graphic></Button>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" text="Editar">
-               <graphic>
-                  <ImageView fx:id="bt_editar" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/edit16.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#onCancel" prefHeight="30.0" prefWidth="85.0" text="Cancelar">
+            <Button mnemonicParsing="false" onAction="#onCancel" prefHeight="40.0" prefWidth="90.0" text="Cancelar">
                <graphic>
                   <ImageView fx:id="bt_cancelar" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -108,14 +97,5 @@
             </Button>
          </children>
       </HBox>
-      <Button fx:id="bt_localizar" contentDisplay="TOP" layoutX="488.0" layoutY="315.0" mnemonicParsing="false" text="Localizar Exames">
-         <graphic>
-            <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/search64.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
    </children>
 </AnchorPane>

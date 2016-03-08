@@ -9,8 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="controller.TabelaExameController">
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabelaExameController">
    <children>
       <SplitPane dividerPositions="0.09151785714285714" layoutX="119.0" layoutY="55.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -18,7 +17,7 @@
                <children>
                   <ToolBar layoutX="-8.0" layoutY="1.0" prefHeight="42.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
-                      <Button fx:id="bt_adicionar" mnemonicParsing="false" prefWidth="90.0" text="Adicionar">
+                      <Button fx:id="bt_adicionar" mnemonicParsing="false" onAction="#precoExame" prefWidth="90.0" text="Adicionar">
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -27,7 +26,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="bt_excluir" mnemonicParsing="false" prefWidth="90.0" text="Excluir">
+                        <Button fx:id="bt_excluir" mnemonicParsing="false" onAction="#onDelete" prefWidth="90.0" text="Excluir">
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -45,6 +44,15 @@
                               </ImageView>
                            </graphic>
                         </Button>
+                        <Button fx:id="bt_refresh" mnemonicParsing="false" onAction="#onAtualizar" prefWidth="90.0" text="Refresh">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/refresh16.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                     </items>
                   </ToolBar>
                </children>
@@ -54,10 +62,10 @@
                   <TableView fx:id="tabela_valor_exame" layoutX="46.0" layoutY="40.0" prefHeight="350.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="codigoColuna" prefWidth="61.0" text="Código" />
-                      <TableColumn fx:id="exameColuna" prefWidth="395.0" text="Exame" />
-                        <TableColumn fx:id="categoriaColuna" prefWidth="78.0" text="Categoria" />
-                        <TableColumn fx:id="valor_exameColuna" prefWidth="72.0" text="Val. Exame" />
-                        <TableColumn fx:id="valor_categoriaColuna" prefWidth="91.0" text="Val. Categoria" />
+                      <TableColumn fx:id="exameColuna" prefWidth="381.0" text="Exame" />
+                        <TableColumn fx:id="categoriaColuna" prefWidth="75.0" text="Categoria" />
+                        <TableColumn fx:id="valor_exameColuna" prefWidth="91.0" text="Val. Exame" />
+                        <TableColumn fx:id="valor_categoriaColuna" prefWidth="97.0" text="Val. Categoria" />
                     </columns>
                   </TableView>
                </children>

@@ -38,13 +38,13 @@ public class HomeController implements Initializable {
 
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
     private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento,
-            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadExame, abriuPrecoExame,
+            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadExame,
             abriuCadCategoria, abriuTabelaExame, abriuDependentes;
 
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
     private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
             MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadExamePalco,
-            precoExamePalco, primaryStage, cadCategoriaPalco, tabelaExamePalco, cadDependentesPalco;
+            primaryStage, cadCategoriaPalco, tabelaExamePalco, cadDependentesPalco;
 
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
@@ -55,7 +55,6 @@ public class HomeController implements Initializable {
     private CidadeController cidadeController;
     private BairroController bairroController;
     private ExameController exameController;
-    private PrecoExameController precoExameController;
     private CategoriasController categoriasController;
     private TabelaExameController tabelaExameController;
     private DependentesController dependentesController;
@@ -63,7 +62,7 @@ public class HomeController implements Initializable {
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC,
             nodeA1, nodeA2, nodeA3, nodeA4, nodeA5, nodeA6, nodeA7,
-            nodeB1, nodeB2;
+            nodeB1, nodeB2, nodeB3;
     /*Declaração dos nossos SplitPanes*/
     @FXML
     private SplitPane split_superior, split_lateral;
@@ -99,8 +98,9 @@ public class HomeController implements Initializable {
 
         this.nodeB1 = new TreeItem<>("Meus Pacientes", new ImageView(icon));
         this.nodeB2 = new TreeItem<>("Agendamentos", new ImageView(icon));
+        this.nodeB3 = new TreeItem<>("Tabela de Exames", new ImageView(icon));
         /*Adicionando os filhos do nodeB*/
-        nodeB.getChildren().addAll(nodeB1, nodeB2);
+        nodeB.getChildren().addAll(nodeB1, nodeB2, nodeB3);
         /*Adicionando o Node Pai a TreeView*/
         treeView.setRoot(root);
     }
@@ -144,6 +144,9 @@ public class HomeController implements Initializable {
                         break;
                     case "Agendamentos":
                         agendamento();
+                        break;
+                    case "Tabela de Exames":
+                        tabelaExame();
                         break;
                     default:
                         break;
@@ -468,38 +471,6 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    private void precoExame() {
-        if (!abriuPrecoExame) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/PrecoExame.fxml"));
-            try {
-                this.precoExamePalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.precoExameController = carregar.getController();
-                this.precoExamePalco.setTitle("Gerenciamento de Exames");
-                this.precoExamePalco.setScene(scene);
-                this.precoExamePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.precoExamePalco.setResizable(false);
-                this.precoExamePalco.setMaximized(false);
-                this.precoExamePalco.initOwner(primaryStage);
-                this.precoExamePalco.show();
-                this.precoExameController.carregarTabela();
-                this.precoExameController.iniciarProcessos();
-                this.abriuPrecoExame = true;
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
-        } else {
-            this.precoExamePalco.show();
-            this.precoExameController.carregarTabela();
-            this.precoExamePalco.requestFocus();
-            this.precoExameController.iniciarProcessos();
-        }
-    }
-
-    @FXML
     private void cadCategoria() {
         if (!abriuCadCategoria) {
             FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Categorias.fxml"));
@@ -546,6 +517,7 @@ public class HomeController implements Initializable {
                 this.tabelaExamePalco.setMaximized(false);
                 this.tabelaExamePalco.initOwner(primaryStage);
                 this.tabelaExamePalco.show();
+                this.tabelaExameController.carregarTabela();
                 this.abriuTabelaExame = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
@@ -554,6 +526,7 @@ public class HomeController implements Initializable {
         } else {
             this.tabelaExamePalco.show();
             this.tabelaExamePalco.requestFocus();
+            this.tabelaExameController.carregarTabela();
         }
     }
 

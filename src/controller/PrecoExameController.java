@@ -114,6 +114,13 @@ public class PrecoExameController implements Initializable {
 
     @FXML
     private void onSave() {
+        if (txt_valor_categoria.getText().isEmpty()) {
+            DialogFX.showMessage("O valor de categoria não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
+            return;
+        } else if (txt_valor_exame.getText().isEmpty()) {
+            DialogFX.showMessage("O valor de exame não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
+            return;
+        }
         if (this.cb_categoria.getSelectionModel().getSelectedIndex() != -1
                 && tabela_exame.getSelectionModel().getSelectedIndex() != -1) {
             this.exameModel = new ExameModel();
@@ -151,7 +158,6 @@ public class PrecoExameController implements Initializable {
      */
     @FXML
     private void onCancel() {
-        tabela_exame.getSelectionModel().clearSelection();
-        limparCampos();
+
     }
 }
