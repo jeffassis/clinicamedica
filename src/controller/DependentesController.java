@@ -12,8 +12,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -59,36 +61,20 @@ public class DependentesController implements Initializable {
         cb_paciente.setConverter(new ConverterDados(ConverterDados.GET_PACIENTE_NOME).getPacienteConverter());
         /*Passamos o ComboBox para o construtor, mas falta utilizar o método saveDate() para ter efeito*/
         this.autoComplete = new AutoCompleteComboBox(cb_paciente);
-    }
-    /**
-     * Inicializa Processos importantes.
-     */
-    public void iniciarProcessos() {
-        /*Para evitar exceções*/
-        cb_paciente.getItems().clear();
+        /*Botão salvar inicia bloqueado*/
+        bt_salvar.setDisable(true);
         
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                cb_paciente.setItems(PacienteDAO.executeQuery(null, PacienteDAO.QUERY_TODOS));
-                /*Esse método que coloca o autoComplete em ação so deve ser chamado apos os dados estarem no comboBox*/
-                autoComplete.saveData();
-                return null;
-            }
-        };
-        Thread t = new Thread(task);
-        t.setDaemon(true);
-        t.start();
-
         /*Adicionamos um evento que vai ser chamado quando o usuario digitar, esse evento
         é apenas mostrar o valor que nem está na imagem 1 - depentende 50,00 2 - 70,00*/
         txt_nome1.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             /*Se digitar uma letra*/
             if (newValue.length() == 1) {
                 txt_valor.setText("50,00");
+                /*Ativa o botão novamente*/
+                bt_salvar.setDisable(false);
             } else if (newValue.length() == 0) {
                 txt_valor.setText("0,00");
+                bt_salvar.setDisable(true);
             }
         });
         txt_nome2.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
@@ -108,6 +94,74 @@ public class DependentesController implements Initializable {
             }
         });
 
+    }
+
+    /**
+     * Inicializa Processos importantes.
+     */
+    public void iniciarProcessos() {
+        /*Para evitar exceções*/
+        cb_paciente.getItems().clear();
+
+        Task task = new Task() {
+            @Override
+            protected Object call() throws Exception {
+                cb_paciente.setItems(PacienteDAO.executeQuery(null, PacienteDAO.QUERY_TODOS));
+                /*Esse método que coloca o autoComplete em ação so deve ser chamado apos os dados estarem no comboBox*/
+                autoComplete.saveData();
+                return null;
+            }
+        };
+        Thread t = new Thread(task);
+        t.setDaemon(true);
+        t.start();
+    }
+
+    /**
+     * Método limpa todos os campos.
+     */
+    @FXML
+    private void limparCampos() {
+        txt_nome1.setText("");
+        txt_nome2.setText("");
+        txt_nome3.setText("");
+        txt_nome4.setText("");
+        txt_nome5.setText("");
+        dp_nascimento1.getEditor().setText("");
+        dp_nascimento2.getEditor().setText("");
+        dp_nascimento3.getEditor().setText("");
+        dp_nascimento4.getEditor().setText("");
+        dp_nascimento5.getEditor().setText("");
+        cb_paciente.getSelectionModel().clearSelection();
+        cb_parent1.getSelectionModel().clearSelection();
+        cb_parent2.getSelectionModel().clearSelection();
+        cb_parent3.getSelectionModel().clearSelection();
+        cb_parent4.getSelectionModel().clearSelection();
+        cb_parent5.getSelectionModel().clearSelection();
+        txt_valor.setText("0,00");
+        txt_telefone1.setText("");
+        txt_telefone2.setText("");
+        txt_telefone3.setText("");
+        txt_telefone4.setText("");
+        txt_telefone5.setText("");
+
+    }
+
+    /**
+     * Método fecha a janela.
+     *
+     * @param evento
+     */
+    @FXML
+    private void onCancelar(ActionEvent evento) {
+        /*Fecha a janela*/
+        ((Node) evento.getSource()).getScene().getWindow().hide();
+    }
+    /**
+     * Método reiniciar os dados da tela.
+     */
+    public void refresh(){
+        limparCampos();
     }
 
 }

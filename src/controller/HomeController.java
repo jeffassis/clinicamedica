@@ -556,6 +556,7 @@ public class HomeController implements Initializable {
                 Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
+            this.dependentesController.refresh();
             this.cadDependentesPalco.show();
             this.dependentesController.iniciarProcessos();
         }

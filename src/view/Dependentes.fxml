@@ -42,12 +42,12 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="bt_limpar" mnemonicParsing="false" text="Limpar Tudo">
+            <Button fx:id="bt_limpar" mnemonicParsing="false" onAction="#limparCampos"  text="Limpar Tudo">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="bt_cancelar" mnemonicParsing="false" text="Cancelar">
+            <Button fx:id="bt_cancelar" mnemonicParsing="false" onAction ="#onCancelar" text="Cancelar">
                <font>
                   <Font size="14.0" />
                </font>

@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import model.bean.ValorExameModel;
 import model.dao.ValorExameDAO;
 import util.DialogFX;
+import util.Log;
 
 /**
  * FXML Controller class
@@ -107,7 +108,8 @@ public class TabelaExameController implements Initializable {
                 this.precoExameController.iniciarProcessos();
                 this.abriuPrecoExame = true;
             } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TabelaExameController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(TabelaExameController.class.getName(), ex);
             }
         } else {
             this.precoExamePalco.show();
