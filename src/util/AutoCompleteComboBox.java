@@ -68,6 +68,8 @@ public class AutoCompleteComboBox implements EventHandler<KeyEvent> {
                     comboBox.show();
                 }
                 moveCaret(comboBox.getEditor().getText().length());
+                /*Para aqui*/
+                return;
             }
             if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.LEFT
                     || event.isControlDown() || event.getCode() == KeyCode.HOME
