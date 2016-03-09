@@ -69,10 +69,14 @@ public class PrecoExameController implements Initializable {
     /**
      * Executa as funções iniciais como preencher o comboBox utilizando o Task
      * já que pode ser um processo pesado
+     *
+     * @param editar
+     * @param tabela
      */
-    public void iniciarProcessos() {
+    public void iniciarProcessos(boolean editar, TableView<ValorExameModel> tabela) {
         /*Para evitar uma exception de Thread temos que limpar o comboBox*/
         cb_categoria.getItems().clear();
+        tabela_exame.getSelectionModel().clearSelection();
 
         Task task = new Task() {
             @Override
@@ -80,7 +84,15 @@ public class PrecoExameController implements Initializable {
                 cb_categoria.setItems(CategoriaDAO.executeQuery(null, CategoriaDAO.QUERY_TODOS));
                 return null;
             }
+
+            @Override
+            protected void succeeded() {
+                if (editar == true) {
+                    editarDados(tabela);
+                }
+            }
         };
+
         Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
@@ -129,8 +141,28 @@ public class PrecoExameController implements Initializable {
             DialogFX.showMessage("O valor de exame não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
             return;
         }
-        if (this.cb_categoria.getSelectionModel().getSelectedIndex() != -1
-                && tabela_exame.getSelectionModel().getSelectedIndex() != -1) {
+        if (flag == 1) {
+            if (this.cb_categoria.getSelectionModel().getSelectedIndex() != -1
+                    && tabela_exame.getSelectionModel().getSelectedIndex() != -1) {
+                this.exameModel = new ExameModel();
+                exameModel.setCodigo(Integer.valueOf(txt_codigo.getText().trim()));
+                exameModel.setDescricao(txt_descricao.getText().trim());
+
+                this.valorExameModel = new ValorExameModel();
+                valorExameModel.setExameModel(exameModel);
+                valorExameModel.setValor_categoria(Double.valueOf(txt_valor_categoria.getText().trim()));
+                valorExameModel.setValor_exame(Double.valueOf(txt_valor_exame.getText().trim()));
+                CategoriaModel categoria = cb_categoria.getSelectionModel().getSelectedItem();
+                valorExameModel.setCategoriaModel(categoria);
+                if (ValorExameDAO.executeUpdates(valorExameModel, ValorExameDAO.CREATE)) {
+                    ((Node) event.getSource()).getScene().getWindow().hide();
+                    limparCampos();
+                    DialogFX.showMessage("Preço inserido com sucesso!", "Sucesso", DialogFX.SUCESS);
+                }
+            } else {
+                DialogFX.showMessage("Por favor verifique se você selecionou uma categoria ou exame.", "Atenção", DialogFX.ATENCAO);
+            }
+        } else {
             this.exameModel = new ExameModel();
             exameModel.setCodigo(Integer.valueOf(txt_codigo.getText().trim()));
             exameModel.setDescricao(txt_descricao.getText().trim());
@@ -141,13 +173,12 @@ public class PrecoExameController implements Initializable {
             valorExameModel.setValor_exame(Double.valueOf(txt_valor_exame.getText().trim()));
             CategoriaModel categoria = cb_categoria.getSelectionModel().getSelectedItem();
             valorExameModel.setCategoriaModel(categoria);
-            if (ValorExameDAO.executeUpdates(valorExameModel, ValorExameDAO.CREATE)) {
+            if (ValorExameDAO.executeUpdates(valorExameModel, ValorExameDAO.UPDATE)) {
+                flag = 1;
                 ((Node) event.getSource()).getScene().getWindow().hide();
                 limparCampos();
                 DialogFX.showMessage("Preço inserido com sucesso!", "Sucesso", DialogFX.SUCESS);
             }
-        } else {
-            DialogFX.showMessage("Por favor verifique se você selecionou uma categoria ou exame.", "Atenção", DialogFX.ATENCAO);
         }
     }
 
@@ -163,7 +194,9 @@ public class PrecoExameController implements Initializable {
             txt_descricao.setText(valorExameModel.getExameModel().getDescricao());
             txt_valor_categoria.setText(valorExameModel.getValor_categoriaProperty().getValue().toString());
             txt_valor_exame.setText(valorExameModel.getValor_exameProperty().getValue().toString());
-            for (int i = 0; cb_categoria.getItems().size() < i; i++) {
+            for (int i = 0; i < cb_categoria.getItems().size(); i++) {
+                System.out.println(valorExameModel.getCategoriaModel().getCodigo());
+                System.err.println("Categoria:" + cb_categoria.getItems().get(i).getCodigo());
                 if (cb_categoria.getItems().get(i).getCodigo() == valorExameModel.getCategoriaModel().getCodigo()) {
                     cb_categoria.getSelectionModel().select(i);
                     break;

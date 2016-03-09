@@ -94,8 +94,7 @@ public class TabelaExameController implements Initializable {
         thread.start();
     }
 
-    @FXML
-    private void precoExame() {
+    private void precoExame(boolean editar) {
         if (!abriuPrecoExame) {
             FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/PrecoExame.fxml"));
             try {
@@ -112,7 +111,7 @@ public class TabelaExameController implements Initializable {
                 this.precoExamePalco.initModality(Modality.APPLICATION_MODAL);
                 this.precoExamePalco.show();
                 this.precoExameController.carregarTabela();
-                this.precoExameController.iniciarProcessos();
+                this.precoExameController.iniciarProcessos(editar, tabela_valor_exame);
                 this.abriuPrecoExame = true;
             } catch (IOException ex) {
                 Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
@@ -121,8 +120,15 @@ public class TabelaExameController implements Initializable {
             this.precoExamePalco.show();
             this.precoExamePalco.requestFocus();
             this.precoExameController.carregarTabela();
-            this.precoExameController.iniciarProcessos();
+            this.precoExameController.iniciarProcessos(editar, tabela_valor_exame);
         }
+    }
+
+    @FXML
+    private void precoExame() {
+        flag = 1;
+        /* se for chamado por aqui significa q não é para editar*/
+        precoExame(false);
     }
 
     /**
@@ -133,8 +139,9 @@ public class TabelaExameController implements Initializable {
     private void onMouseClick(MouseEvent evento) {
         if (tabela_valor_exame.getSelectionModel().getSelectedIndex() != -1) {
             if (evento.getClickCount() == 2) {
-                this.precoExame();
-                this.precoExameController.editarDados(tabela_valor_exame);
+                flag = 2;
+                /*Informamos que queremos editar*/
+                this.precoExame(true);
             }
         } else {
             DialogFX.showMessage("Por favor selecione um Exame!", "Atenção", DialogFX.ATENCAO);
