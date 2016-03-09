@@ -156,7 +156,11 @@ public class TabelaExameController implements Initializable {
                 flag = 2;
             }
         } else {
-            DialogFX.showMessage("Por favor selecione um Exame!", "Atenção", DialogFX.ATENCAO);
+            /*Para evitar no caso da Tabela vazia ao clicar nela aperecer a msg para selecionar um exame.*/
+            int totalItens = tabela_valor_exame.getItems().size();
+            if (totalItens > 0) {
+                DialogFX.showMessage("Por favor selecione um Exame!", "Atenção", DialogFX.ATENCAO);
+            }
         }
     }
 
