@@ -53,6 +53,8 @@ public class TabelaExameController implements Initializable {
 
     ValorExameModel valorExameModel;
 
+    int flag = 1;
+
     /**
      * Initializes the controller class.
      */
@@ -132,6 +134,7 @@ public class TabelaExameController implements Initializable {
         if (tabela_valor_exame.getSelectionModel().getSelectedIndex() != -1) {
             if (evento.getClickCount() == 2) {
                 this.precoExame();
+                this.precoExameController.editarDados(tabela_valor_exame);
             }
         } else {
             DialogFX.showMessage("Por favor selecione um Exame!", "Atenção", DialogFX.ATENCAO);

@@ -2,7 +2,6 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -68,8 +67,8 @@ public class PrecoExameController implements Initializable {
     }
 
     /**
-     * Executa as funções iniciais como preencher o comboBox do Bairro
-     * utilizando o Task já que pode ser um processo pesado
+     * Executa as funções iniciais como preencher o comboBox utilizando o Task
+     * já que pode ser um processo pesado
      */
     public void iniciarProcessos() {
         /*Para evitar uma exception de Thread temos que limpar o comboBox*/
@@ -109,16 +108,15 @@ public class PrecoExameController implements Initializable {
     }
 
     /**
-     * Método que
+     * Método que popula o exame nos campos
      *
      */
     @FXML
-    public void clickEdit(TableView<ValorExameModel> tabela) {
-        if (tabela.getSelectionModel().getSelectedIndex() != -1) {
-            valorExameModel = tabela.getSelectionModel().getSelectedItem();
-            this.exameModel = new ExameModel();
-            txt_codigo.setText(Integer.toString(valorExameModel.getCodigo()));
-            //txt_descricao.setText(valorExameModel.getDescricao());
+    private void clickEdit() {
+        if (tabela_exame.getSelectionModel().getSelectedIndex() != -1) {
+            exameModel = tabela_exame.getSelectionModel().getSelectedItem();
+            txt_codigo.setText(Integer.toString(exameModel.getCodigo()));
+            txt_descricao.setText(exameModel.getDescricao());
         }
     }
 
@@ -150,6 +148,27 @@ public class PrecoExameController implements Initializable {
             }
         } else {
             DialogFX.showMessage("Por favor verifique se você selecionou uma categoria ou exame.", "Atenção", DialogFX.ATENCAO);
+        }
+    }
+
+    /**
+     * Método responsavel por carregar os dados para Objeto ser editado
+     *
+     * @param tabela
+     */
+    public void editarDados(TableView<ValorExameModel> tabela) {
+        if (tabela.getSelectionModel().getSelectedIndex() != -1) {
+            valorExameModel = tabela.getSelectionModel().getSelectedItem();
+            txt_codigo.setText(valorExameModel.getCodigoProperty().getValue().toString());
+            txt_descricao.setText(valorExameModel.getExameModel().getDescricao());
+            txt_valor_categoria.setText(valorExameModel.getValor_categoriaProperty().getValue().toString());
+            txt_valor_exame.setText(valorExameModel.getValor_exameProperty().getValue().toString());
+            for (int i = 0; cb_categoria.getItems().size() < i; i++) {
+                if (cb_categoria.getItems().get(i).getCodigo() == valorExameModel.getCategoriaModel().getCodigo()) {
+                    cb_categoria.getSelectionModel().select(i);
+                    break;
+                }
+            }
         }
     }
 
