@@ -30,10 +30,11 @@ import util.DialogFX;
  */
 public class TabelaExameController implements Initializable {
 
+    /*Variavel booleana para conferir se a janela foi aberta*/
     private boolean abriuPrecoExame;
-
+    /*Declaração do Stage da GUI precoExame*/
     private Stage precoExamePalco;
-
+    /*Instanciando a Class Controller*/
     private PrecoExameController precoExameController;
 
     @FXML
@@ -50,9 +51,9 @@ public class TabelaExameController implements Initializable {
     private TableColumn<ValorExameModel, Double> valor_categoriaColuna;
     @FXML
     private Button bt_excluir;
-
+    /*Instancia da Class Model*/
     ValorExameModel valorExameModel;
-
+    /*Variavel para ser enviada com o valor da ação da GUI preçoExame*/
     int flag = 1;
 
     /**
@@ -94,6 +95,11 @@ public class TabelaExameController implements Initializable {
         thread.start();
     }
 
+    /**
+     * Sobrecargar do método preçoExame para ser utilizado quando for editar
+     *
+     * @param editar
+     */
     private void precoExame(boolean editar) {
         if (!abriuPrecoExame) {
             FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/PrecoExame.fxml"));
@@ -124,6 +130,9 @@ public class TabelaExameController implements Initializable {
         }
     }
 
+    /**
+     * Método precoExame com a anotação para quando for chamado adicionar
+     */
     @FXML
     private void precoExame() {
         /* se for chamado por aqui significa q não é para editar*/
@@ -132,6 +141,7 @@ public class TabelaExameController implements Initializable {
     }
 
     /**
+     * Método com evento do mouse na tabela para ativar o editar
      *
      * @param evento
      */

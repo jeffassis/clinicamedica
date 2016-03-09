@@ -46,11 +46,10 @@ public class PrecoExameController implements Initializable {
     private TableColumn<ExameModel, String> exameColuna;
     @FXML
     private ComboBox<CategoriaModel> cb_categoria;
-
+    /*Instancias da Class Model-*/
     private ExameModel exameModel;
-
     private ValorExameModel valorExameModel;
-
+    /*Variavel para diferenciar o Editar e o Salvar*/
     int flag = 1;
 
     /**
@@ -134,6 +133,11 @@ public class PrecoExameController implements Initializable {
         }
     }
 
+    /**
+     * Método responsavel por salvar e editar precoExame
+     *
+     * @param event
+     */
     @FXML
     private void onSave(ActionEvent event) {
         if (txt_valor_categoria.getText().isEmpty()) {
@@ -198,8 +202,8 @@ public class PrecoExameController implements Initializable {
             txt_valor_categoria.setText(valorExameModel.getValor_categoriaProperty().getValue().toString());
             txt_valor_exame.setText(valorExameModel.getValor_exameProperty().getValue().toString());
             for (int i = 0; i < cb_categoria.getItems().size(); i++) {
-                System.out.println(valorExameModel.getCategoriaModel().getCodigo());
-                System.err.println("Categoria:" + cb_categoria.getItems().get(i).getCodigo());
+                //System.out.println(valorExameModel.getCategoriaModel().getCodigo());
+                //System.err.println("Categoria:" + cb_categoria.getItems().get(i).getCodigo());
                 if (cb_categoria.getItems().get(i).getCodigo() == valorExameModel.getCategoriaModel().getCodigo()) {
                     cb_categoria.getSelectionModel().select(i);
                     break;
