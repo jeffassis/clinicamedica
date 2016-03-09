@@ -2,7 +2,6 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -30,6 +29,8 @@ import util.DialogFX;
 public class PrecoExameController implements Initializable {
 
     @FXML
+    private TextField txt_id_valor;
+    @FXML
     private TextField txt_codigo;
     @FXML
     private TextField txt_descricao;
@@ -45,11 +46,10 @@ public class PrecoExameController implements Initializable {
     private TableColumn<ExameModel, String> exameColuna;
     @FXML
     private ComboBox<CategoriaModel> cb_categoria;
-
+    /*Instancias da Class Model-*/
     private ExameModel exameModel;
-
     private ValorExameModel valorExameModel;
-
+    /*Variavel para diferenciar o Editar e o Salvar*/
     int flag = 1;
 
     /**
@@ -68,12 +68,16 @@ public class PrecoExameController implements Initializable {
     }
 
     /**
-     * Executa as funções iniciais como preencher o comboBox do Bairro
-     * utilizando o Task já que pode ser um processo pesado
+     * Executa as funções iniciais como preencher o comboBox utilizando o Task
+     * já que pode ser um processo pesado
+     *
+     * @param editar
+     * @param tabela
      */
-    public void iniciarProcessos() {
+    public void iniciarProcessos(boolean editar, TableView<ValorExameModel> tabela) {
         /*Para evitar uma exception de Thread temos que limpar o comboBox*/
         cb_categoria.getItems().clear();
+        tabela_exame.getSelectionModel().clearSelection();
 
         Task task = new Task() {
             @Override
@@ -81,7 +85,15 @@ public class PrecoExameController implements Initializable {
                 cb_categoria.setItems(CategoriaDAO.executeQuery(null, CategoriaDAO.QUERY_TODOS));
                 return null;
             }
+
+            @Override
+            protected void succeeded() {
+                if (editar == true) {
+                    editarDados(tabela);
+                }
+            }
         };
+
         Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
@@ -109,19 +121,23 @@ public class PrecoExameController implements Initializable {
     }
 
     /**
-     * Método que
+     * Método que popula o exame nos campos
      *
      */
     @FXML
-    public void clickEdit(TableView<ValorExameModel> tabela) {
-        if (tabela.getSelectionModel().getSelectedIndex() != -1) {
-            valorExameModel = tabela.getSelectionModel().getSelectedItem();
-            this.exameModel = new ExameModel();
-            txt_codigo.setText(Integer.toString(valorExameModel.getCodigo()));
-            //txt_descricao.setText(valorExameModel.getDescricao());
+    private void clickEdit() {
+        if (tabela_exame.getSelectionModel().getSelectedIndex() != -1) {
+            exameModel = tabela_exame.getSelectionModel().getSelectedItem();
+            txt_codigo.setText(Integer.toString(exameModel.getCodigo()));
+            txt_descricao.setText(exameModel.getDescricao());
         }
     }
 
+    /**
+     * Método responsavel por salvar e editar precoExame
+     *
+     * @param event
+     */
     @FXML
     private void onSave(ActionEvent event) {
         if (txt_valor_categoria.getText().isEmpty()) {
@@ -131,25 +147,69 @@ public class PrecoExameController implements Initializable {
             DialogFX.showMessage("O valor de exame não pode ser vazio!", "Campo Vazio", DialogFX.ATENCAO);
             return;
         }
-        if (this.cb_categoria.getSelectionModel().getSelectedIndex() != -1
-                && tabela_exame.getSelectionModel().getSelectedIndex() != -1) {
+        if (flag == 1) {
+            if (this.cb_categoria.getSelectionModel().getSelectedIndex() != -1
+                    && tabela_exame.getSelectionModel().getSelectedIndex() != -1) {
+                this.exameModel = new ExameModel();
+                exameModel.setCodigo(Integer.valueOf(txt_codigo.getText().trim()));
+                exameModel.setDescricao(txt_descricao.getText().trim());
+
+                this.valorExameModel = new ValorExameModel();
+                valorExameModel.setExameModel(exameModel);
+                valorExameModel.setValor_categoria(Double.valueOf(txt_valor_categoria.getText().trim()));
+                valorExameModel.setValor_exame(Double.valueOf(txt_valor_exame.getText().trim()));
+                CategoriaModel categoria = cb_categoria.getSelectionModel().getSelectedItem();
+                valorExameModel.setCategoriaModel(categoria);
+                if (ValorExameDAO.executeUpdates(valorExameModel, ValorExameDAO.CREATE)) {
+                    ((Node) event.getSource()).getScene().getWindow().hide();
+                    limparCampos();
+                    DialogFX.showMessage("Preço inserido com sucesso!", "Sucesso", DialogFX.SUCESS);
+                }
+            } else {
+                DialogFX.showMessage("Por favor verifique se você selecionou uma categoria ou exame.", "Atenção", DialogFX.ATENCAO);
+            }
+        } else {
+            this.valorExameModel = new ValorExameModel();
+            valorExameModel.setCodigo(Integer.valueOf(txt_id_valor.getText().trim()));
             this.exameModel = new ExameModel();
             exameModel.setCodigo(Integer.valueOf(txt_codigo.getText().trim()));
             exameModel.setDescricao(txt_descricao.getText().trim());
-
-            this.valorExameModel = new ValorExameModel();
             valorExameModel.setExameModel(exameModel);
             valorExameModel.setValor_categoria(Double.valueOf(txt_valor_categoria.getText().trim()));
             valorExameModel.setValor_exame(Double.valueOf(txt_valor_exame.getText().trim()));
             CategoriaModel categoria = cb_categoria.getSelectionModel().getSelectedItem();
             valorExameModel.setCategoriaModel(categoria);
-            if (ValorExameDAO.executeUpdates(valorExameModel, ValorExameDAO.CREATE)) {
+            if (ValorExameDAO.executeUpdates(valorExameModel, ValorExameDAO.UPDATE)) {
                 ((Node) event.getSource()).getScene().getWindow().hide();
                 limparCampos();
-                DialogFX.showMessage("Preço inserido com sucesso!", "Sucesso", DialogFX.SUCESS);
+                DialogFX.showMessage("Preço atualizado com sucesso!", "Sucesso", DialogFX.SUCESS);
+                flag = 1;
             }
-        } else {
-            DialogFX.showMessage("Por favor verifique se você selecionou uma categoria ou exame.", "Atenção", DialogFX.ATENCAO);
+        }
+    }
+
+    /**
+     * Método responsavel por carregar os dados para Objeto ser editado
+     *
+     * @param tabela
+     */
+    public void editarDados(TableView<ValorExameModel> tabela) {
+        if (tabela.getSelectionModel().getSelectedIndex() != -1) {
+            valorExameModel = tabela.getSelectionModel().getSelectedItem();
+            txt_id_valor.setText(valorExameModel.getCodigoProperty().getValue().toString());
+            txt_codigo.setText(valorExameModel.getExameModel().getCodigoProperty().getValue().toString());
+            txt_descricao.setText(valorExameModel.getExameModel().getDescricao());
+            txt_valor_categoria.setText(valorExameModel.getValor_categoriaProperty().getValue().toString());
+            txt_valor_exame.setText(valorExameModel.getValor_exameProperty().getValue().toString());
+            for (int i = 0; i < cb_categoria.getItems().size(); i++) {
+                //System.out.println(valorExameModel.getCategoriaModel().getCodigo());
+                //System.err.println("Categoria:" + cb_categoria.getItems().get(i).getCodigo());
+                if (cb_categoria.getItems().get(i).getCodigo() == valorExameModel.getCategoriaModel().getCodigo()) {
+                    cb_categoria.getSelectionModel().select(i);
+                    break;
+                }
+            }
+            flag = 2;
         }
     }
 

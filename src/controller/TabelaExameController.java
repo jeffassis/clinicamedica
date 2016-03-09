@@ -31,10 +31,11 @@ import util.Log;
  */
 public class TabelaExameController implements Initializable {
 
+    /*Variavel booleana para conferir se a janela foi aberta*/
     private boolean abriuPrecoExame;
-
+    /*Declaração do Stage da GUI precoExame*/
     private Stage precoExamePalco;
-
+    /*Instanciando a Class Controller*/
     private PrecoExameController precoExameController;
 
     @FXML
@@ -51,8 +52,10 @@ public class TabelaExameController implements Initializable {
     private TableColumn<ValorExameModel, Double> valor_categoriaColuna;
     @FXML
     private Button bt_excluir;
-
+    /*Instancia da Class Model*/
     ValorExameModel valorExameModel;
+    /*Variavel para ser enviada com o valor da ação da GUI preçoExame*/
+    int flag = 1;
 
     /**
      * Initializes the controller class.
@@ -93,8 +96,12 @@ public class TabelaExameController implements Initializable {
         thread.start();
     }
 
-    @FXML
-    private void precoExame() {
+    /**
+     * Sobrecargar do método preçoExame para ser utilizado quando for editar
+     *
+     * @param editar
+     */
+    private void precoExame(boolean editar) {
         if (!abriuPrecoExame) {
             FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/PrecoExame.fxml"));
             try {
@@ -111,7 +118,7 @@ public class TabelaExameController implements Initializable {
                 this.precoExamePalco.initModality(Modality.APPLICATION_MODAL);
                 this.precoExamePalco.show();
                 this.precoExameController.carregarTabela();
-                this.precoExameController.iniciarProcessos();
+                this.precoExameController.iniciarProcessos(editar, tabela_valor_exame);
                 this.abriuPrecoExame = true;
             } catch (IOException ex) {
                 Logger.getLogger(TabelaExameController.class.getName()).log(Level.SEVERE, null, ex);
@@ -121,11 +128,22 @@ public class TabelaExameController implements Initializable {
             this.precoExamePalco.show();
             this.precoExamePalco.requestFocus();
             this.precoExameController.carregarTabela();
-            this.precoExameController.iniciarProcessos();
+            this.precoExameController.iniciarProcessos(editar, tabela_valor_exame);
         }
     }
 
     /**
+     * Método precoExame com a anotação para quando for chamado adicionar
+     */
+    @FXML
+    private void precoExame() {
+        /* se for chamado por aqui significa q não é para editar*/
+        precoExame(false);
+        flag = 1;
+    }
+
+    /**
+     * Método com evento do mouse na tabela para ativar o editar
      *
      * @param evento
      */
@@ -133,7 +151,9 @@ public class TabelaExameController implements Initializable {
     private void onMouseClick(MouseEvent evento) {
         if (tabela_valor_exame.getSelectionModel().getSelectedIndex() != -1) {
             if (evento.getClickCount() == 2) {
-                this.precoExame();
+                /*Informamos que queremos editar*/
+                this.precoExame(true);
+                flag = 2;
             }
         } else {
             DialogFX.showMessage("Por favor selecione um Exame!", "Atenção", DialogFX.ATENCAO);

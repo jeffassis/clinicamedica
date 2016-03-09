@@ -35,15 +35,6 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="bt_editar" mnemonicParsing="false" prefWidth="90.0" text="Editar">
-                           <graphic>
-                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/edit16.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
                         <Button fx:id="bt_refresh" mnemonicParsing="false" onAction="#onAtualizar" prefWidth="90.0" text="Refresh">
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
