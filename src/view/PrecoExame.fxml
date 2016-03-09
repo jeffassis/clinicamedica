@@ -97,5 +97,6 @@
             </Button>
          </children>
       </HBox>
+      <TextField fx:id="txt_id_valor" layoutX="360.0" layoutY="339.0" />
    </children>
 </AnchorPane>

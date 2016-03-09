@@ -126,9 +126,9 @@ public class TabelaExameController implements Initializable {
 
     @FXML
     private void precoExame() {
-        flag = 1;
         /* se for chamado por aqui significa q não é para editar*/
         precoExame(false);
+        flag = 1;
     }
 
     /**
@@ -139,9 +139,9 @@ public class TabelaExameController implements Initializable {
     private void onMouseClick(MouseEvent evento) {
         if (tabela_valor_exame.getSelectionModel().getSelectedIndex() != -1) {
             if (evento.getClickCount() == 2) {
-                flag = 2;
                 /*Informamos que queremos editar*/
                 this.precoExame(true);
+                flag = 2;
             }
         } else {
             DialogFX.showMessage("Por favor selecione um Exame!", "Atenção", DialogFX.ATENCAO);
