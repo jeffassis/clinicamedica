@@ -22,6 +22,7 @@ public class DependenteModel {
     private StringProperty telefone;
     private StringProperty nascimento;
     private StringProperty parentesco;
+    private PacienteModel pacienteModel;
 
     /**
      * Construtor Padrão.
@@ -106,6 +107,22 @@ public class DependenteModel {
     }
     public void setParentesco(String parentesco){
         this.parentesco.set(parentesco);
+    }
+    
+    /**
+     * Método seta o pacienteModel desta Classe.
+     * @param pacienteModel 
+     */
+    public void setPacienteModel(PacienteModel pacienteModel){
+        this.pacienteModel = pacienteModel;
+    }
+    
+    /**
+     * Retorna o pacienteModel desta classe.
+     * @return 
+     */
+    public PacienteModel getPacienteModel(){
+        return this.pacienteModel;
     }
 
 }
