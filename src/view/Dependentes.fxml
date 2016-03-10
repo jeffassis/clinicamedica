@@ -37,7 +37,7 @@
       </HBox>
       <HBox layoutX="14.0" layoutY="432.0" spacing="10.0">
          <children>
-            <Button fx:id="bt_salvar" mnemonicParsing="false" text="Salvar">
+            <Button fx:id="bt_salvar" mnemonicParsing="false" onAction="#onSave" text="Salvar">
                <font>
                   <Font size="14.0" />
                </font>
