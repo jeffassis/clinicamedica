@@ -6,6 +6,8 @@
 package controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,10 +22,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import model.bean.DependenteModel;
 import model.bean.PacienteModel;
+import model.dao.DependentesDAO;
 import model.dao.PacienteDAO;
 import util.AutoCompleteComboBox;
 import util.ConverterDados;
+import util.DialogFX;
+import util.MaskFormatter;
 
 /**
  *
@@ -46,6 +52,8 @@ public class DependentesController implements Initializable {
     private Button bt_salvar, bt_limpar, bt_cancelar;
     /*Classe que vai transforma o comboBox em autoComplete*/
     private AutoCompleteComboBox autoComplete;
+    /*Mascara para os campos*/
+    private MaskFormatter formatter;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -63,7 +71,35 @@ public class DependentesController implements Initializable {
         this.autoComplete = new AutoCompleteComboBox(cb_paciente);
         /*Botão salvar inicia bloqueado*/
         bt_salvar.setDisable(true);
+        /*Adicionando as mascaras*/
+        formatter = new MaskFormatter(txt_telefone1);
+        formatter.setMask(MaskFormatter.TEL_8DIG);
+        formatter.showMask();
+        /*Não esta funcionando para os TextField do telefone*/
+//        formatter.addComponente(txt_telefone2, MaskFormatter.TEL_8DIG, true);
+//        formatter.addComponente(txt_telefone3, MaskFormatter.TEL_8DIG, true);
+//        formatter.addComponente(txt_telefone4, MaskFormatter.TEL_8DIG, true);
+//        formatter.addComponente(txt_telefone5, MaskFormatter.TEL_8DIG, true);
+        /*até eu resolver o BUG dos textFields aqui, tive q fazer desta forma*/
+        formatter = new MaskFormatter(txt_telefone2);
+        formatter.setMask(MaskFormatter.TEL_8DIG);
+        formatter.showMask();
+        formatter = new MaskFormatter(txt_telefone3);
+        formatter.setMask(MaskFormatter.TEL_8DIG);
+        formatter.showMask();
+        formatter = new MaskFormatter(txt_telefone4);
+        formatter.setMask(MaskFormatter.TEL_8DIG);
+        formatter.showMask();
+        formatter = new MaskFormatter(txt_telefone5);
+        formatter.setMask(MaskFormatter.TEL_8DIG);
+        formatter.showMask();
+        formatter.addComponente(dp_nascimento1, MaskFormatter.DATA_BARRA, true);
+        formatter.addComponente(dp_nascimento2, MaskFormatter.DATA_BARRA, true);
+        formatter.addComponente(dp_nascimento3, MaskFormatter.DATA_BARRA, true);
+        formatter.addComponente(dp_nascimento4, MaskFormatter.DATA_BARRA, true);
+        formatter.addComponente(dp_nascimento5, MaskFormatter.DATA_BARRA, true);
         
+
         /*Adicionamos um evento que vai ser chamado quando o usuario digitar, esse evento
         é apenas mostrar o valor que nem está na imagem 1 - depentende 50,00 2 - 70,00*/
         txt_nome1.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
@@ -157,11 +193,90 @@ public class DependentesController implements Initializable {
         /*Fecha a janela*/
         ((Node) evento.getSource()).getScene().getWindow().hide();
     }
+
+    /**
+     * Evento do botão salvar.
+     */
+    @FXML
+    private void onSave() {
+        if (verificarCampos()) {
+            DialogFX.showMessage("Por favor verifique se os campos estão preenchidos corretamente", "Campo não preenchido", DialogFX.ATENCAO);
+        } else {
+            /*Lista que vai conter nossos dependentes*/
+            List<DependenteModel> lista = new ArrayList<>();
+            /*Para evitar repetições de código usaremos um for, assim como o verificar Campos*/
+            TextField[] textFields = {txt_nome1, txt_nome2, txt_nome3, txt_nome4, txt_nome5};
+            TextField[] telefonesFields = {txt_telefone1, txt_telefone2, txt_telefone3, txt_telefone4, txt_telefone5};
+            ComboBox[] boxs = {cb_parent1, cb_parent2, cb_parent3, cb_parent4, cb_parent5};
+            DatePicker[] pickers = {dp_nascimento1, dp_nascimento2, dp_nascimento3, dp_nascimento4, dp_nascimento5};
+            for (int i = 0; i < textFields.length; i++) {
+                /*Se o campo nome não estiver vazio*/
+                if (!textFields[i].getText().isEmpty()) {
+                    DependenteModel dependenteModel = new DependenteModel();
+                    /*Adicionamos o paciente selecionado ao dependente*/
+                    dependenteModel.setPacienteModel(cb_paciente.getSelectionModel().getSelectedItem());
+                    dependenteModel.setNome(textFields[i].getText().trim());
+                    dependenteModel.setTelefone(telefonesFields[i].getText().trim());
+                    dependenteModel.setParentesco(boxs[i].getSelectionModel().getSelectedItem().toString());
+                    dependenteModel.setNascimento(pickers[i].getEditor().getText());
+                    /*adicionamos a nossa lista*/
+                    lista.add(dependenteModel);
+                }
+            }
+            /*Utilizando o metodo MultiUpdates adicionamos todos eles ao banco de dados*/
+            if (DependentesDAO.executeMultiUpdates(lista)) {
+                limparCampos();
+                DialogFX.showMessage("Dependentes Adicionados com sucesso!", "Sucesso", DialogFX.SUCESS);
+            } else {
+                DialogFX.showMessage("Houve um erro ao adicionar os dependentes", "ERRO", DialogFX.ERRO);
+            }
+
+        }
+    }
+
     /**
      * Método reiniciar os dados da tela.
      */
-    public void refresh(){
+    public void refresh() {
         limparCampos();
+    }
+
+    /**
+     * Método que verifica todos os campos.
+     *
+     * @return
+     */
+    private boolean verificarCampos() {
+        /*Verificamos se o paciente foi selecionado, se não foi retornamos true*/
+        if (cb_paciente.getSelectionModel().isSelected(-1)) {
+            return true;
+        }
+        /*Verificação do primeiro dependente*/
+        if (txt_nome1.getText().isEmpty()) {
+            return true;
+        } else if (txt_telefone1.getText().isEmpty() && cb_parent1.getSelectionModel().isSelected(-1)
+                && dp_nascimento1.getEditor().getText().length() < 10) {
+            return true;
+        }
+        /*Adicionamos nossos componentes a um array do mesmo tipo*/
+        TextField[] textFields = {txt_nome2, txt_nome3, txt_nome4, txt_nome5};
+        TextField[] telefonesFields = {txt_telefone2, txt_telefone3, txt_telefone4, txt_telefone5};
+        ComboBox[] boxs = {cb_parent2, cb_parent3, cb_parent4, cb_parent5};
+        DatePicker[] pickers = {dp_nascimento2, dp_nascimento3, dp_nascimento4, dp_nascimento5};
+        /*Vamos usar o for para verificar os campos*/
+        for (int i = 0; i < textFields.length; i++) {
+            /*Se o campo Nome não esta vazio, então vamos verificar seus campos*/
+            if (!textFields[i].getText().isEmpty()) {
+                /*Verificamos da mesma maneira que o primeiro, veja q usando essa maneira
+                evitamos repetições de código*/
+                if (telefonesFields[i].getText().isEmpty() && boxs[i].getSelectionModel().isSelected(-1)
+                        && pickers[i].getEditor().getText().length() < 10) {
+                    return true;
+                }
+            }
+        }
+        return false;
+
     }
 
 }
