@@ -44,7 +44,7 @@ public class AutoCompleteComboBox implements EventHandler<KeyEvent> {
         /*Salvamos os dados originais*/
         dados = comboBox.getItems();
         this.salvouDados = true;
-        
+
     }
 
     /**
@@ -112,6 +112,17 @@ public class AutoCompleteComboBox implements EventHandler<KeyEvent> {
      */
     private void moveCaret(int length) {
         this.comboBox.getEditor().positionCaret(length);
+    }
+
+    /**
+     * Adiciona outro comboBox. Obs: Utilizar somente apos o comboBox está com
+     * todos os Dados populados.
+     *
+     * @param comboBox
+     */
+    public void addComboBox(ComboBox comboBox) {
+        AutoCompleteComboBox box = new AutoCompleteComboBox(comboBox);
+        box.saveData();
     }
 
 }
