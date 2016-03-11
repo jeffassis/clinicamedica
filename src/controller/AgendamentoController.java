@@ -21,6 +21,7 @@ import model.bean.PacienteModel;
 import model.dao.AgendamentoDAO;
 import model.dao.MedicoDAO;
 import model.dao.PacienteDAO;
+import util.AutoCompleteComboBox;
 import util.ConverterDados;
 import util.DialogFX;
 import util.MaskFormatter;
@@ -66,7 +67,9 @@ public class AgendamentoController implements Initializable {
     @FXML
     private TableColumn<AgendamentoModel, String> motivoColuna;
 
-    AgendamentoModel agendamentoModel;
+    private AgendamentoModel agendamentoModel;
+    
+    private AutoCompleteComboBox autoCompleteComboBox;
 
     /**
      * Initializes the controller class.
@@ -92,6 +95,9 @@ public class AgendamentoController implements Initializable {
         /*Utilizando a nossa Classe converterDados */
         this.cb_medico.setConverter(new ConverterDados(ConverterDados.GET_MEDICO_NOME).getMedicoConverter());
         this.cb_paciente.setConverter(new ConverterDados(ConverterDados.GET_PACIENTE_NOME).getPacienteConverter());
+        /*Utilizando o autocomplete do comboBox*/
+        this.autoCompleteComboBox = new AutoCompleteComboBox(cb_medico);
+        
 
         /**
          * Colocando a Mascara no DatePicker
@@ -122,6 +128,14 @@ public class AgendamentoController implements Initializable {
                 cb_paciente.setItems(PacienteDAO.executeQuery(null, PacienteDAO.QUERY_TODOS));
                 return null;
             }
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                autoCompleteComboBox.saveData();
+                autoCompleteComboBox.addComboBox(cb_paciente);
+            }
+            
         };
         Thread thread = new Thread(task);
         thread.setDaemon(true);
