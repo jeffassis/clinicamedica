@@ -6,6 +6,7 @@ import model.bean.CategoriaModel;
 import model.bean.CidadeModel;
 import model.bean.MedicoModel;
 import model.bean.PacienteModel;
+import model.dao.MedicoDAO;
 import model.dao.PacienteDAO;
 
 /**
@@ -82,7 +83,9 @@ public class ConverterDados {
 
             @Override
             public MedicoModel fromString(String string) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                MedicoModel medico = new MedicoModel();
+                medico.setNome(string);
+                return MedicoDAO.executeQuery(medico, MedicoDAO.QUERY_NOME).get(0);
             }
         };
         return convertido;
