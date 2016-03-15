@@ -201,14 +201,15 @@ public class PrecoExameController implements Initializable {
             txt_descricao.setText(valorExameModel.getExameModel().getDescricao());
             txt_valor_categoria.setText(valorExameModel.getValor_categoriaProperty().getValue().toString());
             txt_valor_exame.setText(valorExameModel.getValor_exameProperty().getValue().toString());
-            for (int i = 0; i < cb_categoria.getItems().size(); i++) {
-                //System.out.println(valorExameModel.getCategoriaModel().getCodigo());
-                //System.err.println("Categoria:" + cb_categoria.getItems().get(i).getCodigo());
-                if (cb_categoria.getItems().get(i).getCodigo() == valorExameModel.getCategoriaModel().getCodigo()) {
-                    cb_categoria.getSelectionModel().select(i);
-                    break;
-                }
-            }
+//            for (int i = 0; i < cb_categoria.getItems().size(); i++) {
+//                //System.out.println(valorExameModel.getCategoriaModel().getCodigo());
+//                //System.err.println("Categoria:" + cb_categoria.getItems().get(i).getCodigo());
+//                if (cb_categoria.getItems().get(i).getCodigo() == valorExameModel.getCategoriaModel().getCodigo()) {
+//                    cb_categoria.getSelectionModel().select(i);
+//                    break;
+//                }
+//            }
+            cb_categoria.setValue(valorExameModel.getCategoriaModel());
             flag = 2;
         }
     }
