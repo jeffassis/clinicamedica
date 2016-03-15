@@ -120,31 +120,16 @@ public class PacientesController implements Initializable {
                         dp_nascimento.getEditor().setText(model.getNascimento());
                         txt_endereco.setText(model.getEndereco());
                         txt_telefone.setText(model.getTelefone());
-                        for (int i = 0; i < cb_cidade.getItems().size(); i++) {
-                            /*Já que cada cidade tem um código, vamos comparar assim*/
-                            if (cb_cidade.getItems().get(i).getCodigo() == model.getCidadeModel().getCodigo()) {
-                                cb_cidade.getSelectionModel().select(i);
-                                break;
-                            }
-                        }
-                        for (int i = 0; i < cb_bairro.getItems().size(); i++) {
-                            if (cb_bairro.getItems().get(i).getCodigo() == model.getBairroModel().getCodigo()) {
-                                cb_bairro.getSelectionModel().select(i);
-                                break;
-                            }
-                        }
-                        txt_cep.setText(model.getCep());
-                        txt_documento.setText(model.getDocumento());
-                        for (int i = 0; i < cb_sexo.getItems().size(); i++) {
-                            if (cb_sexo.getItems().get(i).equals(model.getSexo())) {
-                                cb_sexo.getSelectionModel().select(i);
-                                break;
-                            }
-                        }
+                        /*removidos os for*/
+                        cb_cidade.setValue(model.getCidadeModel());
+                        cb_bairro.setValue(model.getBairroModel());
+                        cb_sexo.setValue(model.getSexo());
                         dp_cliente.getEditor().setText(model.getData_cliente());
                         txt_tipo.setText(model.getTipo());
                         txt_email.setText(model.getEmail());
                         txt_observacoes.setText(model.getObs());
+                        txt_documento.setText(model.getDocumento());
+                        txt_cep.setText(model.getCep());
 
                     }
                 }
