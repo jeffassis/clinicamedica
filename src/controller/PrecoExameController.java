@@ -156,8 +156,9 @@ public class PrecoExameController implements Initializable {
 
                 this.valorExameModel = new ValorExameModel();
                 valorExameModel.setExameModel(exameModel);
-                valorExameModel.setValor_categoria(Double.valueOf(txt_valor_categoria.getText().trim()));
-                valorExameModel.setValor_exame(Double.valueOf(txt_valor_exame.getText().trim()));
+                /*Para evitar exceção ao digitar o valor com virgula.*/
+                valorExameModel.setValor_categoria(Double.valueOf(txt_valor_categoria.getText().trim().replace(",", ".")));
+                valorExameModel.setValor_exame(Double.valueOf(txt_valor_exame.getText().trim().replace(",", ".")));
                 CategoriaModel categoria = cb_categoria.getSelectionModel().getSelectedItem();
                 valorExameModel.setCategoriaModel(categoria);
                 if (ValorExameDAO.executeUpdates(valorExameModel, ValorExameDAO.CREATE)) {
