@@ -38,6 +38,7 @@ public class DependentesDAO {
      * Passe o ID do dependente e retornarar o paciente Relacionado a ele.
      */
     public static final int QUERY_DEPENDENTE = 5;
+    public static final int QUERY_NOME = 6;
 
     /**
      * Método executa operações de CREATE,UPDATE e DELETE no banco de Dados.
@@ -189,6 +190,41 @@ public class DependentesDAO {
                             + "on id_codigo_paciente = id_paciente where id_dependente = ?";
                     ps = conexao.prepareStatement(sql);
                     ps.setInt(1, dm.getCodigo());
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        dependente = new DependenteModel();
+                        dependente.setCodigo(rs.getInt("id_dependente"));
+                        dependente.setNome(rs.getString("nome_dependente"));
+                        dependente.setNascimento(rs.getString("nascimento_dependente"));
+                        dependente.setTelefone(rs.getString("telefone_dependente"));
+                        dependente.setParentesco(rs.getString("parentesco_dependente"));
+                        /*Paciente que esta relacionado com os dependentes*/
+                        PacienteModel pacienteModel = new PacienteModel();
+                        pacienteModel.setCodigo(rs.getInt("id_paciente"));
+                        pacienteModel.setNome(rs.getString("nome_paciente"));
+                        pacienteModel.setNascimento(rs.getString("nascimento_paciente"));
+                        pacienteModel.setEndereco(rs.getString("endereco_paciente"));
+                        pacienteModel.setTelefone(rs.getString("telefone_paciente"));
+                        pacienteModel.setCep(rs.getString("cep_paciente"));
+                        pacienteModel.setDocumento(rs.getString("documento_paciente"));
+                        pacienteModel.setSexo(rs.getString("sexo_paciente"));
+                        pacienteModel.setData_cliente(rs.getString("data_cliente_paciente"));
+                        pacienteModel.setTipo(rs.getString("tipo_paciente"));
+                        pacienteModel.setEmail(rs.getString("email_paciente"));
+                        pacienteModel.setObs(rs.getString("obs_paciente"));
+
+                        dependente.setPacienteModel(pacienteModel);
+
+                        lista.add(dependente);
+                    }
+                    ConnectionFactory.closeConnection(conexao, ps, rs);
+                    return lista;
+                case QUERY_NOME:
+                    sql = "select * from dependente left join paciente_dependente"
+                            + "on id_dependente = id_codigo_dependente left join paciente"
+                            + "on id_codigo_paciente = id_paciente where nome_dependente = ?";
+                    ps = conexao.prepareStatement(sql);
+                    ps.setString(1, dm.getNome());
                     rs = ps.executeQuery();
                     while (rs.next()) {
                         dependente = new DependenteModel();
