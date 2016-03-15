@@ -67,9 +67,9 @@ public class DependentesDAO {
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
                 case UPDATE:
-                    sql = "update dependente set nome_dependente = ?"
-                            + "telefone_dependente = ?"
-                            + "nascimento_dependente = ?"
+                    sql = "update dependente set nome_dependente = ?,"
+                            + "telefone_dependente = ?,"
+                            + "nascimento_dependente = ?,"
                             + "parentesco_dependente = ?"
                             + "where id_dependente = ?";
                     ps = conexao.prepareStatement(sql);
