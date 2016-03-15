@@ -4,8 +4,10 @@ import javafx.util.StringConverter;
 import model.bean.BairroModel;
 import model.bean.CategoriaModel;
 import model.bean.CidadeModel;
+import model.bean.DependenteModel;
 import model.bean.MedicoModel;
 import model.bean.PacienteModel;
+import model.dao.DependentesDAO;
 import model.dao.MedicoDAO;
 import model.dao.PacienteDAO;
 
@@ -45,6 +47,11 @@ public class ConverterDados {
      */
     public static final int GET_CATEGORIA_CODIGO = 8;
     public static final int GET_CATEGORIA_DESCRICAO = 9;
+    /**
+     * Retornar o código do Dependente.
+     */
+    public static final int GET_DEPENDENTE_CODIGO = 10;
+    public static final int GET_DEPENDENTE_NOME = 11;
 
     /**
      * Passe um int estatico da Classe ConverterDados informando o tipo da
@@ -184,7 +191,7 @@ public class ConverterDados {
                 pm.setNome(string);
                 return PacienteDAO.executeQuery(pm, PacienteDAO.QUERY_NOME).get(0);
             }
-            
+
         };
         return convertido;
     }
@@ -218,5 +225,33 @@ public class ConverterDados {
             }
         };
         return convertido;
+    }
+
+    public StringConverter<DependenteModel> getDependenteConverter() {
+        StringConverter<DependenteModel> converter = new StringConverter<DependenteModel>() {
+            @Override
+            public String toString(DependenteModel object) {
+                if (object != null) {
+                    switch (retorno) {
+                        case GET_DEPENDENTE_CODIGO:
+                            return object.getCodigoProperty().getValue().toString();
+                        case GET_DEPENDENTE_NOME:
+                            return object.getNome();
+                        default:
+                            return "";
+                    }
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public DependenteModel fromString(String string) {
+                DependenteModel dm = new DependenteModel();
+                dm.setNome(string);
+                return DependentesDAO.executeQuery(dm, DependentesDAO.QUERY_NOME).get(0);
+            }
+        };
+        return converter;
     }
 }
