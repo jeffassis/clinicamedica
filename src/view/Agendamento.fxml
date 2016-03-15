@@ -62,7 +62,7 @@
             </ComboBox>
             <Label text="Paciente:">
                <HBox.margin>
-                  <Insets left="35.0" right="8.0" top="5.0" />
+                  <Insets left="25.0" right="8.0" top="5.0" />
                </HBox.margin>
             </Label>
             <ComboBox fx:id="cb_paciente" prefHeight="25.0" prefWidth="179.0" />
@@ -72,7 +72,7 @@
       <TextArea fx:id="txt_motivo" layoutX="39.0" layoutY="355.0" prefHeight="78.0" prefWidth="507.0" />
       <HBox layoutX="36.0" layoutY="453.0" prefHeight="32.0" prefWidth="513.0">
          <children>
-            <Button fx:id="bt_finalizar" mnemonicParsing="false" onAction="#onSave" prefHeight="25.0" prefWidth="165.0" text="Finalizar Agendamento">
+            <Button fx:id="bt_finalizar" mnemonicParsing="false" onAction="#onSave" prefHeight="25.0" prefWidth="100.0" text="Finalizar">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -80,7 +80,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="bt_cancelar" mnemonicParsing="false" onAction="#onDelete" prefHeight="25.0" prefWidth="162.0" text="Cancelar Agendamento">
+            <Button fx:id="bt_cancelar" mnemonicParsing="false" onAction="#onDelete" prefHeight="25.0" prefWidth="100.0" text="Cancelar">
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin>
@@ -106,9 +106,25 @@
             </Button>
          </children>
       </HBox>
-      <DatePicker fx:id="dpData" layoutX="370.0" layoutY="292.0" prefHeight="25.0" prefWidth="179.0" />
-      <Label layoutX="330.0" layoutY="296.0" text="Data:" />
-      <ComboBox fx:id="cb_horario" layoutX="88.0" layoutY="292.0" prefWidth="150.0" />
-      <Label layoutX="42.0" layoutY="296.0" text="Horário:" AnchorPane.leftAnchor="40.0" />
+      <HBox layoutX="40.0" layoutY="292.0" AnchorPane.leftAnchor="40.0">
+         <children>
+            <Label text="Horário:">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </Label>
+            <ComboBox fx:id="cb_horario" prefWidth="193.0">
+               <HBox.margin>
+                  <Insets left="3.0" />
+               </HBox.margin>
+            </ComboBox>
+            <Label text="Data:">
+               <HBox.margin>
+                  <Insets left="45.0" right="8.0" top="5.0" />
+               </HBox.margin>
+            </Label>
+            <DatePicker fx:id="dpData" prefHeight="25.0" prefWidth="179.0" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

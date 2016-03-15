@@ -45,9 +45,9 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <HBox layoutX="52.0" layoutY="155.0" prefHeight="34.0" prefWidth="361.0" spacing="8.0">
+      <HBox layoutX="51.0" layoutY="154.0" prefHeight="34.0" prefWidth="376.0" spacing="8.0">
          <children>
-            <Button fx:id="bt_novo" mnemonicParsing="false" onAction="#onNew" prefHeight="30.0" prefWidth="85.0" text="Novo">
+            <Button fx:id="bt_novo" mnemonicParsing="false" onAction="#onNew" prefHeight="30.0" prefWidth="80.0" text="Novo">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -55,7 +55,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="bt_salvar" disable="true" mnemonicParsing="false" onAction="#onSave" prefHeight="30.0" prefWidth="85.0" text="Salvar">
+            <Button fx:id="bt_salvar" disable="true" mnemonicParsing="false" onAction="#onSave" prefHeight="30.0" prefWidth="80.0" text="Salvar">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -63,7 +63,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="bt_excluir" disable="true" mnemonicParsing="false" onAction="#onDelete" prefHeight="30.0" prefWidth="85.0" text="Excluir">
+            <Button fx:id="bt_excluir" disable="true" mnemonicParsing="false" onAction="#onDelete" prefHeight="30.0" prefWidth="82.0" text="Excluir">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -71,7 +71,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="bt_cancelar" mnemonicParsing="false" onAction="#onCancel" prefHeight="30.0" prefWidth="85.0" text="Cancelar">
+            <Button fx:id="bt_cancelar" mnemonicParsing="false" onAction="#onCancel" prefHeight="30.0" prefWidth="96.0" text="Cancelar">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>

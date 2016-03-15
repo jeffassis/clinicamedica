@@ -41,9 +41,9 @@
             <Reflection />
          </effect>
       </Label>
-      <HBox layoutX="30.0" layoutY="184.0" prefHeight="32.0" prefWidth="466.0" spacing="10.0" AnchorPane.leftAnchor="25.0">
+      <HBox layoutX="27.0" layoutY="183.0" prefHeight="32.0" prefWidth="466.0" spacing="10.0" AnchorPane.leftAnchor="27.0">
          <children>
-            <Button fx:id="bt_novo" mnemonicParsing="false" onAction="#onNew" prefHeight="28.0" prefWidth="82.0" text="Novo">
+            <Button fx:id="bt_novo" mnemonicParsing="false" onAction="#onNew" prefHeight="28.0" prefWidth="78.0" text="Novo">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -51,7 +51,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="bt_salvar" disable="true" mnemonicParsing="false" onAction="#onSave" prefHeight="28.0" prefWidth="82.0" text="Salvar">
+            <Button fx:id="bt_salvar" disable="true" mnemonicParsing="false" onAction="#onSave" prefHeight="28.0" prefWidth="79.0" text="Salvar">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -59,7 +59,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="bt_editar" disable="true" mnemonicParsing="false" onAction="#onEdit" prefHeight="28.0" prefWidth="82.0" text="Editar">
+            <Button fx:id="bt_editar" disable="true" mnemonicParsing="false" onAction="#onEdit" prefHeight="28.0" prefWidth="80.0" text="Editar">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -75,7 +75,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="bt_cancelar" mnemonicParsing="false" onAction="#onCancel" prefHeight="28.0" prefWidth="82.0" text="Cancelar">
+            <Button fx:id="bt_cancelar" mnemonicParsing="false" onAction="#onCancel" prefHeight="28.0" prefWidth="96.0" text="Cancelar">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>

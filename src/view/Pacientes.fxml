@@ -35,7 +35,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-                <Button fx:id="bt_localizar" mnemonicParsing="false" onAction="#onLocalizar" prefHeight="28.0" prefWidth="85.0" text="Localizar">
+                <Button fx:id="bt_localizar" mnemonicParsing="false" onAction="#onLocalizar" prefHeight="28.0" prefWidth="96.0" text="Localizar">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -43,7 +43,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-                <Button fx:id="bt_imprimir" mnemonicParsing="false" prefHeight="28.0" prefWidth="85.0" text="Imprimir">
+                <Button fx:id="bt_imprimir" mnemonicParsing="false" prefHeight="28.0" prefWidth="94.0" text="Imprimir">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -51,7 +51,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-                <Button fx:id="bt_cancelar" mnemonicParsing="false" onAction="#onCancel" prefHeight="28.0" prefWidth="85.0" text="Cancelar">
+                <Button fx:id="bt_cancelar" mnemonicParsing="false" onAction="#onCancel" prefHeight="28.0" prefWidth="96.0" text="Cancelar">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -189,7 +189,7 @@
                 <DatePicker fx:id="dp_cliente" disable="true" GridPane.columnIndex="4" GridPane.rowIndex="7" />
             </children>
         </GridPane>
-      <Label layoutX="573.0" layoutY="416.0" text="Status:" />
+      <Label layoutX="563.0" layoutY="416.0" text="Status:" />
       <CheckBox layoutX="613.0" layoutY="416.0" mnemonicParsing="false" text="Ativo" />
     </children>
 </AnchorPane>
