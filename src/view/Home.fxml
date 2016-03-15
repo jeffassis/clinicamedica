@@ -106,7 +106,14 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Pagamento Mensalidade" />
+                  <MenuItem mnemonicParsing="false" onAction="#mensalidade" text="Pagamento Mensalidade">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/mes16.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
             </items>
           </Menu>
             <Menu fx:id="menuConsulta" mnemonicParsing="false" text="Consultas">

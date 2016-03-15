@@ -39,12 +39,13 @@ public class HomeController implements Initializable {
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
     private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento,
             abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadExame,
-            abriuCadCategoria, abriuTabelaExame, abriuDependentes;
+            abriuCadCategoria, abriuTabelaExame, abriuDependentes, abriuMensalidade;
 
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
     private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
             MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadExamePalco,
-            primaryStage, cadCategoriaPalco, tabelaExamePalco, cadDependentesPalco;
+            primaryStage, cadCategoriaPalco, tabelaExamePalco, cadDependentesPalco,
+            mensalidadePalco;
 
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
@@ -58,6 +59,7 @@ public class HomeController implements Initializable {
     private CategoriasController categoriasController;
     private TabelaExameController tabelaExameController;
     private DependentesController dependentesController;
+    private MensalidadeController mensalidadeController;
 
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC,
@@ -558,8 +560,38 @@ public class HomeController implements Initializable {
         } else {
             this.dependentesController.refresh();
             this.cadDependentesPalco.show();
+            this.cadDependentesPalco.requestFocus();
             this.dependentesController.iniciarProcessos();
         }
     }
 
+    /**
+     * Método para chamar a GUI de Mensalidades
+     */
+    @FXML
+    private void mensalidade() {
+        if (!abriuMensalidade) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Mensalidade.fxml"));
+            try {
+                this.mensalidadePalco = new Stage();
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.mensalidadeController = carregar.getController();
+                this.mensalidadePalco.setTitle("Pagamento de Mensalidades");
+                this.mensalidadePalco.setScene(scene);
+                this.mensalidadePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/paciente64.png")));
+                this.mensalidadePalco.setResizable(false);
+                this.mensalidadePalco.setMaximized(false);
+                this.mensalidadePalco.show();
+
+                this.abriuMensalidade = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.mensalidadePalco.show();
+            this.mensalidadePalco.requestFocus();
+        }
+    }
 }
