@@ -39,12 +39,12 @@ public class HomeController implements Initializable {
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
     private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento,
             abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadExame,
-            abriuCadCategoria, abriuTabelaExame, abriuDependentes;
+            abriuCadCategoria, abriuTabelaExame, abriuDependentes, abriuMeusDependentes;
 
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
-    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
-            MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadExamePalco,
-            primaryStage, cadCategoriaPalco, tabelaExamePalco, cadDependentesPalco;
+    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, agendamentoPalco,
+            meusPacientesPalco, cadCidadePalco, cadBairroPalco, cadExamePalco,
+            primaryStage, cadCategoriaPalco, tabelaExamePalco, cadDependentesPalco, meusDependentes;
 
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
@@ -58,11 +58,12 @@ public class HomeController implements Initializable {
     private CategoriasController categoriasController;
     private TabelaExameController tabelaExameController;
     private DependentesController dependentesController;
+    private MeusDependentesController meusDependentesController;
 
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC,
             nodeA1, nodeA2, nodeA3, nodeA4, nodeA5, nodeA6, nodeA7,
-            nodeB1, nodeB2, nodeB3;
+            nodeB1, nodeB2, nodeB3, nodeB4;
     /*Declaração dos nossos SplitPanes*/
     @FXML
     private SplitPane split_superior, split_lateral;
@@ -99,8 +100,9 @@ public class HomeController implements Initializable {
         this.nodeB1 = new TreeItem<>("Meus Pacientes", new ImageView(icon));
         this.nodeB2 = new TreeItem<>("Agendamentos", new ImageView(icon));
         this.nodeB3 = new TreeItem<>("Tabela de Exames", new ImageView(icon));
+        this.nodeB4 = new TreeItem<>("Meus Dependentes", new ImageView(icon));
         /*Adicionando os filhos do nodeB*/
-        nodeB.getChildren().addAll(nodeB1, nodeB2, nodeB3);
+        nodeB.getChildren().addAll(nodeB1, nodeB4, nodeB3, nodeB2);
         /*Adicionando o Node Pai a TreeView*/
         treeView.setRoot(root);
     }
@@ -126,6 +128,9 @@ public class HomeController implements Initializable {
                         break;
                     case "Dependentes":
                         cadDependentes();
+                        break;
+                    case "Meus Dependentes":
+                        meusDependentes();
                         break;
                     case "Funcionários":
                         cadFuncionario();
@@ -281,18 +286,18 @@ public class HomeController implements Initializable {
         if (!abriuMeusPacientes) {
             FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/MeusPacientes.fxml"));
             try {
-                this.MeusPacientesPalco = new Stage();
+                this.meusPacientesPalco = new Stage();
                 Parent root;
                 root = carregar.load();
                 Scene scene = new Scene(root);
                 this.meusPacientesController = carregar.getController();
-                this.MeusPacientesPalco.setTitle("Meus Pacientes");
-                this.MeusPacientesPalco.setScene(scene);
-                this.MeusPacientesPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.MeusPacientesPalco.setResizable(false);
-                this.MeusPacientesPalco.setMaximized(false);
-                this.MeusPacientesPalco.initOwner(primaryStage);
-                this.MeusPacientesPalco.show();
+                this.meusPacientesPalco.setTitle("Meus Pacientes");
+                this.meusPacientesPalco.setScene(scene);
+                this.meusPacientesPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.meusPacientesPalco.setResizable(false);
+                this.meusPacientesPalco.setMaximized(false);
+                this.meusPacientesPalco.initOwner(primaryStage);
+                this.meusPacientesPalco.show();
                 /*Pegamos a referencia da HomeController*/
                 this.meusPacientesController.pegarHomeReferencia(this);
                 this.meusPacientesController.carregarTabela();
@@ -302,9 +307,9 @@ public class HomeController implements Initializable {
                 Log.relatarExcecao(HomeController.class.getName(), ex);
             }
         } else {
-            this.MeusPacientesPalco.show();
+            this.meusPacientesPalco.show();
             this.meusPacientesController.carregarTabela();
-            this.MeusPacientesPalco.requestFocus();
+            this.meusPacientesPalco.requestFocus();
         }
     }
 
@@ -347,18 +352,18 @@ public class HomeController implements Initializable {
         if (!abriuAgendamento) {
             FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Agendamento.fxml"));
             try {
-                this.AgendamentoPalco = new Stage();
+                this.agendamentoPalco = new Stage();
                 Parent root;
                 root = carregar.load();
                 Scene scene = new Scene(root);
                 this.agendamentoController = carregar.getController();
-                this.AgendamentoPalco.setTitle("Agendamento");
-                this.AgendamentoPalco.setScene(scene);
-                this.AgendamentoPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.AgendamentoPalco.setResizable(false);
-                this.AgendamentoPalco.setMaximized(false);
-                this.AgendamentoPalco.initOwner(primaryStage);
-                this.AgendamentoPalco.show();
+                this.agendamentoPalco.setTitle("Agendamento");
+                this.agendamentoPalco.setScene(scene);
+                this.agendamentoPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
+                this.agendamentoPalco.setResizable(false);
+                this.agendamentoPalco.setMaximized(false);
+                this.agendamentoPalco.initOwner(primaryStage);
+                this.agendamentoPalco.show();
                 this.agendamentoController.iniciarProcessos();
                 //this.agendamentoController.carregarTabela();
                 this.abriuAgendamento = true;
@@ -368,8 +373,8 @@ public class HomeController implements Initializable {
             }
         } else {
             this.agendamentoController.refresh();
-            this.AgendamentoPalco.show();
-            this.AgendamentoPalco.requestFocus();
+            this.agendamentoPalco.show();
+            this.agendamentoPalco.requestFocus();
             this.agendamentoController.iniciarProcessos();
             //this.agendamentoController.carregarTabela();
         }
@@ -559,6 +564,38 @@ public class HomeController implements Initializable {
             this.dependentesController.refresh();
             this.cadDependentesPalco.show();
             this.dependentesController.iniciarProcessos();
+        }
+    }
+
+    /**
+     * Método que chama a Tela meus Dependentes.
+     */
+    @FXML
+    private void meusDependentes() {
+        if (!abriuMeusDependentes) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/MeusDependentes.fxml"));
+            try {
+                Parent root = carregar.load();
+                this.meusDependentes = new Stage();
+                this.meusDependentes.setTitle("Meus Dependentes");
+                this.meusDependentes.getIcons().add(new Image(getClass().getResourceAsStream("/img/users_icon.png")));
+                Scene cena = new Scene(root);
+                this.meusDependentes.setScene(cena);
+                this.meusDependentes.setResizable(false);
+                this.meusDependentes.setMaximized(false);
+                this.meusDependentes.initOwner(primaryStage);
+                this.meusDependentesController = carregar.getController();
+                this.meusDependentesController.iniciarProcessos();
+                this.meusDependentes.show();
+                abriuMeusDependentes = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(HomeController.class.getName(), ex);
+            }
+        } else {
+            this.meusDependentesController.refresh();
+            this.meusDependentesController.iniciarProcessos();
+            this.meusDependentes.show();
         }
     }
 
