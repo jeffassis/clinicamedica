@@ -210,6 +210,7 @@ public class PrecoExameController implements Initializable {
 //                    break;
 //                }
 //            }
+            /*testando o uso do setValue para troca-lo pelo for*/
             cb_categoria.setValue(valorExameModel.getCategoriaModel());
             flag = 2;
         }
