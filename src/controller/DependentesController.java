@@ -75,24 +75,10 @@ public class DependentesController implements Initializable {
         formatter = new MaskFormatter(txt_telefone1);
         formatter.setMask(MaskFormatter.TEL_8DIG);
         formatter.showMask();
-        /*Não esta funcionando para os TextField do telefone*/
-//        formatter.addComponente(txt_telefone2, MaskFormatter.TEL_8DIG, true);
-//        formatter.addComponente(txt_telefone3, MaskFormatter.TEL_8DIG, true);
-//        formatter.addComponente(txt_telefone4, MaskFormatter.TEL_8DIG, true);
-//        formatter.addComponente(txt_telefone5, MaskFormatter.TEL_8DIG, true);
-        /*até eu resolver o BUG dos textFields aqui, tive q fazer desta forma*/
-        formatter = new MaskFormatter(txt_telefone2);
-        formatter.setMask(MaskFormatter.TEL_8DIG);
-        formatter.showMask();
-        formatter = new MaskFormatter(txt_telefone3);
-        formatter.setMask(MaskFormatter.TEL_8DIG);
-        formatter.showMask();
-        formatter = new MaskFormatter(txt_telefone4);
-        formatter.setMask(MaskFormatter.TEL_8DIG);
-        formatter.showMask();
-        formatter = new MaskFormatter(txt_telefone5);
-        formatter.setMask(MaskFormatter.TEL_8DIG);
-        formatter.showMask();
+        formatter.addComponente(txt_telefone2, MaskFormatter.TEL_8DIG, true);
+        formatter.addComponente(txt_telefone3, MaskFormatter.TEL_8DIG, true);
+        formatter.addComponente(txt_telefone4, MaskFormatter.TEL_8DIG, true);
+        formatter.addComponente(txt_telefone5, MaskFormatter.TEL_8DIG, true);
         formatter.addComponente(dp_nascimento1, MaskFormatter.DATA_BARRA, true);
         formatter.addComponente(dp_nascimento2, MaskFormatter.DATA_BARRA, true);
         formatter.addComponente(dp_nascimento3, MaskFormatter.DATA_BARRA, true);
