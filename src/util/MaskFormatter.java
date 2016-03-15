@@ -411,7 +411,7 @@ public class MaskFormatter {
      * @param showMask
      */
     public void addComponente(TextField field, int maskType, boolean showMask) {
-        MaskFormatter formatter = new MaskFormatter(textField);
+        MaskFormatter formatter = new MaskFormatter(field);
         formatter.setMask(maskType);
         if (showMask) {
             formatter.showMask();
