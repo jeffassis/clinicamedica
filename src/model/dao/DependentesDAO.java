@@ -117,8 +117,8 @@ public class DependentesDAO {
             switch (operacao) {
                 case QUERY_TODOS:
                     sql = "select * from dependente left join paciente_dependente"
-                            + "on id_dependente = id_codigo_dependente left join paciente"
-                            + "on id_codigo_paciente = id_paciente";
+                            + " on id_dependente = id_codigo_dependente left join paciente"
+                            + " on id_codigo_paciente = id_paciente";
                     ps = conexao.prepareStatement(sql);
                     rs = ps.executeQuery();
                     while (rs.next()) {
@@ -151,8 +151,8 @@ public class DependentesDAO {
                     return lista;
                 case QUERY_PACIENTE:
                     sql = "select * from dependente left join paciente_dependente"
-                            + "on id_dependente = id_codigo_dependente left join paciente"
-                            + "on id_codigo_paciente = id_paciente where id_paciente = ?";
+                            + " on id_dependente = id_codigo_dependente left join paciente"
+                            + " on id_codigo_paciente = id_paciente where id_paciente = ?";
                     ps = conexao.prepareStatement(sql);
                     ps.setInt(1, dm.getPacienteModel().getCodigo());
                     rs = ps.executeQuery();
@@ -186,8 +186,8 @@ public class DependentesDAO {
                     return lista;
                 case QUERY_DEPENDENTE:
                     sql = "select * from dependente left join paciente_dependente"
-                            + "on id_dependente = id_codigo_dependente left join paciente"
-                            + "on id_codigo_paciente = id_paciente where id_dependente = ?";
+                            + " on id_dependente = id_codigo_dependente left join paciente"
+                            + " on id_codigo_paciente = id_paciente where id_dependente = ?";
                     ps = conexao.prepareStatement(sql);
                     ps.setInt(1, dm.getCodigo());
                     rs = ps.executeQuery();
@@ -221,8 +221,8 @@ public class DependentesDAO {
                     return lista;
                 case QUERY_NOME:
                     sql = "select * from dependente left join paciente_dependente"
-                            + "on id_dependente = id_codigo_dependente left join paciente"
-                            + "on id_codigo_paciente = id_paciente where nome_dependente = ?";
+                            + " on id_dependente = id_codigo_dependente left join paciente"
+                            + " on id_codigo_paciente = id_paciente where nome_dependente = ?";
                     ps = conexao.prepareStatement(sql);
                     ps.setString(1, dm.getNome());
                     rs = ps.executeQuery();
@@ -264,11 +264,12 @@ public class DependentesDAO {
             return lista;
         }
     }
-    
+
     /**
      * Adiciona vários dependentes no banco e atribuir eles a um paciente.
+     *
      * @param list
-     * @return 
+     * @return
      */
     public static boolean executeMultiUpdates(List<DependenteModel> list) {
         Connection conexao = ConnectionFactory.getConnection();
