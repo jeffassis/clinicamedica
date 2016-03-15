@@ -29,11 +29,11 @@
             <Image url="@../img/search24.png" />
          </image>
       </ImageView>
-      <Label layoutX="14.0" layoutY="14.0" text="Escolha um Procedimento:" AnchorPane.topAnchor="10.0" />
-      <GridPane layoutX="14.0" layoutY="223.0" prefHeight="90.0" prefWidth="581.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="225.0">
+      <Label layoutX="47.0" layoutY="10.0" text="Escolha um Exame:" AnchorPane.topAnchor="10.0" />
+      <GridPane layoutX="14.0" layoutY="223.0" prefHeight="90.0" prefWidth="565.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="225.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="286.0" minWidth="10.0" prefWidth="75.0" />
-          <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="506.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="286.0" minWidth="10.0" prefWidth="81.0" />
+          <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="484.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -55,12 +55,12 @@
             <ComboBox fx:id="cb_categoria" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Label layoutX="20.0" layoutY="343.0" text="Valores Pagos">
+      <Label layoutX="27.0" layoutY="343.0" text="Valores Pagos">
          <font>
             <Font name="Arial Bold" size="14.0" />
          </font>
       </Label>
-      <GridPane layoutX="17.0" layoutY="373.0" prefHeight="66.0" prefWidth="226.0">
+      <GridPane layoutX="17.0" layoutY="373.0" prefHeight="66.0" prefWidth="226.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="350.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.0" minWidth="10.0" prefWidth="95.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.0" minWidth="10.0" prefWidth="131.0" />
@@ -78,7 +78,7 @@
       </GridPane>
       <HBox layoutX="20.0" layoutY="456.0" spacing="15.0" AnchorPane.leftAnchor="20.0">
          <children>
-            <Button fx:id="bt_ok" mnemonicParsing="false" onAction="#onSave" prefHeight="40.0" prefWidth="90.0" text="OK">
+            <Button fx:id="bt_ok" mnemonicParsing="false" onAction="#onSave" prefHeight="40.0" prefWidth="100.0" text="OK">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -86,7 +86,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button mnemonicParsing="false" onAction="#onCancel" prefHeight="40.0" prefWidth="90.0" text="Cancelar">
+            <Button mnemonicParsing="false" onAction="#onCancel" prefHeight="40.0" prefWidth="100.0" text="Cancelar">
                <graphic>
                   <ImageView fx:id="bt_cancelar" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -97,6 +97,6 @@
             </Button>
          </children>
       </HBox>
-      <TextField fx:id="txt_id_valor" layoutX="360.0" layoutY="339.0" />
+      <TextField fx:id="txt_id_valor" layoutX="360.0" layoutY="339.0" opacity="0.0" text="id_codigo" />
    </children>
 </AnchorPane>

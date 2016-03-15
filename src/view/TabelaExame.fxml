@@ -17,7 +17,7 @@
                <children>
                   <ToolBar layoutX="-8.0" layoutY="1.0" prefHeight="42.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
-                      <Button fx:id="bt_adicionar" mnemonicParsing="false" onAction="#precoExame" prefWidth="90.0" text="Adicionar">
+                      <Button fx:id="bt_adicionar" mnemonicParsing="false" onAction="#precoExame" prefWidth="100.0" text="Adicionar">
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -53,10 +53,10 @@
                   <TableView fx:id="tabela_valor_exame" layoutX="46.0" layoutY="40.0" onMouseClicked="#onMouseClick" prefHeight="350.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="codigoColuna" prefWidth="61.0" text="Código" />
-                      <TableColumn fx:id="exameColuna" prefWidth="381.0" text="Exame" />
-                        <TableColumn fx:id="categoriaColuna" prefWidth="75.0" text="Categoria" />
-                        <TableColumn fx:id="valor_exameColuna" prefWidth="91.0" text="Val. Exame" />
-                        <TableColumn fx:id="valor_categoriaColuna" prefWidth="97.0" text="Val. Categoria" />
+                      <TableColumn fx:id="exameColuna" prefWidth="345.0" text="Exame" />
+                        <TableColumn fx:id="categoriaColuna" prefWidth="83.0" text="Categoria" />
+                        <TableColumn fx:id="valor_exameColuna" prefWidth="92.0" text="Val. Exame" />
+                        <TableColumn fx:id="valor_categoriaColuna" prefWidth="124.0" text="Val. Categoria" />
                     </columns>
                   </TableView>
                </children>
