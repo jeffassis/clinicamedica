@@ -227,7 +227,7 @@ public class GerarMensalidadeController implements Initializable {
             bt_editar.setDisable(true);
             bt_excluir.setDisable(true);
             habilitarCampos();
-            cb_paciente.requestFocus();
+            //cb_paciente.requestFocus();
             flag = 2;
         }
     }
@@ -300,7 +300,7 @@ public class GerarMensalidadeController implements Initializable {
         txt_valor.setText("");
         txt_desconto.setText("");
         cb_mes.getSelectionModel().clearSelection();
-        cb_paciente.getSelectionModel().clearSelection();
+        cb_paciente.getEditor().setText("");
         dp_data.getEditor().clear();
     }
 
