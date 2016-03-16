@@ -116,10 +116,16 @@
                      </graphic></MenuItem>
             </items>
           </Menu>
-            <Menu fx:id="menuConsulta" mnemonicParsing="false" text="Consultas">
+            <Menu fx:id="menuFinanceiro" mnemonicParsing="false" text="Financeiro">
               <items>
-                <MenuItem mnemonicParsing="false" text="Mensalidades" />
-                  <MenuItem mnemonicParsing="false" text="Historico de Exames Paciente" />
+                  <MenuItem mnemonicParsing="false" onAction="#gerarMensalidade" text="Gerar Mensalidade" />
+                  <Menu mnemonicParsing="false" text="Contas a Receber">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Lançamento Receber" />
+                      <MenuItem mnemonicParsing="false" text="Recebimento" />
+                      <MenuItem mnemonicParsing="false" text="Cobrança" />
+                    </items>
+                  </Menu>
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Relatórios">
