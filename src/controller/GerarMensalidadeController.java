@@ -237,17 +237,21 @@ public class GerarMensalidadeController implements Initializable {
      */
     @FXML
     private void onDelete() {
-        if (DialogFX.showConfirmation("Deseja Excluir ?")) {
-            this.mensalidadeModel = tabela_mensalidade.getItems().get(
-                    tabela_mensalidade.getSelectionModel().getSelectedIndex());
-            if (MensalidadeDAO.executeUpdates(mensalidadeModel, MensalidadeDAO.DELETE)) {
-                tabela_mensalidade.getItems().remove(
+        if (tabela_mensalidade.getSelectionModel().getSelectedItem() != null) {
+            if (DialogFX.showConfirmation("Deseja Excluir ?")) {
+                this.mensalidadeModel = tabela_mensalidade.getItems().get(
                         tabela_mensalidade.getSelectionModel().getSelectedIndex());
-                DialogFX.showMessage("Excluido com sucesso!", "Sucesso", DialogFX.SUCESS);
-                desabilitarCampos();
-            } else {
-                DialogFX.showMessage("Não foi possivel excluir dados", "Erro", DialogFX.ERRO);
+                if (MensalidadeDAO.executeUpdates(mensalidadeModel, MensalidadeDAO.DELETE)) {
+                    tabela_mensalidade.getItems().remove(
+                            tabela_mensalidade.getSelectionModel().getSelectedIndex());
+                    DialogFX.showMessage("Excluido com sucesso!", "Sucesso", DialogFX.SUCESS);
+                    desabilitarCampos();
+                } else {
+                    DialogFX.showMessage("Não foi possivel excluir dados", "Erro", DialogFX.ERRO);
+                }
             }
+        } else {
+            DialogFX.showMessage("Selecione uma mensalidade na Tabela!", "Atenção", DialogFX.ATENCAO);
         }
     }
 
