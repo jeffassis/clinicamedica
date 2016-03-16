@@ -5,6 +5,7 @@
  */
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -12,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -19,6 +21,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.bean.DependenteModel;
 import model.dao.DependentesDAO;
 import util.AutoCompleteComboBox;
@@ -31,7 +34,7 @@ import util.MaskFormatter;
  * @author jeanderson
  */
 public class MeusDependentesController implements Initializable {
-
+    
     @FXML
     private ComboBox<DependenteModel> cb_dependentes;
     @FXML
@@ -44,11 +47,11 @@ public class MeusDependentesController implements Initializable {
     private DatePicker dp_nascimento;
     @FXML
     private TextField txt_codigo, txt_paciente, txt_dependente, txt_telefone;
-
+    
     private boolean editar;
     private AutoCompleteComboBox autoCompleteComboBox;
     private MaskFormatter formatter;
-
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> parentesco = FXCollections.observableArrayList();
@@ -76,13 +79,13 @@ public class MeusDependentesController implements Initializable {
                 cb_dependentes.setItems(DependentesDAO.executeQuery(null, DependentesDAO.QUERY_TODOS));
                 return null;
             }
-
+            
             @Override
             protected void succeeded() {
                 super.succeeded();
                 autoCompleteComboBox.saveData();
             }
-
+            
         };
         Thread t = new Thread(task);
         t.setDaemon(true);
@@ -132,7 +135,7 @@ public class MeusDependentesController implements Initializable {
             } else {
                 DialogFX.showMessage("Houve um erro ao alterar dados", "ERRO!", DialogFX.ERRO);
             }
-        }else{
+        } else {
             
         }
     }
@@ -151,12 +154,25 @@ public class MeusDependentesController implements Initializable {
             bt_alterar.setDisable(false);
         }
     }
+
     /**
      * Evento que é lançado quando o MenuItem excluir e pressionado.
      */
     @FXML
-    private void onExcluir(){
-        /*Falta Implementar*/
+    private void onExcluir() {
+        if (!cb_dependentes.getSelectionModel().isSelected(-1)) {
+            DependenteModel dm = cb_dependentes.getSelectionModel().getSelectedItem();
+            if (DialogFX.showConfirmation("Deseja realmente excluir este dependente ?", "Excluir dependente")) {
+                if (DependentesDAO.executeUpdates(dm, DependentesDAO.DELETE)) {
+                    cb_dependentes.getItems().remove(dm);
+                    DialogFX.showMessage("Dependente Excluido com sucesso", "Sucesso!", DialogFX.SUCESS);
+                } else {
+                    DialogFX.showMessage("Houve um erro ao excluir o dependente", "ERRO!", DialogFX.ERRO);
+                }
+            }
+        } else {
+            DialogFX.showMessage("Por favor selecione antes um dependente!", "Dependente não selecionado", DialogFX.ATENCAO);
+        }
     }
 
     /**
@@ -178,7 +194,7 @@ public class MeusDependentesController implements Initializable {
             /*Fecha a janela*/
             ((Node) evento.getSource()).getScene().getWindow().hide();
         }
-
+        
     }
 
     /**
@@ -191,5 +207,12 @@ public class MeusDependentesController implements Initializable {
         dp_nascimento.getEditor().setText("");
         cb_parent.getSelectionModel().clearSelection();
     }
-
+    
+    @FXML
+    private void onVerDados(){
+        FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/PacienteDetalhe.fxml"));
+        Stage palco = new Stage();
+        
+    }
+    
 }
