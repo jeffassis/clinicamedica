@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GerarMensalidadeController">
+   <children>
+      <SplitPane dividerPositions="0.4578313253012048" layoutX="111.0" layoutY="48.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <GridPane layoutX="31.0" layoutY="39.0" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="15.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="92.0" />
+                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="287.0" minWidth="10.0" prefWidth="248.0" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="141.0" minWidth="10.0" prefWidth="127.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="191.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Valor:" GridPane.columnIndex="2">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Descontos:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Mes:" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="txt_valor" disable="true" GridPane.columnIndex="3" />
+                        <TextField fx:id="txt_desconto" disable="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label text="Paciente:" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Data Pagto:" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <ComboBox fx:id="cb_mes" disable="true" prefHeight="26.0" prefWidth="192.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="cb_paciente" disable="true" prefHeight="26.0" prefWidth="228.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Codigo:">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="txt_codigo" disable="true" prefHeight="26.0" prefWidth="103.0" GridPane.columnIndex="1" />
+                        <DatePicker fx:id="dp_data" disable="true" prefHeight="26.0" prefWidth="230.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+                  <HBox layoutX="63.0" layoutY="196.0" spacing="15.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="180.0">
+                     <children>
+                        <Button fx:id="bt_novo" mnemonicParsing="false" onAction="#onNew" prefHeight="32.0" prefWidth="100.0" text="Novo">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/new16.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="bt_salvar" disable="true" mnemonicParsing="false" onAction="#onSave" prefHeight="32.0" prefWidth="100.0" text="Salvar">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/save16.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="bt_editar" disable="true" mnemonicParsing="false" onAction="#onEdit" prefHeight="32.0" prefWidth="100.0" text="Editar">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/edit16.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="bt_excluir" disable="true" mnemonicParsing="false" onAction="#onDelete" prefHeight="32.0" prefWidth="100.0" text="Excluir">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/delete16.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="bt_cancelar" mnemonicParsing="false" onAction="#onCancel" prefHeight="32.0" prefWidth="100.0" text="Cancelar">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/cancel16.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TableView fx:id="tabela_mensalidade" layoutX="77.0" layoutY="19.0" onMouseClicked="#onClicked" prefHeight="238.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                        <TableColumn fx:id="codigoColuna" prefWidth="70.0" text="Codigo" />
+                      <TableColumn fx:id="mesColuna" prefWidth="120.0" text="Nome Mes" />
+                      <TableColumn fx:id="dataColuna" prefWidth="110.0" text="Data Pagto" />
+                        <TableColumn fx:id="mensalColuna" prefWidth="100.0" text="R$ Mensal" />
+                        <TableColumn fx:id="descontoColuna" prefWidth="100.0" text="Desconto" />
+                        <TableColumn fx:id="valor_finalColuna" prefWidth="98.0" text="Valor Final" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

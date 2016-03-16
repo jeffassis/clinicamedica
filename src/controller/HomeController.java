@@ -39,13 +39,14 @@ public class HomeController implements Initializable {
     /*Variavel booleana para verificar se as Janelas já estão abertas*/
     private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento,
             abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadExame,
-            abriuCadCategoria, abriuTabelaExame, abriuDependentes, abriuMensalidade, abriuMeusDependentes;
+            abriuCadCategoria, abriuTabelaExame, abriuDependentes, abriuMensalidade, abriuMeusDependentes,
+            abriuGerarMensalidade;
 
     /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
     private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
             MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadExamePalco,
             primaryStage, cadCategoriaPalco, tabelaExamePalco, cadDependentesPalco,
-            mensalidadePalco, meusDependentes;
+            mensalidadePalco, meusDependentes, gerarMensalidadePalco;
 
     /*Declaração que representa a class Controller*/
     private MedicosController medicosController;
@@ -60,6 +61,7 @@ public class HomeController implements Initializable {
     private TabelaExameController tabelaExameController;
     private DependentesController dependentesController;
     private MensalidadeController mensalidadeController;
+    private GerarMensalidadeController gerarMensalidadeController;
     private MeusDependentesController meusDependentesController;
 
     /*Declaração dos TreeItem*/
@@ -104,7 +106,7 @@ public class HomeController implements Initializable {
         this.nodeB3 = new TreeItem<>("Tabela de Exames", new ImageView(icon));
         this.nodeB4 = new TreeItem<>("Meus Dependentes", new ImageView(icon));
         /*Adicionando os filhos do nodeB*/
-        nodeB.getChildren().addAll(nodeB1, nodeB4, nodeB3,nodeB2);
+        nodeB.getChildren().addAll(nodeB1, nodeB4, nodeB3, nodeB2);
         /*Adicionando o Node Pai a TreeView*/
         treeView.setRoot(root);
     }
@@ -629,6 +631,41 @@ public class HomeController implements Initializable {
             this.meusDependentesController.refresh();
             this.meusDependentesController.iniciarProcessos();
             this.meusDependentes.show();
+        }
+    }
+
+    /**
+     * Método para chamar a GUI de gerarMensalidade
+     */
+    @FXML
+    private void gerarMensalidade() {
+        if (!abriuGerarMensalidade) {
+            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/GerarMensalidade.fxml"));
+            try {
+                this.gerarMensalidadePalco = new Stage();
+                Parent root;
+                root = carregar.load();
+                Scene scene = new Scene(root);
+                this.gerarMensalidadeController = carregar.getController();
+                this.gerarMensalidadePalco.setTitle("Gerar Mensalidade");
+                this.gerarMensalidadePalco.setScene(scene);
+                this.gerarMensalidadePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/paciente64.png")));
+                this.gerarMensalidadePalco.setResizable(false);
+                this.gerarMensalidadePalco.setMaximized(false);
+                this.gerarMensalidadeController.iniciarProcessos();
+                this.gerarMensalidadeController.carregarTabela();
+                this.gerarMensalidadePalco.show();
+
+                this.abriuGerarMensalidade = true;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            this.gerarMensalidadeController.carregarTabela();
+            this.gerarMensalidadeController.iniciarProcessos();
+            this.gerarMensalidadePalco.show();
+            this.gerarMensalidadePalco.requestFocus();
         }
     }
 }
