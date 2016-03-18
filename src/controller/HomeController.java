@@ -620,7 +620,7 @@ public class HomeController implements Initializable {
                 this.meusDependentes.setMaximized(false);
                 this.meusDependentes.initOwner(primaryStage);
                 this.meusDependentesController = carregar.getController();
-                this.meusDependentesController.iniciarProcessos();
+                this.meusDependentesController.iniciarProcessos(this);
                 this.meusDependentes.show();
                 abriuMeusDependentes = true;
             } catch (IOException ex) {
@@ -629,7 +629,7 @@ public class HomeController implements Initializable {
             }
         } else {
             this.meusDependentesController.refresh();
-            this.meusDependentesController.iniciarProcessos();
+            this.meusDependentesController.iniciarProcessos(this);
             this.meusDependentes.show();
         }
     }
