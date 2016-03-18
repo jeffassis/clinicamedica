@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="448.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="controller.PacienteDetalheController">
+<AnchorPane id="AnchorPane" prefHeight="448.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PacienteDetalheController">
    <children>
       <GridPane layoutX="8.0" layoutY="7.0" prefHeight="364.0" prefWidth="690.0">
          <columnConstraints>
@@ -38,19 +37,19 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <TextField fx:id="txt_observacoes" disable="true" editable="false" prefHeight="25.0" prefWidth="133.0" GridPane.columnSpan="5" GridPane.rowIndex="11" />
+            <TextField fx:id="txt_observacoes" editable="false" prefHeight="25.0" prefWidth="133.0" GridPane.columnSpan="5" GridPane.rowIndex="11" />
             <Label text="Matricula:" />
             <Label text="Data Nascimento:" GridPane.rowIndex="2" />
             <Label text="Cidade:" GridPane.rowIndex="4" />
             <Label text="Documento:" GridPane.rowIndex="6" />
             <Label text="Tipo:" GridPane.rowIndex="8" />
             <Label text="Observações:" GridPane.rowIndex="10" />
-            <TextField fx:id="txt_matricula" disable="true" editable="false" GridPane.rowIndex="1">
+            <TextField fx:id="txt_matricula" editable="false" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="txt_tipo" disable="true" editable="false" GridPane.columnSpan="2" GridPane.rowIndex="9">
+            <TextField fx:id="txt_tipo" editable="false" GridPane.columnSpan="2" GridPane.rowIndex="9">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
@@ -60,7 +59,7 @@
                   <Insets left="7.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="txt_nome" disable="true" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="1">
+            <TextField fx:id="txt_nome" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
@@ -70,7 +69,7 @@
                   <Insets left="7.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="txt_endereco" disable="true" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
+            <TextField fx:id="txt_endereco" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>
@@ -80,7 +79,7 @@
                   <Insets left="7.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="txt_telefone" disable="true" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="3">
+            <TextField fx:id="txt_telefone" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
@@ -95,7 +94,7 @@
                   <Insets left="7.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="txt_cep" disable="true" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="5">
+            <TextField fx:id="txt_cep" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
@@ -110,7 +109,7 @@
                   <Insets left="7.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="txt_email" disable="true" editable="false" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="9">
+            <TextField fx:id="txt_email" editable="false" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="9">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
@@ -120,24 +119,24 @@
                   <Insets left="7.0" />
                </GridPane.margin>
             </Label>
-            <DatePicker fx:id="dp_nascimento" disable="true" editable="false" GridPane.rowIndex="3" />
-            <DatePicker fx:id="dp_cliente" disable="true" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-            <TextField fx:id="txt_cidade" disable="true" GridPane.columnSpan="2" GridPane.rowIndex="5">
+            <DatePicker fx:id="dp_nascimento" editable="false" GridPane.rowIndex="3" />
+            <DatePicker fx:id="dp_cliente" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+            <TextField fx:id="txt_cidade" editable="false" GridPane.columnSpan="2" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="txt_documento" disable="true" editable="false" GridPane.columnSpan="2" GridPane.rowIndex="7">
+            <TextField fx:id="txt_documento" editable="false" GridPane.columnSpan="2" GridPane.rowIndex="7">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="txt_bairro" disable="true" editable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="213.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5">
+            <TextField fx:id="txt_bairro" editable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="213.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="txt_sexo" disable="true" editable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="213.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="7">
+            <TextField fx:id="txt_sexo" editable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="213.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="7">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
@@ -146,12 +145,12 @@
       </GridPane>
       <HBox layoutX="562.0" layoutY="393.0" spacing="10.0">
          <children>
-            <Button fx:id="bt_editar" onAction="#onEditar" mnemonicParsing="false" text="Editar">
+            <Button fx:id="bt_editar" mnemonicParsing="false" onAction="#onEditar" text="Editar">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="bt_voltar" onAction="#onVoltar"  mnemonicParsing="false" text="Voltar">
+            <Button fx:id="bt_voltar" mnemonicParsing="false" onAction="#onVoltar" text="Voltar">
                <font>
                   <Font size="14.0" />
                </font>
