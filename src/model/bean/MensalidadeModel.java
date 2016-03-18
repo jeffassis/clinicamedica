@@ -19,6 +19,8 @@ public class MensalidadeModel {
     private StringProperty mes;
     private StringProperty data_pagto;
     private PacienteModel pacienteModel;
+    /*Variavel que vai ter o valor com desconto*/
+    private DoubleProperty valorComDesconto;
 
     public MensalidadeModel() {
         this.codigo = new SimpleIntegerProperty();
@@ -26,6 +28,7 @@ public class MensalidadeModel {
         this.desconto = new SimpleDoubleProperty();
         this.mes = new SimpleStringProperty();
         this.data_pagto = new SimpleStringProperty();
+        this.valorComDesconto = new SimpleDoubleProperty();
     }
 
     public MensalidadeModel(int codigo, Double valor, Double desconto, String mes, String data_pagto) {
@@ -34,6 +37,7 @@ public class MensalidadeModel {
         this.desconto = new SimpleDoubleProperty(desconto);
         this.mes = new SimpleStringProperty(mes);
         this.data_pagto = new SimpleStringProperty(data_pagto);
+        this.valorComDesconto = new SimpleDoubleProperty();
     }
 
     /*Construtor do PacienteModel*/
@@ -109,4 +113,22 @@ public class MensalidadeModel {
     public void setPacienteModel(PacienteModel pacienteModel) {
         this.pacienteModel = pacienteModel;
     }
+
+    /*Não há set para não quebrar nosso encapsulamento, pois a regra de negocio
+    deve ser feita somente aqui*/
+    /**
+     * Retornar o Valor com o desconto.
+     *
+     * @return
+     */
+    public DoubleProperty getValorComDesconto() {
+        if (valor != null && desconto != null) {
+            this.valorComDesconto.set(valor.getValue() - desconto.getValue());
+            return this.valorComDesconto;
+        } else {
+            this.valorComDesconto.set(0);
+            return valorComDesconto;
+        }
+    }
+
 }
