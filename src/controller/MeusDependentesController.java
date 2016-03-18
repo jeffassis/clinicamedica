@@ -8,6 +8,8 @@ package controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -16,17 +18,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.bean.DependenteModel;
 import model.dao.DependentesDAO;
 import util.AutoCompleteComboBox;
 import util.ConverterDados;
 import util.DialogFX;
+import util.Log;
 import util.MaskFormatter;
 
 /**
@@ -48,9 +54,13 @@ public class MeusDependentesController implements Initializable {
     @FXML
     private TextField txt_codigo, txt_paciente, txt_dependente, txt_telefone;
     
-    private boolean editar;
+    private boolean editar, abriuVerDados;
     private AutoCompleteComboBox autoCompleteComboBox;
     private MaskFormatter formatter;
+    /*Vamos precisar da referencia de HomeController*/
+    private HomeController controller;
+    private PacienteDetalheController control;
+    private Stage palco;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -69,9 +79,12 @@ public class MeusDependentesController implements Initializable {
     }
 
     /**
-     * Inicializa Processos importantes.
+     * Inicializa Processos importantes e pega a referencia de HomeController.
+     *
+     * @param homeController
      */
-    public void iniciarProcessos() {
+    public void iniciarProcessos(HomeController homeController) {
+        this.controller = homeController;
         cb_dependentes.getItems().clear();
         Task task = new Task() {
             @Override
@@ -209,9 +222,34 @@ public class MeusDependentesController implements Initializable {
     }
     
     @FXML
-    private void onVerDados(){
-        FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/PacienteDetalhe.fxml"));
-        Stage palco = new Stage();
+    private void onVerDados() {
+        if (!cb_dependentes.getSelectionModel().isSelected(-1)) {
+            if (!abriuVerDados) {
+                try {
+                    FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/PacienteDetalhe.fxml"));
+                    this.palco = new Stage();
+                    Parent root = carregar.load();
+                    Scene cena = new Scene(root);
+                    palco.setScene(cena);
+                    palco.setTitle("Dados do Paciente");
+                    palco.setResizable(false);
+                    palco.setMaximized(false);
+                    palco.initModality(Modality.APPLICATION_MODAL);
+                    this.control = carregar.getController();
+                    palco.show();
+                    control.iniciarProcessos(cb_dependentes.getSelectionModel().getSelectedItem().getPacienteModel(), controller);
+                    this.abriuVerDados = true;
+                } catch (IOException ex) {
+                    Logger.getLogger(MeusDependentesController.class.getName()).log(Level.SEVERE, null, ex);
+                    Log.relatarExcecao(MeusDependentesController.class.getName(), ex);
+                }
+            } else {
+                palco.show();
+                control.iniciarProcessos(cb_dependentes.getSelectionModel().getSelectedItem().getPacienteModel(), controller);
+            }
+        } else {
+            DialogFX.showMessage("Por favor selecione antes um dependente", "Nenhum dependente selecionado", DialogFX.ATENCAO);
+        }
         
     }
     
