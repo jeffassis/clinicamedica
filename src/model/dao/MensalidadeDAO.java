@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.bean.MensalidadeModel;
 import model.bean.PacienteModel;
+import util.Log;
 
 /**
  *
@@ -75,6 +76,7 @@ public class MensalidadeDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MensalidadeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(MensalidadeDAO.class.getName(), ex);
             return false;
         }
     }
@@ -126,6 +128,7 @@ public class MensalidadeDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MensalidadeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(MensalidadeDAO.class.getName(), ex);
         }
         return listaMensalidade;
     }
