@@ -87,6 +87,8 @@ public class GerarMensalidadeController implements Initializable {
         this.dataColuna.setCellValueFactory(cellData -> cellData.getValue().getData_pagtoProperty());
         this.mensalColuna.setCellValueFactory(cellData -> cellData.getValue().getValorProperty().asObject());
         this.descontoColuna.setCellValueFactory(cellData -> cellData.getValue().getDescontoProperty().asObject());
+        /*Apenas mostro qual dados vai popular a coluna*/
+        this.valor_finalColuna.setCellValueFactory(cellData -> cellData.getValue().getValorComDesconto().asObject());
 
         /*Utilizando a nossa Classe ConverterDados*/
         this.cb_paciente.setConverter(new ConverterDados(ConverterDados.GET_PACIENTE_NOME).getPacienteConverter());
