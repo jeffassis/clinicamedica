@@ -2,6 +2,8 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
