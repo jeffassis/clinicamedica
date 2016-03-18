@@ -15,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.bean.BairroModel;
+import model.bean.CidadeModel;
 import model.bean.DependenteModel;
 import model.bean.PacienteModel;
 import util.Log;
@@ -118,7 +120,9 @@ public class DependentesDAO {
                 case QUERY_TODOS:
                     sql = "select * from dependente left join paciente_dependente"
                             + " on id_dependente = id_codigo_dependente left join paciente"
-                            + " on id_codigo_paciente = id_paciente";
+                            + " on id_codigo_paciente = id_paciente left join cidade"
+                            + " on id_codigo_cidade = id_cidade left join bairro"
+                            + " on id_codigo_bairro = id_bairro";
                     ps = conexao.prepareStatement(sql);
                     rs = ps.executeQuery();
                     while (rs.next()) {
@@ -142,6 +146,19 @@ public class DependentesDAO {
                         pacienteModel.setTipo(rs.getString("tipo_paciente"));
                         pacienteModel.setEmail(rs.getString("email_paciente"));
                         pacienteModel.setObs(rs.getString("obs_paciente"));
+                        /*Colocamos a Cidade*/
+                        CidadeModel cidadeModel = new CidadeModel();
+                        cidadeModel.setCodigo(rs.getInt("id_cidade"));
+                        cidadeModel.setNome(rs.getString("nome_cidade"));
+                        cidadeModel.setSigla(rs.getString("sigla_cidade"));
+                        /*Colocamos o Bairro*/
+                        BairroModel bairroModel = new BairroModel();
+                        bairroModel.setCodigo(rs.getInt("id_bairro"));
+                        bairroModel.setNome(rs.getString("nome_bairro"));
+                        bairroModel.setCidadeModel(cidadeModel);
+                        /*Adicionamos no PacienteModel*/
+                        pacienteModel.setCidadeModel(cidadeModel);
+                        pacienteModel.setBairroModel(bairroModel);
 
                         dependente.setPacienteModel(pacienteModel);
 
@@ -152,7 +169,9 @@ public class DependentesDAO {
                 case QUERY_PACIENTE:
                     sql = "select * from dependente left join paciente_dependente"
                             + " on id_dependente = id_codigo_dependente left join paciente"
-                            + " on id_codigo_paciente = id_paciente where id_paciente = ?";
+                            + " on id_codigo_paciente = id_paciente left join cidade"
+                            + " on id_codigo_cidade = id_cidade left join bairro"
+                            + " on id_codigo_bairro = id_bairro where id_paciente = ?";
                     ps = conexao.prepareStatement(sql);
                     ps.setInt(1, dm.getPacienteModel().getCodigo());
                     rs = ps.executeQuery();
@@ -177,6 +196,19 @@ public class DependentesDAO {
                         pacienteModel.setTipo(rs.getString("tipo_paciente"));
                         pacienteModel.setEmail(rs.getString("email_paciente"));
                         pacienteModel.setObs(rs.getString("obs_paciente"));
+                        /*Colocamos a Cidade*/
+                        CidadeModel cidadeModel = new CidadeModel();
+                        cidadeModel.setCodigo(rs.getInt("id_cidade"));
+                        cidadeModel.setNome(rs.getString("nome_cidade"));
+                        cidadeModel.setSigla(rs.getString("sigla_cidade"));
+                        /*Colocamos o Bairro*/
+                        BairroModel bairroModel = new BairroModel();
+                        bairroModel.setCodigo(rs.getInt("id_bairro"));
+                        bairroModel.setNome(rs.getString("nome_bairro"));
+                        bairroModel.setCidadeModel(cidadeModel);
+                        /*Adicionamos no PacienteModel*/
+                        pacienteModel.setCidadeModel(cidadeModel);
+                        pacienteModel.setBairroModel(bairroModel);
 
                         dependente.setPacienteModel(pacienteModel);
 
@@ -187,7 +219,9 @@ public class DependentesDAO {
                 case QUERY_DEPENDENTE:
                     sql = "select * from dependente left join paciente_dependente"
                             + " on id_dependente = id_codigo_dependente left join paciente"
-                            + " on id_codigo_paciente = id_paciente where id_dependente = ?";
+                            + " on id_codigo_paciente = id_paciente left join cidade"
+                            + " on id_codigo_cidade = id_cidade left join bairro"
+                            + " on id_codigo_bairro = id_bairro where id_dependente = ?";
                     ps = conexao.prepareStatement(sql);
                     ps.setInt(1, dm.getCodigo());
                     rs = ps.executeQuery();
@@ -212,6 +246,19 @@ public class DependentesDAO {
                         pacienteModel.setTipo(rs.getString("tipo_paciente"));
                         pacienteModel.setEmail(rs.getString("email_paciente"));
                         pacienteModel.setObs(rs.getString("obs_paciente"));
+                        /*Colocamos a Cidade*/
+                        CidadeModel cidadeModel = new CidadeModel();
+                        cidadeModel.setCodigo(rs.getInt("id_cidade"));
+                        cidadeModel.setNome(rs.getString("nome_cidade"));
+                        cidadeModel.setSigla(rs.getString("sigla_cidade"));
+                        /*Colocamos o Bairro*/
+                        BairroModel bairroModel = new BairroModel();
+                        bairroModel.setCodigo(rs.getInt("id_bairro"));
+                        bairroModel.setNome(rs.getString("nome_bairro"));
+                        bairroModel.setCidadeModel(cidadeModel);
+                        /*Adicionamos no PacienteModel*/
+                        pacienteModel.setCidadeModel(cidadeModel);
+                        pacienteModel.setBairroModel(bairroModel);
 
                         dependente.setPacienteModel(pacienteModel);
 
@@ -222,7 +269,9 @@ public class DependentesDAO {
                 case QUERY_NOME:
                     sql = "select * from dependente left join paciente_dependente"
                             + " on id_dependente = id_codigo_dependente left join paciente"
-                            + " on id_codigo_paciente = id_paciente where nome_dependente = ?";
+                            + " on id_codigo_paciente = id_paciente left join cidade"
+                            + " on id_codigo_cidade = id_cidade left join bairro"
+                            + " on id_codigo_bairro = id_bairro where nome_dependente = ?";
                     ps = conexao.prepareStatement(sql);
                     ps.setString(1, dm.getNome());
                     rs = ps.executeQuery();
@@ -247,6 +296,19 @@ public class DependentesDAO {
                         pacienteModel.setTipo(rs.getString("tipo_paciente"));
                         pacienteModel.setEmail(rs.getString("email_paciente"));
                         pacienteModel.setObs(rs.getString("obs_paciente"));
+                        /*Colocamos a Cidade*/
+                        CidadeModel cidadeModel = new CidadeModel();
+                        cidadeModel.setCodigo(rs.getInt("id_cidade"));
+                        cidadeModel.setNome(rs.getString("nome_cidade"));
+                        cidadeModel.setSigla(rs.getString("sigla_cidade"));
+                        /*Colocamos o Bairro*/
+                        BairroModel bairroModel = new BairroModel();
+                        bairroModel.setCodigo(rs.getInt("id_bairro"));
+                        bairroModel.setNome(rs.getString("nome_bairro"));
+                        bairroModel.setCidadeModel(cidadeModel);
+                        /*Adicionamos no PacienteModel*/
+                        pacienteModel.setCidadeModel(cidadeModel);
+                        pacienteModel.setBairroModel(bairroModel);
 
                         dependente.setPacienteModel(pacienteModel);
 
