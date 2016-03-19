@@ -49,6 +49,7 @@ public class MaskFormatter {
      * Passe o TextField que terá a mascara.
      *
      * @param textField
+     * @deprecated - Use o Construtor Padrão.
      */
     public MaskFormatter(TextField textField) {
         this.textField = textField;
@@ -59,17 +60,26 @@ public class MaskFormatter {
      * Passe um DatePicker que terá a mascara.
      *
      * @param datePicker
+     * @deprecated - Use o Construtor Padrão.
      */
     public MaskFormatter(DatePicker datePicker) {
         this.datePicker = datePicker;
         /*Informa que voi passado um DatePicker*/
         this.usarDatePicker = true;
     }
+    
+    /**
+     * Construtor Padrão.
+     */
+    public MaskFormatter(){
+        
+    }
 
     /**
      * Passe o tipo da Mascara. Ex: setMask(MaskFormatter.TEL_8DIG);
      *
      * @param maskType
+     * @deprecated - Não é mais necessario, use o metodo addComponentes.
      */
     public void setMask(int maskType) {
         this.maskSelecionada = maskType;
@@ -376,6 +386,7 @@ public class MaskFormatter {
     /**
      * Exibi no componente o formato de máscara selecionado. Obs: Utilizar
      * somente depois do método setMask()
+     * @deprecated - Não é mais necessario, use o metodo addComponentes.
      */
     public void showMask() {
         switch (this.maskSelecionada) {
