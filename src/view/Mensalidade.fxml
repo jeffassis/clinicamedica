@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MensalidadeController">
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MensalidadeController">
    <children>
       <SplitPane dividerPositions="0.125" layoutX="99.0" layoutY="53.0" orientation="VERTICAL" prefHeight="450.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -56,16 +55,21 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <ListView fx:id="list_paciente" layoutY="52.0" prefHeight="336.0" prefWidth="203.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0" />
                               <TextField fx:id="txt_paciente" layoutX="2.0" layoutY="21.0" prefHeight="26.0" prefWidth="208.0" />
                               <Label layoutX="61.0" layoutY="3.0" text="Pacientes" />
+                              <TableView fx:id="tabela_paciente" layoutY="57.0" prefHeight="330.0" prefWidth="214.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="57.0">
+                                <columns>
+                                  <TableColumn fx:id="pacienteCodigoColuna" prefWidth="45.0" text="Código" />
+                                  <TableColumn fx:id="pacienteColuna" prefWidth="172.0" text="Paciente" />
+                                </columns>
+                              </TableView>
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
                               <TableView fx:id="tabela_mensalidade" layoutX="60.0" layoutY="14.0" prefHeight="386.0" prefWidth="485.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
-                                  <TableColumn fx:id="codigoColuna" prefWidth="75.0" text="Codigo" />
+                                  <TableColumn fx:id="codigoColuna" prefWidth="75.0" text="Código" />
                                   <TableColumn fx:id="mesColuna" prefWidth="90.0" text="Mes Ref." />
                                     <TableColumn fx:id="dataColuna" prefWidth="90.0" text="Data Venc." />
                                     <TableColumn fx:id="descontoColuna" prefWidth="90.0" text="Desconto" />

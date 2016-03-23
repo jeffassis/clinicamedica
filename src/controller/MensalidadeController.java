@@ -11,7 +11,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.bean.MensalidadeModel;
+import model.bean.PacienteModel;
 import model.dao.MensalidadeDAO;
+import model.dao.PacienteDAO;
 
 /**
  * FXML Controller class
@@ -22,6 +24,12 @@ public class MensalidadeController implements Initializable {
 
     @FXML
     private TextField txt_paciente;
+    @FXML
+    private TableView<PacienteModel> tabela_paciente;
+    @FXML
+    private TableColumn<PacienteModel, Integer> pacienteCodigoColuna;
+    @FXML
+    private TableColumn<PacienteModel, String> pacienteColuna;
     @FXML
     private TableView<MensalidadeModel> tabela_mensalidade;
     @FXML
@@ -53,8 +61,16 @@ public class MensalidadeController implements Initializable {
         this.descontoColuna.setCellValueFactory(cellData -> cellData.getValue().getDescontoProperty().asObject());
         this.valorColuna.setCellValueFactory(cellData -> cellData.getValue().getValorProperty().asObject());
 
+        /**
+         * Carregar os dados do Paciente na TableView
+         */
+        this.pacienteCodigoColuna.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty().asObject());
+        this.pacienteColuna.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
     }
 
+    /**
+     * Método que carrega a tabela Mensalidade
+     */
     public void carregarTabela() {
         Task task = new Task() {
             @Override
@@ -66,6 +82,31 @@ public class MensalidadeController implements Initializable {
             protected void succeeded() {
                 super.succeeded();
                 tabela_mensalidade.setItems((ObservableList<MensalidadeModel>) getValue());
+            }
+        };
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    /**
+     * Método que carrega a tabela Paciente
+     *
+     * Eu fiz 2 task diferente pois a Table de Paciente vai ficar fixa, mas o
+     * povoamento dos dados da TableView de Mensalidade vai ser preenchido
+     * conforme for selecionado o paciente.
+     */
+    public void carregarTabela2() {
+        Task task = new Task() {
+            @Override
+            protected Object call() throws Exception {
+                return PacienteDAO.executeQuery(null, PacienteDAO.QUERY_TODOS);
+            }
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                tabela_paciente.setItems((ObservableList<PacienteModel>) getValue());
             }
         };
         Thread thread = new Thread(task);

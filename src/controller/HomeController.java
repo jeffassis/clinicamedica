@@ -597,6 +597,7 @@ public class HomeController implements Initializable {
                 this.mensalidadePalco.initOwner(primaryStage);
                 this.mensalidadeController.pegarHomeReferencia(this);
                 this.mensalidadeController.carregarTabela();
+                this.mensalidadeController.carregarTabela2();
                 this.mensalidadePalco.show();
 
                 this.abriuMensalidade = true;
@@ -607,6 +608,7 @@ public class HomeController implements Initializable {
             this.mensalidadePalco.show();
             this.mensalidadePalco.requestFocus();
             this.mensalidadeController.carregarTabela();
+            this.mensalidadeController.carregarTabela2();
         }
     }
 
@@ -662,7 +664,7 @@ public class HomeController implements Initializable {
                 this.gerarMensalidadePalco.setMaximized(false);
                 this.gerarMensalidadePalco.initOwner(primaryStage);
                 this.gerarMensalidadeController.iniciarProcessos();
-                this.gerarMensalidadeController.carregarTabela();
+                //this.gerarMensalidadeController.carregarTabela();
                 this.gerarMensalidadePalco.show();
 
                 this.abriuGerarMensalidade = true;
@@ -671,7 +673,7 @@ public class HomeController implements Initializable {
             }
 
         } else {
-            this.gerarMensalidadeController.carregarTabela();
+            //this.gerarMensalidadeController.carregarTabela();
             this.gerarMensalidadeController.iniciarProcessos();
             this.gerarMensalidadePalco.show();
             this.gerarMensalidadePalco.requestFocus();

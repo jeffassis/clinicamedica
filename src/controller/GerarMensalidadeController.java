@@ -134,10 +134,15 @@ public class GerarMensalidadeController implements Initializable {
      * Metodo para carregar o TableView da GUI com Thread
      */
     public void carregarTabela() {
+
+        PacienteModel paciente = cb_paciente.getSelectionModel().getSelectedItem();
+
+        MensalidadeModel mm = new MensalidadeModel(paciente);
+
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                return MensalidadeDAO.executeQuery(null, MensalidadeDAO.QUERY_TODOS);
+                return MensalidadeDAO.executeQuery(mm, MensalidadeDAO.QUERY_PACIENTE);
             }
 
             @Override

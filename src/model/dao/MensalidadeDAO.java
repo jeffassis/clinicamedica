@@ -23,6 +23,7 @@ public class MensalidadeDAO {
     public static final int DELETE = 1;
     public static final int UPDATE = 2;
     public static final int QUERY_TODOS = 3;
+    public static final int QUERY_PACIENTE = 4;
 
     public static boolean executeUpdates(MensalidadeModel mm, int operacao) {
         Connection conexao = ConnectionFactory.getConnection();
@@ -94,6 +95,40 @@ public class MensalidadeDAO {
                     sql = "select * from mensalidade "
                             + "left join paciente on id_codigo_paciente = id_paciente "
                             + "order by id_mensalidade";
+                    ps = conexao.prepareStatement(sql);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        /*Atributos da mensalidade*/
+                        mensalidadeModel = new MensalidadeModel();
+                        mensalidadeModel.setCodigo(rs.getInt("id_mensalidade"));
+                        mensalidadeModel.setValor(rs.getDouble("valor_mensalidade"));
+                        mensalidadeModel.setDesconto(rs.getDouble("desconto_mensalidade"));
+                        mensalidadeModel.setMes(rs.getString("mes_mensalidade"));
+                        mensalidadeModel.setData_pagto(rs.getString("data_mensalidade"));
+
+                        PacienteModel pacienteModel = new PacienteModel();
+                        pacienteModel.setCodigo(rs.getInt("id_paciente"));
+                        pacienteModel.setNome(rs.getString("nome_paciente"));
+                        pacienteModel.setNascimento(rs.getString("nascimento_paciente"));
+                        pacienteModel.setEndereco(rs.getString("endereco_paciente"));
+                        pacienteModel.setTelefone(rs.getString("telefone_paciente"));
+                        pacienteModel.setCep(rs.getString("cep_paciente"));
+                        pacienteModel.setDocumento(rs.getString("documento_paciente"));
+                        pacienteModel.setSexo(rs.getString("sexo_paciente"));
+                        pacienteModel.setData_cliente(rs.getString("data_cliente_paciente"));
+                        pacienteModel.setTipo(rs.getString("tipo_paciente"));
+                        pacienteModel.setEmail(rs.getString("email_paciente"));
+                        pacienteModel.setObs(rs.getString("obs_paciente"));
+
+                        mensalidadeModel.setPacienteModel(pacienteModel);
+
+                        listaMensalidade.add(mensalidadeModel);
+                    }
+                    ConnectionFactory.closeConnection(conexao, ps, rs);
+                    return listaMensalidade;
+                case QUERY_PACIENTE:
+                    sql = "select * from paciente left join mensalidade on "
+                            + "id_codigo_paciente = id_paciente where nome_paciente=?";
                     ps = conexao.prepareStatement(sql);
                     rs = ps.executeQuery();
                     while (rs.next()) {
