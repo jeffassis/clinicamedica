@@ -43,6 +43,8 @@ public class MensalidadeController implements Initializable {
     @FXML
     private TableColumn<MensalidadeModel, Double> valorColuna;
     @FXML
+    private TableColumn<MensalidadeModel, Boolean> pagoColuna;
+    @FXML
     private Button bt_salvar;
 
     private HomeController homeController;
@@ -60,6 +62,7 @@ public class MensalidadeController implements Initializable {
         this.dataColuna.setCellValueFactory(cellData -> cellData.getValue().getData_pagtoProperty());
         this.descontoColuna.setCellValueFactory(cellData -> cellData.getValue().getDescontoProperty().asObject());
         this.valorColuna.setCellValueFactory(cellData -> cellData.getValue().getValorProperty().asObject());
+        this.pagoColuna.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
 
         /**
          * Carregar os dados do Paciente na TableView

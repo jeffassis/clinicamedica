@@ -36,14 +36,16 @@ public class MensalidadeDAO {
                             + "desconto_mensalidade,"
                             + "mes_mensalidade,"
                             + "data_mensalidade,"
-                            + "id_codigo_paciente)"
-                            + "values(?,?,?,?,?)";
+                            + "id_codigo_paciente,"
+                            + "status)"
+                            + "values(?,?,?,?,?,?)";
                     ps = conexao.prepareStatement(sql);
                     ps.setDouble(1, mm.getValor());
                     ps.setDouble(2, mm.getDesconto());
                     ps.setString(3, mm.getMes());
                     ps.setString(4, mm.getData_pagto());
                     ps.setInt(5, mm.getPacienteModel().getCodigo());
+                    ps.setBoolean(6, mm.getStatus());
                     ps.executeUpdate();
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
@@ -59,7 +61,8 @@ public class MensalidadeDAO {
                             + "desconto_mensalidade=?,"
                             + "mes_mensalidade=?,"
                             + "data_mensalidade=?,"
-                            + "id_codigo_paciente=? "
+                            + "id_codigo_paciente=?,"
+                            + "status=? "
                             + "where id_mensalidade=?";
                     ps = conexao.prepareStatement(sql);
                     ps.setDouble(1, mm.getValor());
@@ -67,7 +70,8 @@ public class MensalidadeDAO {
                     ps.setString(3, mm.getMes());
                     ps.setString(4, mm.getData_pagto());
                     ps.setInt(5, mm.getPacienteModel().getCodigo());
-                    ps.setInt(6, mm.getCodigo());
+                    ps.setBoolean(6, mm.getStatus());
+                    ps.setInt(7, mm.getCodigo());
                     ps.executeUpdate();
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
@@ -105,6 +109,7 @@ public class MensalidadeDAO {
                         mensalidadeModel.setDesconto(rs.getDouble("desconto_mensalidade"));
                         mensalidadeModel.setMes(rs.getString("mes_mensalidade"));
                         mensalidadeModel.setData_pagto(rs.getString("data_mensalidade"));
+                        mensalidadeModel.setStatus(rs.getBoolean("status"));
 
                         PacienteModel pacienteModel = new PacienteModel();
                         pacienteModel.setCodigo(rs.getInt("id_paciente"));
@@ -140,6 +145,7 @@ public class MensalidadeDAO {
                         mensalidadeModel.setDesconto(rs.getDouble("desconto_mensalidade"));
                         mensalidadeModel.setMes(rs.getString("mes_mensalidade"));
                         mensalidadeModel.setData_pagto(rs.getString("data_mensalidade"));
+                        mensalidadeModel.setStatus(rs.getBoolean("status"));
 
                         PacienteModel pacienteModel = new PacienteModel();
                         pacienteModel.setCodigo(rs.getInt("id_paciente"));
