@@ -57,7 +57,7 @@
                            <children>
                               <TextField fx:id="txt_paciente" layoutX="2.0" layoutY="21.0" prefHeight="26.0" prefWidth="208.0" />
                               <Label layoutX="61.0" layoutY="3.0" text="Pacientes" />
-                              <TableView fx:id="tabela_paciente" layoutY="57.0" prefHeight="330.0" prefWidth="214.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="57.0">
+                              <TableView fx:id="tabela_paciente" layoutY="57.0" onMouseClicked="#preencheTabela" prefHeight="330.0" prefWidth="214.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="57.0">
                                 <columns>
                                   <TableColumn fx:id="pacienteCodigoColuna" prefWidth="45.0" text="Código" />
                                   <TableColumn fx:id="pacienteColuna" prefWidth="172.0" text="Paciente" />

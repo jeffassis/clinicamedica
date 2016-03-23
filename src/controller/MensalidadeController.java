@@ -71,11 +71,16 @@ public class MensalidadeController implements Initializable {
     /**
      * Método que carrega a tabela Mensalidade
      */
-    public void carregarTabela() {
+    public void preencheTabela() {
+
+        PacienteModel paciente = tabela_paciente.getSelectionModel().getSelectedItem();
+
+        MensalidadeModel mm = new MensalidadeModel(paciente);
+
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                return MensalidadeDAO.executeQuery(null, MensalidadeDAO.QUERY_TODOS);
+                return MensalidadeDAO.executeQuery(mm, MensalidadeDAO.QUERY_PACIENTE);
             }
 
             @Override

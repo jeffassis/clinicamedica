@@ -596,7 +596,6 @@ public class HomeController implements Initializable {
                 this.mensalidadePalco.setMaximized(false);
                 this.mensalidadePalco.initOwner(primaryStage);
                 this.mensalidadeController.pegarHomeReferencia(this);
-                this.mensalidadeController.carregarTabela();
                 this.mensalidadeController.carregarTabela2();
                 this.mensalidadePalco.show();
 
@@ -607,7 +606,6 @@ public class HomeController implements Initializable {
         } else {
             this.mensalidadePalco.show();
             this.mensalidadePalco.requestFocus();
-            this.mensalidadeController.carregarTabela();
             this.mensalidadeController.carregarTabela2();
         }
     }
