@@ -127,9 +127,10 @@ public class MensalidadeDAO {
                     ConnectionFactory.closeConnection(conexao, ps, rs);
                     return listaMensalidade;
                 case QUERY_PACIENTE:
-                    sql = "select * from paciente left join mensalidade on "
-                            + "id_codigo_paciente = id_paciente where nome_paciente=?";
+                    sql = "select * from mensalidade left join paciente on "
+                            + "id_codigo_paciente = id_paciente where id_mensalidade=?";
                     ps = conexao.prepareStatement(sql);
+                    ps.setInt(1, mm.getPacienteModel().getCodigo());
                     rs = ps.executeQuery();
                     while (rs.next()) {
                         /*Atributos da mensalidade*/
