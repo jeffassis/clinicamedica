@@ -128,7 +128,7 @@ public class MensalidadeDAO {
                     return listaMensalidade;
                 case QUERY_PACIENTE:
                     sql = "select * from mensalidade left join paciente on "
-                            + "id_codigo_paciente = id_paciente where id_mensalidade=?";
+                            + "id_codigo_paciente = id_paciente where id_paciente=? order by id_mensalidade";
                     ps = conexao.prepareStatement(sql);
                     ps.setInt(1, mm.getPacienteModel().getCodigo());
                     rs = ps.executeQuery();
