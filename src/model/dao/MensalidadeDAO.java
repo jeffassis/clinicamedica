@@ -23,6 +23,7 @@ public class MensalidadeDAO {
     public static final int DELETE = 1;
     public static final int UPDATE = 2;
     public static final int QUERY_TODOS = 3;
+    public static final int QUERY_PACIENTE = 4;
 
     public static boolean executeUpdates(MensalidadeModel mm, int operacao) {
         Connection conexao = ConnectionFactory.getConnection();
@@ -35,14 +36,16 @@ public class MensalidadeDAO {
                             + "desconto_mensalidade,"
                             + "mes_mensalidade,"
                             + "data_mensalidade,"
-                            + "id_codigo_paciente)"
-                            + "values(?,?,?,?,?)";
+                            + "id_codigo_paciente,"
+                            + "status)"
+                            + "values(?,?,?,?,?,?)";
                     ps = conexao.prepareStatement(sql);
                     ps.setDouble(1, mm.getValor());
                     ps.setDouble(2, mm.getDesconto());
                     ps.setString(3, mm.getMes());
                     ps.setString(4, mm.getData_pagto());
                     ps.setInt(5, mm.getPacienteModel().getCodigo());
+                    ps.setBoolean(6, mm.getStatus());
                     ps.executeUpdate();
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
@@ -58,7 +61,8 @@ public class MensalidadeDAO {
                             + "desconto_mensalidade=?,"
                             + "mes_mensalidade=?,"
                             + "data_mensalidade=?,"
-                            + "id_codigo_paciente=? "
+                            + "id_codigo_paciente=?,"
+                            + "status=? "
                             + "where id_mensalidade=?";
                     ps = conexao.prepareStatement(sql);
                     ps.setDouble(1, mm.getValor());
@@ -66,7 +70,8 @@ public class MensalidadeDAO {
                     ps.setString(3, mm.getMes());
                     ps.setString(4, mm.getData_pagto());
                     ps.setInt(5, mm.getPacienteModel().getCodigo());
-                    ps.setInt(6, mm.getCodigo());
+                    ps.setBoolean(6, mm.getStatus());
+                    ps.setInt(7, mm.getCodigo());
                     ps.executeUpdate();
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
@@ -104,6 +109,43 @@ public class MensalidadeDAO {
                         mensalidadeModel.setDesconto(rs.getDouble("desconto_mensalidade"));
                         mensalidadeModel.setMes(rs.getString("mes_mensalidade"));
                         mensalidadeModel.setData_pagto(rs.getString("data_mensalidade"));
+                        mensalidadeModel.setStatus(rs.getBoolean("status"));
+
+                        PacienteModel pacienteModel = new PacienteModel();
+                        pacienteModel.setCodigo(rs.getInt("id_paciente"));
+                        pacienteModel.setNome(rs.getString("nome_paciente"));
+                        pacienteModel.setNascimento(rs.getString("nascimento_paciente"));
+                        pacienteModel.setEndereco(rs.getString("endereco_paciente"));
+                        pacienteModel.setTelefone(rs.getString("telefone_paciente"));
+                        pacienteModel.setCep(rs.getString("cep_paciente"));
+                        pacienteModel.setDocumento(rs.getString("documento_paciente"));
+                        pacienteModel.setSexo(rs.getString("sexo_paciente"));
+                        pacienteModel.setData_cliente(rs.getString("data_cliente_paciente"));
+                        pacienteModel.setTipo(rs.getString("tipo_paciente"));
+                        pacienteModel.setEmail(rs.getString("email_paciente"));
+                        pacienteModel.setObs(rs.getString("obs_paciente"));
+
+                        mensalidadeModel.setPacienteModel(pacienteModel);
+
+                        listaMensalidade.add(mensalidadeModel);
+                    }
+                    ConnectionFactory.closeConnection(conexao, ps, rs);
+                    return listaMensalidade;
+                case QUERY_PACIENTE:
+                    sql = "select * from mensalidade left join paciente on "
+                            + "id_codigo_paciente = id_paciente where id_paciente=? order by id_mensalidade";
+                    ps = conexao.prepareStatement(sql);
+                    ps.setInt(1, mm.getPacienteModel().getCodigo());
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        /*Atributos da mensalidade*/
+                        mensalidadeModel = new MensalidadeModel();
+                        mensalidadeModel.setCodigo(rs.getInt("id_mensalidade"));
+                        mensalidadeModel.setValor(rs.getDouble("valor_mensalidade"));
+                        mensalidadeModel.setDesconto(rs.getDouble("desconto_mensalidade"));
+                        mensalidadeModel.setMes(rs.getString("mes_mensalidade"));
+                        mensalidadeModel.setData_pagto(rs.getString("data_mensalidade"));
+                        mensalidadeModel.setStatus(rs.getBoolean("status"));
 
                         PacienteModel pacienteModel = new PacienteModel();
                         pacienteModel.setCodigo(rs.getInt("id_paciente"));

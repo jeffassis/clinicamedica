@@ -131,13 +131,18 @@ public class GerarMensalidadeController implements Initializable {
     }
 
     /**
-     * Metodo para carregar o TableView da GUI com Thread
+     * Metodo para carregar o TableView da GUI sendo controlado pelo ComboBox
      */
     public void carregarTabela() {
+
+        PacienteModel paciente = cb_paciente.getSelectionModel().getSelectedItem();
+
+        MensalidadeModel mm = new MensalidadeModel(paciente);
+
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                return MensalidadeDAO.executeQuery(null, MensalidadeDAO.QUERY_TODOS);
+                return MensalidadeDAO.executeQuery(mm, MensalidadeDAO.QUERY_PACIENTE);
             }
 
             @Override
@@ -176,7 +181,6 @@ public class GerarMensalidadeController implements Initializable {
             mensalidadeModel.setPacienteModel(paciente);
             if (MensalidadeDAO.executeUpdates(mensalidadeModel, MensalidadeDAO.CREATE)) {
                 DialogFX.showMessage("Dados inseridos com sucesso", "Sucesso", DialogFX.SUCESS);
-                carregarTabela();
                 limparCampos();
                 desabilitarCampos();
             }
@@ -198,7 +202,6 @@ public class GerarMensalidadeController implements Initializable {
             mensalidadeModel.setPacienteModel(paciente);
             if (MensalidadeDAO.executeUpdates(mensalidadeModel, MensalidadeDAO.UPDATE)) {
                 DialogFX.showMessage("Dados Atualizados com sucesso", "Sucesso", DialogFX.SUCESS);
-                carregarTabela();
                 limparCampos();
                 desabilitarCampos();
                 flag = 1;
@@ -314,18 +317,17 @@ public class GerarMensalidadeController implements Initializable {
      * Metodo para Desabilitar os campos
      */
     private void desabilitarCampos() {
-        cb_paciente.setDisable(true);
         dp_data.setDisable(true);
         txt_valor.setDisable(true);
         txt_desconto.setDisable(true);
         cb_mes.setDisable(true);
+        bt_salvar.setDisable(true);
     }
 
     /**
      * Metodo para habilitar os campos
      */
     private void habilitarCampos() {
-        cb_paciente.setDisable(false);
         dp_data.setDisable(false);
         txt_valor.setDisable(false);
         txt_desconto.setDisable(false);

@@ -64,7 +64,7 @@
                            </GridPane.margin>
                         </Label>
                         <ComboBox fx:id="cb_mes" disable="true" prefHeight="26.0" prefWidth="192.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <ComboBox fx:id="cb_paciente" disable="true" prefHeight="26.0" prefWidth="228.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="cb_paciente" onAction="#carregarTabela" prefHeight="26.0" prefWidth="228.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Codigo:">
                            <GridPane.margin>
                               <Insets right="5.0" />

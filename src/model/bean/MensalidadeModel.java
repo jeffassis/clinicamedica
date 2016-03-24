@@ -1,7 +1,9 @@
 package model.bean;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -21,6 +23,8 @@ public class MensalidadeModel {
     private PacienteModel pacienteModel;
     /*Variavel que vai ter o valor com desconto*/
     private DoubleProperty valorComDesconto;
+    /*Variavel booleana para verificar o status da mensalidade*/
+    private BooleanProperty status;
 
     public MensalidadeModel() {
         this.codigo = new SimpleIntegerProperty();
@@ -29,15 +33,17 @@ public class MensalidadeModel {
         this.mes = new SimpleStringProperty();
         this.data_pagto = new SimpleStringProperty();
         this.valorComDesconto = new SimpleDoubleProperty();
+        this.status = new SimpleBooleanProperty();
     }
 
-    public MensalidadeModel(int codigo, Double valor, Double desconto, String mes, String data_pagto) {
+    public MensalidadeModel(int codigo, Double valor, Double desconto, String mes, String data_pagto, Double valorComDesconto, Boolean status) {
         this.codigo = new SimpleIntegerProperty(codigo);
         this.valor = new SimpleDoubleProperty(valor);
         this.desconto = new SimpleDoubleProperty(desconto);
         this.mes = new SimpleStringProperty(mes);
         this.data_pagto = new SimpleStringProperty(data_pagto);
-        this.valorComDesconto = new SimpleDoubleProperty();
+        this.valorComDesconto = new SimpleDoubleProperty(valorComDesconto);
+        this.status = new SimpleBooleanProperty(status);
     }
 
     /*Construtor do PacienteModel*/
@@ -114,6 +120,21 @@ public class MensalidadeModel {
         this.pacienteModel = pacienteModel;
     }
 
+    /**
+     * Getters e Setters da variavel Booleana
+     */
+    public BooleanProperty getStatusProperty() {
+        return this.status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status.set(true);
+    }
+
+    public Boolean getStatus() {
+        return status.get();
+    }
+
     /*Não há set para não quebrar nosso encapsulamento, pois a regra de negocio
     deve ser feita somente aqui*/
     /**
@@ -130,5 +151,4 @@ public class MensalidadeModel {
             return valorComDesconto;
         }
     }
-
 }

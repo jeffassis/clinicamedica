@@ -67,7 +67,7 @@ public class HomeController implements Initializable {
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC,
             nodeA1, nodeA2, nodeA3, nodeA4, nodeA5, nodeA6, nodeA7,
-            nodeB1, nodeB2, nodeB3, nodeB4;
+            nodeB1, nodeB2, nodeB3, nodeB4, nodeB5;
     /*Declaração dos nossos SplitPanes*/
     @FXML
     private SplitPane split_superior, split_lateral;
@@ -105,8 +105,9 @@ public class HomeController implements Initializable {
         this.nodeB2 = new TreeItem<>("Agendamentos", new ImageView(icon));
         this.nodeB3 = new TreeItem<>("Tabela de Exames", new ImageView(icon));
         this.nodeB4 = new TreeItem<>("Meus Dependentes", new ImageView(icon));
+        this.nodeB5 = new TreeItem<>("Mensalidades", new ImageView(icon));
         /*Adicionando os filhos do nodeB*/
-        nodeB.getChildren().addAll(nodeB1, nodeB4, nodeB3, nodeB2);
+        nodeB.getChildren().addAll(nodeB1, nodeB4, nodeB3, nodeB2, nodeB5);
         /*Adicionando o Node Pai a TreeView*/
         treeView.setRoot(root);
     }
@@ -156,6 +157,9 @@ public class HomeController implements Initializable {
                         break;
                     case "Tabela de Exames":
                         tabelaExame();
+                        break;
+                    case "Mensalidades":
+                        mensalidade();
                         break;
                     default:
                         break;
@@ -590,6 +594,9 @@ public class HomeController implements Initializable {
                 this.mensalidadePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/paciente64.png")));
                 this.mensalidadePalco.setResizable(false);
                 this.mensalidadePalco.setMaximized(false);
+                this.mensalidadePalco.initOwner(primaryStage);
+                this.mensalidadeController.pegarHomeReferencia(this);
+                this.mensalidadeController.carregarTabela2();
                 this.mensalidadePalco.show();
 
                 this.abriuMensalidade = true;
@@ -599,6 +606,7 @@ public class HomeController implements Initializable {
         } else {
             this.mensalidadePalco.show();
             this.mensalidadePalco.requestFocus();
+            this.mensalidadeController.carregarTabela2();
         }
     }
 
@@ -638,7 +646,7 @@ public class HomeController implements Initializable {
      * Método para chamar a GUI de gerarMensalidade
      */
     @FXML
-    private void gerarMensalidade() {
+    public void gerarMensalidade() {
         if (!abriuGerarMensalidade) {
             FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/GerarMensalidade.fxml"));
             try {
@@ -652,8 +660,9 @@ public class HomeController implements Initializable {
                 this.gerarMensalidadePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/paciente64.png")));
                 this.gerarMensalidadePalco.setResizable(false);
                 this.gerarMensalidadePalco.setMaximized(false);
+                this.gerarMensalidadePalco.initOwner(primaryStage);
                 this.gerarMensalidadeController.iniciarProcessos();
-                this.gerarMensalidadeController.carregarTabela();
+                //this.gerarMensalidadeController.carregarTabela();
                 this.gerarMensalidadePalco.show();
 
                 this.abriuGerarMensalidade = true;
@@ -662,7 +671,7 @@ public class HomeController implements Initializable {
             }
 
         } else {
-            this.gerarMensalidadeController.carregarTabela();
+            //this.gerarMensalidadeController.carregarTabela();
             this.gerarMensalidadeController.iniciarProcessos();
             this.gerarMensalidadePalco.show();
             this.gerarMensalidadePalco.requestFocus();
