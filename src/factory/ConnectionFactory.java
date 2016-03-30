@@ -22,7 +22,8 @@ public class ConnectionFactory {
      */
     private static final String DRIVER = "org.postgresql.Driver";
     /*Tive que alterar pq não funcionou mais no meu, então mudei a porta e voltou a funcionar*/
-    private static final String URL = "jdbc:postgresql://localhost:5432/clinicamedica";
+    //private static final String URL = "jdbc:postgresql://localhost:5432/clinicamedica";
+    private static final String URL = "jdbc:postgresql://localhost:9897/clinicamedica";
     private static final String USER = "postgres";
     private static final String PASS = "jean1420";
 
