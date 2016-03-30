@@ -7,9 +7,12 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.util.Callback;
 import model.bean.MensalidadeModel;
 import model.bean.PacienteModel;
 import model.dao.MensalidadeDAO;
@@ -63,6 +66,19 @@ public class MensalidadeController implements Initializable {
         this.descontoColuna.setCellValueFactory(cellData -> cellData.getValue().getDescontoProperty().asObject());
         this.valorColuna.setCellValueFactory(cellData -> cellData.getValue().getValorProperty().asObject());
         this.pagoColuna.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
+        /*Usamos o metodo CellFactory para mudar a estrutura da coluna e colocamos um checkBox, smp para mudar a estrutura da coluna
+        usaremos CellFactory*/
+        this.pagoColuna.setCellFactory(checkBox -> new CheckBoxTableCell<>());
+        /*Veja a baixo como seria sem a lambda, teriamos que usar uma classe anonima para add o checkBox*/
+//        this.pagoColuna.setCellFactory(new Callback<TableColumn<MensalidadeModel, Boolean>, TableCell<MensalidadeModel, Boolean>>() {
+//            @Override
+//            public TableCell<MensalidadeModel, Boolean> call(TableColumn<MensalidadeModel, Boolean> param) {
+                  /*Criamos o checkBox q vamos colocar na coluna da tabela*/
+//                CheckBoxTableCell<MensalidadeModel,Boolean> checkBox = new CheckBoxTableCell<>();
+                  /*Retornamos o checkBox, assim adicionado ele a nossa coluna*/
+//                return checkBox;
+//            }
+//        });
 
         /**
          * Carregar os dados do Paciente na TableView
