@@ -2,11 +2,17 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.EventDispatchChain;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -17,6 +23,7 @@ import model.bean.MensalidadeModel;
 import model.bean.PacienteModel;
 import model.dao.MensalidadeDAO;
 import model.dao.PacienteDAO;
+import util.CustomCheckBoxTable;
 
 /**
  * FXML Controller class
@@ -68,17 +75,29 @@ public class MensalidadeController implements Initializable {
         this.pagoColuna.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
         /*Usamos o metodo CellFactory para mudar a estrutura da coluna e colocamos um checkBox, smp para mudar a estrutura da coluna
         usaremos CellFactory*/
-        this.pagoColuna.setCellFactory(checkBox -> new CheckBoxTableCell<>());
+        // this.pagoColuna.setCellFactory(checkBox -> new CheckBoxTableCell<>());
         /*Veja a baixo como seria sem a lambda, teriamos que usar uma classe anonima para add o checkBox*/
 //        this.pagoColuna.setCellFactory(new Callback<TableColumn<MensalidadeModel, Boolean>, TableCell<MensalidadeModel, Boolean>>() {
 //            @Override
 //            public TableCell<MensalidadeModel, Boolean> call(TableColumn<MensalidadeModel, Boolean> param) {
-                  /*Criamos o checkBox q vamos colocar na coluna da tabela*/
+        /*Criamos o checkBox q vamos colocar na coluna da tabela*/
 //                CheckBoxTableCell<MensalidadeModel,Boolean> checkBox = new CheckBoxTableCell<>();
-                  /*Retornamos o checkBox, assim adicionado ele a nossa coluna*/
+        /*Retornamos o checkBox, assim adicionado ele a nossa coluna*/
 //                return checkBox;
 //            }
 //        });
+
+        this.pagoColuna.setCellFactory(coluna -> {
+            CustomCheckBoxTable customCheck = new CustomCheckBoxTable<>(coluna);
+            /*Falamos oq deve acontecer no evento do clique no CheckBox, no caso colocamos para
+            chamar o nosso metodo checkBoxOnAction, e passamos o checkBox como parametro para
+            verificamos o estado do checkBox*/
+            customCheck.getCheckBox().setOnAction(evento -> checkBoxOnAction(customCheck.getCheckBox()));
+            return customCheck;
+        });
+        /*Deixamos que seja editavel a coluna*/
+        this.tabela_mensalidade.setEditable(true);
+        this.pagoColuna.setEditable(true);
 
         /**
          * Carregar os dados do Paciente na TableView
@@ -153,6 +172,15 @@ public class MensalidadeController implements Initializable {
      */
     public void pegarHomeReferencia(HomeController homeController) {
         this.homeController = homeController;
+    }
+    
+    /**
+     * Evento do clique no CheckBox da Coluna.
+     * @param box 
+     */
+    private void checkBoxOnAction(CheckBox box){
+        /*Falta implementar*/
+        System.out.println("Situação do Combo: "+ box.isSelected());
     }
 
 }
