@@ -57,6 +57,8 @@ public class CustomCheckBoxTable<S,T> extends TableCell<S, T> {
             BooleanProperty checado = (BooleanProperty)this.coluna.getCellObservableValue(getIndex());
             /*Colocamos o checkBox para ficar selecionado ou nao de acordo com o clique do usuario*/
             this.checkBox.setSelected(checado.getValue());
+            /*Agora ele obeserva a coluna*/
+            this.checkBox.selectedProperty().bindBidirectional(checado);
             /*Colocamos o checkBox na celula*/
             setGraphic(this.checkBox);
         }
