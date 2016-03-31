@@ -136,7 +136,7 @@ public class GerarMensalidadeController implements Initializable {
     public void carregarTabela() {
 
         PacienteModel paciente = cb_paciente.getSelectionModel().getSelectedItem();
-        System.out.println("Paciente: "+ paciente.getCodigo());
+        
         MensalidadeModel mm = new MensalidadeModel(paciente);
 
         Task task = new Task() {
