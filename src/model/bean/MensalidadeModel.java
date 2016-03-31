@@ -128,7 +128,7 @@ public class MensalidadeModel {
     }
 
     public void setStatus(Boolean status) {
-        this.status.set(true);
+        this.status.set(status);
     }
 
     public Boolean getStatus() {
