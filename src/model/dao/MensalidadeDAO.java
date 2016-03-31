@@ -22,8 +22,9 @@ public class MensalidadeDAO {
     public static final int CREATE = 0;
     public static final int DELETE = 1;
     public static final int UPDATE = 2;
-    public static final int QUERY_TODOS = 3;
-    public static final int QUERY_PACIENTE = 4;
+    public static final int UPDATE_STATUS = 3;
+    public static final int QUERY_TODOS = 4;
+    public static final int QUERY_PACIENTE = 5;
 
     public static boolean executeUpdates(MensalidadeModel mm, int operacao) {
         Connection conexao = ConnectionFactory.getConnection();
@@ -72,6 +73,14 @@ public class MensalidadeDAO {
                     ps.setInt(5, mm.getPacienteModel().getCodigo());
                     ps.setBoolean(6, mm.getStatus());
                     ps.setInt(7, mm.getCodigo());
+                    ps.executeUpdate();
+                    ConnectionFactory.closeConnection(conexao, ps);
+                    return true;
+                case UPDATE_STATUS:
+                    sql = "update mensalidade set status = ? where id_mensalidade = ?";
+                    ps = conexao.prepareStatement(sql);
+                    ps.setBoolean(1, mm.getStatus());
+                    ps.setInt(2, mm.getCodigo());
                     ps.executeUpdate();
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
