@@ -92,12 +92,9 @@ public class MensalidadeController implements Initializable {
             /*Falamos oq deve acontecer no evento do clique no CheckBox, no caso colocamos para
             chamar o nosso metodo checkBoxOnAction, e passamos o checkBox como parametro para
             verificamos o estado do checkBox*/
-            customCheck.getCheckBox().setOnAction(evento -> checkBoxOnAction(customCheck.getCheckBox()));
+            customCheck.getCheckBox().setOnAction(evento -> checkBoxOnAction(customCheck.getCheckBox(), customCheck));
             return customCheck;
         });
-        /*Deixamos que seja editavel a coluna*/
-        this.tabela_mensalidade.setEditable(true);
-        this.pagoColuna.setEditable(true);
 
         /**
          * Carregar os dados do Paciente na TableView
@@ -173,14 +170,16 @@ public class MensalidadeController implements Initializable {
     public void pegarHomeReferencia(HomeController homeController) {
         this.homeController = homeController;
     }
-    
+
     /**
      * Evento do clique no CheckBox da Coluna.
-     * @param box 
+     *
+     * @param box
      */
-    private void checkBoxOnAction(CheckBox box){
+    private void checkBoxOnAction(CheckBox box, CustomCheckBoxTable customCheck) {
         /*Falta implementar*/
-        System.out.println("Situação do Combo: "+ box.isSelected());
+        System.out.println("Situação do Combo: " + box.isSelected());
+        System.out.println("Linha selecionada:" + customCheck.getIndex());
     }
 
 }
