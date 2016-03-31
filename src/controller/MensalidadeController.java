@@ -116,7 +116,10 @@ public class MensalidadeController implements Initializable {
      * Método que carrega a tabela Mensalidade
      */
     public void preencheTabela() {
-
+        /*Limpa a lista de CheckBox para evitar problemas*/
+        if (listCheckBox != null) {
+            this.listCheckBox.clear();
+        }
         PacienteModel paciente = tabela_paciente.getSelectionModel().getSelectedItem();
 
         MensalidadeModel mm = new MensalidadeModel(paciente);
