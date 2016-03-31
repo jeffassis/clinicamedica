@@ -1,6 +1,8 @@
 package controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ObservableValue;
@@ -24,6 +26,7 @@ import model.bean.PacienteModel;
 import model.dao.MensalidadeDAO;
 import model.dao.PacienteDAO;
 import util.CustomCheckBoxTable;
+import util.DialogFX;
 
 /**
  * FXML Controller class
@@ -56,6 +59,8 @@ public class MensalidadeController implements Initializable {
     private TableColumn<MensalidadeModel, Boolean> pagoColuna;
     @FXML
     private Button bt_salvar;
+    /*Vai conter todos dos CheckBox da Tabela*/
+    private List<CheckBox> listCheckBox;
 
     private HomeController homeController;
 
@@ -86,13 +91,17 @@ public class MensalidadeController implements Initializable {
 //                return checkBox;
 //            }
 //        });
+        /*Instancio a Lista*/
+        this.listCheckBox = new ArrayList<>();
 
         this.pagoColuna.setCellFactory(coluna -> {
             CustomCheckBoxTable customCheck = new CustomCheckBoxTable<>(coluna);
             /*Falamos oq deve acontecer no evento do clique no CheckBox, no caso colocamos para
             chamar o nosso metodo checkBoxOnAction, e passamos o checkBox como parametro para
             verificamos o estado do checkBox*/
-            customCheck.getCheckBox().setOnAction(evento -> checkBoxOnAction(customCheck.getCheckBox(), customCheck));
+            //customCheck.getCheckBox().setOnAction(evento -> checkBoxOnAction(customCheck.getCheckBox(), customCheck));
+            /*Agora adicionamos nossos checkBox dentro da lista*/
+            listCheckBox.add(customCheck.getCheckBox());
             return customCheck;
         });
 
@@ -175,12 +184,35 @@ public class MensalidadeController implements Initializable {
      * Evento do clique no CheckBox da Coluna.
      *
      * @param box
-     * @param customCheck 
+     * @param customCheck
+     * @deprecated - Não vai ser mais utilizado.
      */
     private void checkBoxOnAction(CheckBox box, CustomCheckBoxTable customCheck) {
         /*Falta implementar*/
         System.out.println("Situação do Combo: " + box.isSelected());
         System.out.println("Linha selecionada:" + customCheck.getIndex());
+    }
+
+    /**
+     * Evento do botão salvar.
+     */
+    @FXML
+    private void onSave() {
+        if (!this.tabela_mensalidade.getSelectionModel().isSelected(-1)) {
+            /*Pegamos o checkBox q esta na lista e sabemos que o check foi colocado na lista na mesma sequencia da Tabela*/
+            CheckBox checkBox = this.listCheckBox.get(tabela_mensalidade.getSelectionModel().getSelectedIndex());
+            /*Pegamos a mensalidade na Tabela*/
+            MensalidadeModel mensalidade = this.tabela_mensalidade.getSelectionModel().getSelectedItem();
+            /*Mudamos o status dela pelo do CheckBox*/
+            mensalidade.setStatus(checkBox.isSelected());
+            if (MensalidadeDAO.executeUpdates(mensalidade, MensalidadeDAO.UPDATE_STATUS)) {
+                DialogFX.showMessage("Mensalidade paga com sucesso", "Sucesso", DialogFX.SUCESS);
+            } else {
+                DialogFX.showMessage("Não foi possivel salvar o status da Mensalidade", "ERRO", DialogFX.ERRO);
+            }
+        } else {
+            DialogFX.showMessage("Selecione uma mensalidade por favor!", "Mensalidade não selecionada", DialogFX.ATENCAO);
+        }
     }
 
 }
