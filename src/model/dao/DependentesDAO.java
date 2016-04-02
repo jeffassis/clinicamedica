@@ -146,6 +146,7 @@ public class DependentesDAO {
                         pacienteModel.setTipo(rs.getString("tipo_paciente"));
                         pacienteModel.setEmail(rs.getString("email_paciente"));
                         pacienteModel.setObs(rs.getString("obs_paciente"));
+                        pacienteModel.setStatus(rs.getBoolean("status"));
                         /*Colocamos a Cidade*/
                         CidadeModel cidadeModel = new CidadeModel();
                         cidadeModel.setCodigo(rs.getInt("id_cidade"));
@@ -196,6 +197,7 @@ public class DependentesDAO {
                         pacienteModel.setTipo(rs.getString("tipo_paciente"));
                         pacienteModel.setEmail(rs.getString("email_paciente"));
                         pacienteModel.setObs(rs.getString("obs_paciente"));
+                        pacienteModel.setStatus(rs.getBoolean("status"));
                         /*Colocamos a Cidade*/
                         CidadeModel cidadeModel = new CidadeModel();
                         cidadeModel.setCodigo(rs.getInt("id_cidade"));
@@ -246,6 +248,7 @@ public class DependentesDAO {
                         pacienteModel.setTipo(rs.getString("tipo_paciente"));
                         pacienteModel.setEmail(rs.getString("email_paciente"));
                         pacienteModel.setObs(rs.getString("obs_paciente"));
+                        pacienteModel.setStatus(rs.getBoolean("status"));
                         /*Colocamos a Cidade*/
                         CidadeModel cidadeModel = new CidadeModel();
                         cidadeModel.setCodigo(rs.getInt("id_cidade"));
@@ -296,6 +299,7 @@ public class DependentesDAO {
                         pacienteModel.setTipo(rs.getString("tipo_paciente"));
                         pacienteModel.setEmail(rs.getString("email_paciente"));
                         pacienteModel.setObs(rs.getString("obs_paciente"));
+                        pacienteModel.setStatus(rs.getBoolean("status"));
                         /*Colocamos a Cidade*/
                         CidadeModel cidadeModel = new CidadeModel();
                         cidadeModel.setCodigo(rs.getInt("id_cidade"));
@@ -328,12 +332,12 @@ public class DependentesDAO {
     }
 
     /**
-     * Adiciona vários dependentes no banco e atribuir eles a um paciente.
+     * Adiciona vários dependentes no banco e dependentes eles a um paciente.
      *
-     * @param list
+     * @param dependentes 
      * @return
      */
-    public static boolean executeMultiUpdates(List<DependenteModel> list) {
+    public static boolean executeMultiUpdates(List<DependenteModel> dependentes) {
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement ps;
         ResultSet rs;
@@ -343,19 +347,19 @@ public class DependentesDAO {
         final String sql_query = "select id_dependente from dependente where nome_dependente = ?";
         final String sql_insert_paciente = "insert into paciente_dependente(id_codigo_dependente, id_codigo_paciente) values(?,?)";
         try {
-            for (int i = 0; i < list.size(); i++) {
+            for (int i = 0; i < dependentes.size(); i++) {
                 /*Adicionamos um dependente*/
                 ps = conexao.prepareStatement(sql_insert);
-                ps.setString(1, list.get(i).getNome());
-                ps.setString(2, list.get(i).getTelefone());
-                ps.setString(3, list.get(i).getNascimento());
-                ps.setString(4, list.get(i).getParentesco());
+                ps.setString(1, dependentes.get(i).getNome());
+                ps.setString(2, dependentes.get(i).getTelefone());
+                ps.setString(3, dependentes.get(i).getNascimento());
+                ps.setString(4, dependentes.get(i).getParentesco());
                 ps.executeUpdate();
                 ps.close();
 
                 /*Fazemos uma query para descobrir o ID desse dependente recem-adicionado*/
                 ps = conexao.prepareStatement(sql_query);
-                ps.setString(1, list.get(i).getNome());
+                ps.setString(1, dependentes.get(i).getNome());
                 rs = ps.executeQuery();
                 rs.next();
                 int id_dependente = rs.getInt("id_dependente");
@@ -364,7 +368,7 @@ public class DependentesDAO {
                 /*Agora que ja sabemos o ID do dependente recem-adicionado vamos atribuir ele a um paciente*/
                 ps = conexao.prepareStatement(sql_insert_paciente);
                 ps.setInt(1, id_dependente);
-                ps.setInt(2, list.get(i).getPacienteModel().getCodigo());
+                ps.setInt(2, dependentes.get(i).getPacienteModel().getCodigo());
                 ps.executeUpdate();
                 ps.close();
 
