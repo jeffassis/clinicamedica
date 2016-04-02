@@ -90,7 +90,8 @@ public class PacienteDAO {
                             + "email_paciente=?,"
                             + "obs_paciente=?,"
                             + "id_codigo_cidade=?,"
-                            + "id_codigo_bairro=? "
+                            + "id_codigo_bairro=?,"
+                            + "status = ?"
                             + "where id_paciente=?";
                     ps = conexao.prepareStatement(sql);
                     ps.setString(1, pm.getNome());
@@ -107,6 +108,7 @@ public class PacienteDAO {
                     ps.setInt(12, pm.getCidadeModel().getCodigo());
                     ps.setInt(13, pm.getBairroModel().getCodigo());
                     ps.setInt(14, pm.getCodigo());
+                    ps.setBoolean(15,pm.getStatus());
                     ps.executeUpdate();
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
