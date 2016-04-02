@@ -190,6 +190,6 @@
             </children>
         </GridPane>
       <Label layoutX="563.0" layoutY="416.0" text="Status:" />
-      <CheckBox layoutX="613.0" layoutY="416.0" mnemonicParsing="false" text="Ativo" />
+      <CheckBox fx:id="checkStatus" layoutX="613.0" layoutY="416.0" mnemonicParsing="false" text="Ativo" />
     </children>
 </AnchorPane>
