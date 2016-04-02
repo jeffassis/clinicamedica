@@ -133,6 +133,7 @@ public class MensalidadeDAO {
                         pacienteModel.setTipo(rs.getString("tipo_paciente"));
                         pacienteModel.setEmail(rs.getString("email_paciente"));
                         pacienteModel.setObs(rs.getString("obs_paciente"));
+                        pacienteModel.setStatus(rs.getBoolean("status"));
 
                         mensalidadeModel.setPacienteModel(pacienteModel);
 
@@ -169,6 +170,7 @@ public class MensalidadeDAO {
                         pacienteModel.setTipo(rs.getString("tipo_paciente"));
                         pacienteModel.setEmail(rs.getString("email_paciente"));
                         pacienteModel.setObs(rs.getString("obs_paciente"));
+                        pacienteModel.setStatus(rs.getBoolean("status"));
 
                         mensalidadeModel.setPacienteModel(pacienteModel);
 
