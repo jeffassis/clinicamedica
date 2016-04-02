@@ -70,6 +70,7 @@ public class PacientesController implements Initializable {
         /*Adicionamos outros componentes*/
         formatter.addComponente(dp_cliente, MaskFormatter.DATA_BARRA, true);
         formatter.addComponente(dp_nascimento, MaskFormatter.DATA_BARRA, true);
+        this.checkStatus.setSelected(true);
 
         /*Utilizando a nossa Classe converter CidadeModel*/
         this.cb_cidade.setConverter(new ConverterDados(ConverterDados.GET_CIDADE_NOME).getCidadeConverter());
@@ -275,7 +276,6 @@ public class PacientesController implements Initializable {
         txt_observacoes.setText("");
         cb_cidade.getSelectionModel().clearSelection();
         cb_bairro.getSelectionModel().clearSelection();
-        this.checkStatus.setSelected(false);
     }
 
     /**
@@ -329,6 +329,6 @@ public class PacientesController implements Initializable {
         this.cb_sexo.getSelectionModel().clearSelection();
         this.cb_bairro.getSelectionModel().clearSelection();
         this.cb_cidade.getSelectionModel().clearSelection();
-        this.checkStatus.setSelected(false);
+        this.checkStatus.setSelected(true);
     }
 }
