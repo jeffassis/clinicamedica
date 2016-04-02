@@ -1,6 +1,8 @@
 package model.bean;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -26,6 +28,7 @@ public class PacienteModel {
     private StringProperty obs;
     private CidadeModel cidadeModel;
     private BairroModel bairroModel;
+    private BooleanProperty status;
 
     /**
      * Construtor que converte a variavel em SimpleProperty
@@ -43,6 +46,7 @@ public class PacienteModel {
         this.tipo = new SimpleStringProperty();
         this.email = new SimpleStringProperty();
         this.obs = new SimpleStringProperty();
+        this.status = new SimpleBooleanProperty();
     }
 
     /**
@@ -74,6 +78,40 @@ public class PacienteModel {
         this.tipo = new SimpleStringProperty(tipo);
         this.email = new SimpleStringProperty(email);
         this.obs = new SimpleStringProperty(obs);
+        /*Apenas inicio ele*/
+        this.status = new SimpleBooleanProperty();
+    }
+    
+    /**
+     * Construtor que passa as variaveis como proprio param SimpleProperty
+     *
+     * @param codigo
+     * @param nome
+     * @param nascimento
+     * @param endereco
+     * @param telefone
+     * @param cep
+     * @param documento
+     * @param sexo
+     * @param data_cliente
+     * @param tipo
+     * @param email
+     * @param obs
+     */
+    public PacienteModel(int codigo, String nome, String nascimento, String endereco, String telefone, String cep, String documento, String sexo, String data_cliente, String tipo, String email, String obs,boolean status) {
+        this.codigo = new SimpleIntegerProperty(codigo);
+        this.nome = new SimpleStringProperty(nome);
+        this.nascimento = new SimpleStringProperty(nascimento);
+        this.endereco = new SimpleStringProperty(endereco);
+        this.telefone = new SimpleStringProperty(telefone);
+        this.cep = new SimpleStringProperty(cep);
+        this.documento = new SimpleStringProperty(documento);
+        this.sexo = new SimpleStringProperty(sexo);
+        this.data_cliente = new SimpleStringProperty(data_cliente);
+        this.tipo = new SimpleStringProperty(tipo);
+        this.email = new SimpleStringProperty(email);
+        this.obs = new SimpleStringProperty(obs);
+        this.status = new SimpleBooleanProperty(status);
     }
 
     /**
@@ -147,6 +185,9 @@ public class PacienteModel {
     public StringProperty getSexoProperty() {
         return this.sexo;
     }
+    public BooleanProperty getStatusProperty(){
+        return this.status;
+    }
 
     public void setSexo(String sexo) {
         this.sexo.set(sexo);
@@ -199,6 +240,10 @@ public class PacienteModel {
     public void setBairroModel(BairroModel bairroModel) {
         this.bairroModel = bairroModel;
     }
+    
+    public void setStatus(boolean status){
+        this.status.set(status);
+    }
 
     public int getCodigo() {
         return codigo.get();
@@ -247,4 +292,9 @@ public class PacienteModel {
     public String getObs() {
         return obs.get();
     }
+    
+    public boolean getStatus(){
+        return this.status.get();
+    }
+    
 }
