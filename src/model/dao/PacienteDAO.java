@@ -24,9 +24,10 @@ public class PacienteDAO {
     public static final int CREATE = 0;
     public static final int DELETE = 1;
     public static final int UPDATE = 2;
-    public static final int QUERY_TODOS = 3;
-    public static final int QUERY_NOME = 4;
-    
+    public static final int UPDATE_STATUS = 3;
+    public static final int QUERY_TODOS = 4;
+    public static final int QUERY_NOME = 5;
+
     public static boolean executeUpdates(PacienteModel pm, int operacao) {
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement ps;
@@ -47,7 +48,8 @@ public class PacienteDAO {
                             + "email_paciente,"
                             + "obs_paciente,"
                             + "id_codigo_cidade,"
-                            + "id_codigo_bairro)"
+                            + "id_codigo_bairro,"
+                            + "status)"
                             + "values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
                     ps = conexao.prepareStatement(sql);
                     ps.setString(1, pm.getNome());
@@ -63,6 +65,7 @@ public class PacienteDAO {
                     ps.setString(11, pm.getObs());
                     ps.setInt(12, pm.getCidadeModel().getCodigo());
                     ps.setInt(13, pm.getBairroModel().getCodigo());
+                    ps.setBoolean(14, pm.getStatus());
                     ps.executeUpdate();
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
@@ -107,6 +110,13 @@ public class PacienteDAO {
                     ps.executeUpdate();
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
+                case UPDATE_STATUS:
+                    sql = "update paciente set status = ?";
+                    ps = conexao.prepareStatement(sql);
+                    ps.setBoolean(1, pm.getStatus());
+                    ps.executeUpdate();
+                    ConnectionFactory.closeConnection(conexao, ps);
+                    return true;
                 default:
                     conexao.close();
                     return false;
@@ -117,7 +127,7 @@ public class PacienteDAO {
         }
         return false;
     }
-    
+
     public static ObservableList<PacienteModel> executeQuery(PacienteModel pm, int operacao) {
         Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement ps;
@@ -149,6 +159,7 @@ public class PacienteDAO {
                         pacienteModel.setTipo(rs.getString("tipo_paciente"));
                         pacienteModel.setEmail(rs.getString("email_paciente"));
                         pacienteModel.setObs(rs.getString("obs_paciente"));
+                        pacienteModel.setStatus(rs.getBoolean("status"));
                         /*Colocamos a Cidade*/
                         CidadeModel cidadeModel = new CidadeModel();
                         cidadeModel.setCodigo(rs.getInt("id_cidade"));
@@ -190,6 +201,7 @@ public class PacienteDAO {
                         pacienteModel.setTipo(rs.getString("tipo_paciente"));
                         pacienteModel.setEmail(rs.getString("email_paciente"));
                         pacienteModel.setObs(rs.getString("obs_paciente"));
+                        pacienteModel.setStatus(rs.getBoolean("status"));
                         /*Colocamos a Cidade*/
                         CidadeModel cidadeModel = new CidadeModel();
                         cidadeModel.setCodigo(rs.getInt("id_cidade"));
