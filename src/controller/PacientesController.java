@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
@@ -43,6 +44,8 @@ public class PacientesController implements Initializable {
     private ComboBox<CidadeModel> cb_cidade;
     @FXML
     private ComboBox<BairroModel> cb_bairro;
+    @FXML
+    private CheckBox checkStatus;
     @FXML
     private ComboBox<String> cb_sexo;
     ObservableList<String> listaSexo = FXCollections.observableArrayList("Feminino", "Masculino");
@@ -103,7 +106,7 @@ public class PacientesController implements Initializable {
                 super.succeeded();
                 /*Colocamos dentro do succeeded pq vamos precisar que os comboBox já estejam populados
                 pq se não ao comparar os dados que nem fazemos a baixo poderia da erro já que o banco pode demorar para responder.*/
- /*Se foi aberto para editar*/
+                /*Se foi aberto para editar*/
                 if (editar) {
                     /*Para evitar qualquer tipo de exceção*/
                     if (tabela != null) {
@@ -130,6 +133,7 @@ public class PacientesController implements Initializable {
                         txt_observacoes.setText(model.getObs());
                         txt_documento.setText(model.getDocumento());
                         txt_cep.setText(model.getCep());
+                        checkStatus.setSelected(model.getStatus());
 
                     }
                 }
@@ -170,6 +174,7 @@ public class PacientesController implements Initializable {
         pacienteModel.setCidadeModel(cidade);
         BairroModel bairro = cb_bairro.getSelectionModel().getSelectedItem();
         pacienteModel.setBairroModel(bairro);
+        pacienteModel.setStatus(checkStatus.isSelected());
         /*Para pegamos a data ficou mais fácil, Imagina que o datepicker virou um TextField
         primeiro vamos verificar se a datas fornecidas estão corretas*/
         if (dp_nascimento.getEditor().getText().length() == 10) {
@@ -270,6 +275,7 @@ public class PacientesController implements Initializable {
         txt_observacoes.setText("");
         cb_cidade.getSelectionModel().clearSelection();
         cb_bairro.getSelectionModel().clearSelection();
+        this.checkStatus.setSelected(false);
     }
 
     /**
@@ -323,5 +329,6 @@ public class PacientesController implements Initializable {
         this.cb_sexo.getSelectionModel().clearSelection();
         this.cb_bairro.getSelectionModel().clearSelection();
         this.cb_cidade.getSelectionModel().clearSelection();
+        this.checkStatus.setSelected(false);
     }
 }
