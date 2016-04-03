@@ -27,6 +27,7 @@ public class PacienteDAO {
     public static final int UPDATE_STATUS = 3;
     public static final int QUERY_TODOS = 4;
     public static final int QUERY_NOME = 5;
+    public static final int QUERY_STATUS = 6;
 
     public static boolean executeUpdates(PacienteModel pm, int operacao) {
         Connection conexao = ConnectionFactory.getConnection();
@@ -107,8 +108,8 @@ public class PacienteDAO {
                     ps.setString(11, pm.getObs());
                     ps.setInt(12, pm.getCidadeModel().getCodigo());
                     ps.setInt(13, pm.getBairroModel().getCodigo());
-                    ps.setInt(14, pm.getCodigo());
-                    ps.setBoolean(15,pm.getStatus());
+                    ps.setBoolean(14, pm.getStatus());
+                    ps.setInt(15, pm.getCodigo());
                     ps.executeUpdate();
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
@@ -221,6 +222,51 @@ public class PacienteDAO {
                         listaPaciente.add(pacienteModel);
                     }
                     ConnectionFactory.closeConnection(conexao, ps, rs);
+                    return listaPaciente;
+                case QUERY_STATUS:
+                    sql = "select * from paciente "
+                            + "left join cidade on id_codigo_cidade = id_cidade "
+                            + "left join bairro on id_codigo_bairro = id_bairro "
+                            + "where status = ?";
+                    ps = conexao.prepareStatement(sql);
+                    ps.setBoolean(1, pm.getStatus());
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        /*Inicializamos o paciente e colocamos os valores*/
+                        pacienteModel = new PacienteModel();
+                        pacienteModel.setCodigo(rs.getInt("id_paciente"));
+                        pacienteModel.setNome(rs.getString("nome_paciente"));
+                        pacienteModel.setNascimento(rs.getString("nascimento_paciente"));
+                        pacienteModel.setEndereco(rs.getString("endereco_paciente"));
+                        pacienteModel.setTelefone(rs.getString("telefone_paciente"));
+                        pacienteModel.setCep(rs.getString("cep_paciente"));
+                        pacienteModel.setDocumento(rs.getString("documento_paciente"));
+                        pacienteModel.setSexo(rs.getString("sexo_paciente"));
+                        pacienteModel.setData_cliente(rs.getString("data_cliente_paciente"));
+                        pacienteModel.setTipo(rs.getString("tipo_paciente"));
+                        pacienteModel.setEmail(rs.getString("email_paciente"));
+                        pacienteModel.setObs(rs.getString("obs_paciente"));
+                        pacienteModel.setStatus(rs.getBoolean("status"));
+                        /*Colocamos a Cidade*/
+                        CidadeModel cidadeModel = new CidadeModel();
+                        cidadeModel.setCodigo(rs.getInt("id_cidade"));
+                        cidadeModel.setNome(rs.getString("nome_cidade"));
+                        cidadeModel.setSigla(rs.getString("sigla_cidade"));
+                        /*Colocamos o Bairro*/
+                        BairroModel bairroModel = new BairroModel();
+                        bairroModel.setCodigo(rs.getInt("id_bairro"));
+                        bairroModel.setNome(rs.getString("nome_bairro"));
+                        bairroModel.setCidadeModel(cidadeModel);
+                        /*Adicionamos no PacienteModel*/
+                        pacienteModel.setCidadeModel(cidadeModel);
+                        pacienteModel.setBairroModel(bairroModel);
+                        /*Adicionamos na Lista*/
+                        listaPaciente.add(pacienteModel);
+                    }
+                    ConnectionFactory.closeConnection(conexao, ps, rs);
+                    return listaPaciente;
+                default:
+                    ConnectionFactory.closeConnection(conexao);
                     return listaPaciente;
             }
         } catch (SQLException ex) {
