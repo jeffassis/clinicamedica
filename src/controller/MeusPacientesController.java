@@ -1,16 +1,21 @@
 package controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import model.bean.PacienteModel;
 import model.dao.PacienteDAO;
+import util.CustomCheckBoxTable;
+import util.CustomComboBoxTable;
 import util.DialogFX;
 
 /**
@@ -32,8 +37,11 @@ public class MeusPacientesController implements Initializable {
     private TableColumn<PacienteModel, String> telefoneColuna;
     @FXML
     private TableColumn<PacienteModel, String> emailColuna;
+    @FXML
+    private TableColumn<PacienteModel,Boolean> statusColuna;
     /*Vamos precisar dele para chamar a tela paciente para editar os dados*/
     private HomeController homeController;
+    private List<ComboBox> combos;
 
     /**
      * Initializes the controller class.
@@ -48,6 +56,13 @@ public class MeusPacientesController implements Initializable {
         this.enderecoColuna.setCellValueFactory(cellData -> cellData.getValue().getEnderecoProperty());
         this.telefoneColuna.setCellValueFactory(cellData -> cellData.getValue().getTelefoneProperty());
         this.emailColuna.setCellValueFactory(cellData -> cellData.getValue().getEmailProperty());
+        this.statusColuna.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
+        this.combos = new ArrayList<>();
+        this.statusColuna.setCellFactory(coluna ->{
+            CustomComboBoxTable customBox = new CustomComboBoxTable(coluna);
+            combos.add(customBox.getComboBox());
+            return customBox;
+        });
     }
 
     public void carregarTabela() {
