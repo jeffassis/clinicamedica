@@ -73,8 +73,8 @@
                         </Button>
                         <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Status">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="Ativos" />
-                            <MenuItem mnemonicParsing="false" text="Inativos" />
+                            <MenuItem fx:id="mnAtivo" onAction="#mnAtivoAction"  mnemonicParsing="false" text="Ativos" />
+                            <MenuItem fx:id="mnInativo" onAction="#mnInativoAction"  mnemonicParsing="false" text="Inativos" />
                           </items>
                            <HBox.margin>
                               <Insets left="55.0" top="5.0" />
