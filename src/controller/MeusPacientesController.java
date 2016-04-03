@@ -3,14 +3,20 @@ package controller;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
+import javax.swing.text.TabableView;
 import model.bean.PacienteModel;
 import model.dao.PacienteDAO;
 import util.DialogFX;
@@ -36,7 +42,11 @@ public class MeusPacientesController implements Initializable {
     private TableColumn<PacienteModel, String> emailColuna;
     /*Vamos precisar dele para chamar a tela paciente para editar os dados*/
     private HomeController homeController;
-    private List<ComboBox> combos;
+    @FXML
+    private MenuItem mnAtivo, mnInativo;
+    private ObservableList<PacienteModel> listaDePacientes;
+    private SortedList<PacienteModel> listaDeAtivos;
+    private SortedList<PacienteModel> listaDeInativos;
 
     /**
      * Initializes the controller class.
@@ -57,13 +67,21 @@ public class MeusPacientesController implements Initializable {
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                return PacienteDAO.executeQuery(null, PacienteDAO.QUERY_TODOS);
+                listaDePacientes = PacienteDAO.executeQuery(null, PacienteDAO.QUERY_TODOS);
+                return null;
             }
 
             @Override
             protected void succeeded() {
                 super.succeeded();
-                tabela_paciente.setItems((ObservableList<PacienteModel>) getValue());
+                tabela_paciente.setItems(listaDePacientes);
+                /*Filtro de pacientes ativos, passamos como parametro uma lista de pacientes e no segundo fazemos a condição*/
+                FilteredList<PacienteModel> filtroDeAtivos = new FilteredList<>(listaDePacientes, paciente -> paciente.getStatus());
+                FilteredList<PacienteModel> filtroDeInativos = new FilteredList<>(listaDePacientes, paciente -> paciente.getStatus() == false);
+                
+                /*Adicionamos o dados a essa lista, passando o filtro ou seja ela so terar os dados de acordo com o filtro*/
+                listaDeAtivos = new SortedList<>(filtroDeAtivos);
+                listaDeInativos = new SortedList<>(filtroDeInativos);
             }
         };
         Thread thread = new Thread(task);
@@ -99,5 +117,25 @@ public class MeusPacientesController implements Initializable {
     private void onRefresh() {
         carregarTabela();
         tabela_paciente.getSelectionModel().clearSelection();
+    }
+
+    /**
+     * Evento do menuItem ativo.
+     */
+    @FXML
+    private void mnAtivoAction() {
+        if(listaDeAtivos != null){
+            tabela_paciente.setItems(listaDeAtivos);
+        }
+    }
+
+    /**
+     * Evento do menuItem inativo.
+     */
+    @FXML
+    private void mnInativoAction() {
+       if(listaDeInativos != null){
+           tabela_paciente.setItems(listaDeInativos);
+       }
     }
 }
