@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -12,9 +17,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MeusPacientesController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="721.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MeusPacientesController">
    <children>
-      <SplitPane dividerPositions="0.09547738693467336" layoutX="66.0" layoutY="27.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.08032128514056225" layoutX="66.0" layoutY="27.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
@@ -66,6 +71,15 @@
                               </ImageView>
                            </graphic>
                         </Button>
+                        <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Status">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Ativos" />
+                            <MenuItem mnemonicParsing="false" text="Inativos" />
+                          </items>
+                           <HBox.margin>
+                              <Insets left="55.0" top="5.0" />
+                           </HBox.margin>
+                        </MenuButton>
                      </children>
                   </HBox>
                </children>
@@ -74,12 +88,11 @@
                <children>
                   <TableView fx:id="tabela_paciente" layoutX="76.0" layoutY="14.0" onMouseClicked="#onMouseClick" prefHeight="364.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="nomeColuna" minWidth="180.0" prefWidth="-1.0" text="Nome" />
+                      <TableColumn fx:id="nomeColuna" minWidth="195.0" prefWidth="-1.0" text="Nome" />
                       <TableColumn fx:id="codigoColuna" minWidth="80.0" prefWidth="-1.0" text="Matricula" />
                         <TableColumn fx:id="enderecoColuna" minWidth="160.0" prefWidth="-1.0" text="Endereço" />
                         <TableColumn fx:id="telefoneColuna" minWidth="110.0" prefWidth="-1.0" text="Telefone" />
-                        <TableColumn fx:id="emailColuna" minWidth="170.0" prefWidth="-1.0" text="Email" />
-                        <TableColumn fx:id="statusColuna" prefWidth="147.0" text="Status" />
+                        <TableColumn fx:id="emailColuna" minWidth="173.0" prefWidth="-1.0" text="Email" />
                     </columns>
                   </TableView>
                </children>

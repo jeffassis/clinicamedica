@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -17,7 +22,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GerarMensalidadeController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GerarMensalidadeController">
    <children>
       <SplitPane dividerPositions="0.4578313253012048" layoutX="111.0" layoutY="48.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -129,12 +134,12 @@
                <children>
                   <TableView fx:id="tabela_mensalidade" layoutX="77.0" layoutY="19.0" onMouseClicked="#onClicked" prefHeight="238.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                        <TableColumn fx:id="codigoColuna" prefWidth="70.0" text="Codigo" />
-                      <TableColumn fx:id="mesColuna" prefWidth="120.0" text="Nome Mes" />
-                      <TableColumn fx:id="dataColuna" prefWidth="110.0" text="Data Pagto" />
-                        <TableColumn fx:id="mensalColuna" prefWidth="100.0" text="R$ Mensal" />
+                        <TableColumn fx:id="codigoColuna" text="Codigo" />
+                      <TableColumn fx:id="mesColuna" prefWidth="150.0" text="Nome Mes" />
+                      <TableColumn fx:id="dataColuna" minWidth="20.0" prefWidth="135.0" text="Data Pagto" />
+                        <TableColumn fx:id="mensalColuna" prefWidth="110.0" text="R$ Mensal" />
                         <TableColumn fx:id="descontoColuna" prefWidth="100.0" text="Desconto" />
-                        <TableColumn fx:id="valor_finalColuna" prefWidth="98.0" text="Valor Final" />
+                        <TableColumn fx:id="valor_finalColuna" prefWidth="100.0" text="Valor Final" />
                     </columns>
                   </TableView>
                </children>
