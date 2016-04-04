@@ -201,7 +201,7 @@ public class MensalidadeController implements Initializable {
      */
     @FXML
     private void onSave() {
-        if (!this.tabela_mensalidade.getSelectionModel().isSelected(-1)) {
+        if (this.tabela_mensalidade.getSelectionModel().getSelectedIndex() != -1) {
             /*Pegamos o checkBox q esta na lista e sabemos que o check foi colocado na lista na mesma sequencia da Tabela*/
             CheckBox checkBox = this.listCheckBox.get(tabela_mensalidade.getSelectionModel().getSelectedIndex());
             /*Pegamos a mensalidade na Tabela*/
