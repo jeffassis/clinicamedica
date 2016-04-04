@@ -47,7 +47,7 @@ public class CategoriaDAO {
                     return true;
                 case UPDATE:
                     sql = "update categoria set"
-                            + "decricao_categoria=? "
+                            + "descricao_categoria=? "
                             + "where id_categoria=?";
                     ps = conexao.prepareStatement(sql);
                     ps.setString(1, cm.getDescricao());
@@ -92,5 +92,4 @@ public class CategoriaDAO {
         }
         return listaCategoria;
     }
-
 }
