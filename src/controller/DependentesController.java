@@ -66,7 +66,7 @@ public class DependentesController implements Initializable {
         cb_parent4.setItems(parentesco);
         cb_parent5.setItems(parentesco);
         /*Qual o dado que será mostrado no combo*/
-        cb_paciente.setConverter(new ConverterDados(ConverterDados.GET_PACIENTE_NOME).getPacienteConverter());
+        cb_paciente.setConverter(new ConverterDados(ConverterDados.GET_PACIENTE_NOME).getPacienteConverter(cb_paciente));
         /*Passamos o ComboBox para o construtor, mas falta utilizar o método saveDate() para ter efeito*/
         this.autoComplete = new AutoCompleteComboBox(cb_paciente);
         /*Botão salvar inicia bloqueado*/

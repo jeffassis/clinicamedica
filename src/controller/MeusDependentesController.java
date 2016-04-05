@@ -69,7 +69,7 @@ public class MeusDependentesController implements Initializable {
         cb_parent.setItems(parentesco);
         /*O botão de alterar paciente só funcionara quando for clicado em editar*/
         bt_alterar.setDisable(true);
-        cb_dependentes.setConverter(new ConverterDados(ConverterDados.GET_DEPENDENTE_NOME).getDependenteConverter());
+        cb_dependentes.setConverter(new ConverterDados(ConverterDados.GET_DEPENDENTE_NOME).getDependenteConverter(cb_dependentes));
         this.autoCompleteComboBox = new AutoCompleteComboBox(cb_dependentes);
         this.formatter = new MaskFormatter(dp_nascimento);
         formatter.setMask(MaskFormatter.DATA_BARRA);

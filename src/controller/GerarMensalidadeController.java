@@ -91,7 +91,7 @@ public class GerarMensalidadeController implements Initializable {
         this.valor_finalColuna.setCellValueFactory(cellData -> cellData.getValue().getValorComDesconto().asObject());
 
         /*Utilizando a nossa Classe ConverterDados*/
-        this.cb_paciente.setConverter(new ConverterDados(ConverterDados.GET_PACIENTE_NOME).getPacienteConverter());
+        this.cb_paciente.setConverter(new ConverterDados(ConverterDados.GET_PACIENTE_NOME).getPacienteConverter(cb_paciente));
         /*Utilizando o autoComplete do ComboBox*/
         this.autoCompleteComboBox = new AutoCompleteComboBox(cb_paciente);
 

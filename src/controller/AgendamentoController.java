@@ -93,8 +93,8 @@ public class AgendamentoController implements Initializable {
         this.motivoColuna.setCellValueFactory(cellData -> cellData.getValue().getMotivoProperty());
 
         /*Utilizando a nossa Classe converterDados */
-        this.cb_medico.setConverter(new ConverterDados(ConverterDados.GET_MEDICO_NOME).getMedicoConverter());
-        this.cb_paciente.setConverter(new ConverterDados(ConverterDados.GET_PACIENTE_NOME).getPacienteConverter());
+        this.cb_medico.setConverter(new ConverterDados(ConverterDados.GET_MEDICO_NOME).getMedicoConverter(cb_medico));
+        this.cb_paciente.setConverter(new ConverterDados(ConverterDados.GET_PACIENTE_NOME).getPacienteConverter(cb_paciente));
         /*Utilizando o autocomplete do comboBox*/
         this.autoCompleteComboBox = new AutoCompleteComboBox(cb_medico);
         
