@@ -51,7 +51,7 @@ public class PacienteDAO {
                             + "id_codigo_cidade,"
                             + "id_codigo_bairro,"
                             + "status)"
-                            + "values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                            + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                     ps = conexao.prepareStatement(sql);
                     ps.setString(1, pm.getNome());
                     ps.setString(2, pm.getNascimento());

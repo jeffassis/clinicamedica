@@ -171,7 +171,7 @@ public class CategoriasController implements Initializable {
      * Método que desativa os botoes editar e excluir
      */
     @FXML
-    private void onCancel() {
+    public void onCancel() {
         /* Desmarca qualquer registro que esteja selecionado na tabela*/
         tabela_categoria.getSelectionModel().clearSelection();
 

@@ -510,6 +510,7 @@ public class HomeController implements Initializable {
             this.cadCategoriaPalco.show();
             this.cadCategoriaPalco.requestFocus();
             this.categoriasController.carregarTabela();
+            this.categoriasController.onCancel();
         }
     }
 
