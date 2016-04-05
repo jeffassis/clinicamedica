@@ -10,6 +10,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -66,9 +67,11 @@ public class AgendamentoController implements Initializable {
     private TableColumn<AgendamentoModel, String> dataColuna;
     @FXML
     private TableColumn<AgendamentoModel, String> motivoColuna;
+    @FXML
+    private CheckBox checkMostrarExames;
 
     private AgendamentoModel agendamentoModel;
-    
+
     private AutoCompleteComboBox autoCompleteComboBox;
 
     /**
@@ -97,7 +100,6 @@ public class AgendamentoController implements Initializable {
         this.cb_paciente.setConverter(new ConverterDados(ConverterDados.GET_PACIENTE_NOME).getPacienteConverter(cb_paciente));
         /*Utilizando o autocomplete do comboBox*/
         this.autoCompleteComboBox = new AutoCompleteComboBox(cb_medico);
-        
 
         /**
          * Colocando a Mascara no DatePicker
@@ -135,7 +137,7 @@ public class AgendamentoController implements Initializable {
                 autoCompleteComboBox.saveData();
                 autoCompleteComboBox.addComboBox(cb_paciente);
             }
-            
+
         };
         Thread thread = new Thread(task);
         thread.setDaemon(true);
@@ -149,7 +151,7 @@ public class AgendamentoController implements Initializable {
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                return AgendamentoDAO.executeQuery(null, AgendamentoDAO.QUERY_DATA);
+                return AgendamentoDAO.executeQuery(null, AgendamentoDAO.QUERY_TODOS);
             }
 
             @Override
@@ -270,11 +272,24 @@ public class AgendamentoController implements Initializable {
         txt_motivo.setText("");
         dpData.getEditor().setText("");
     }
-    
+
     /**
      * Método reiniciar os dados da tela.
      */
-    public void refresh(){
+    public void refresh() {
         limparCampos();
+        checkMostrarExames.setSelected(false);
+        dp_localiza.setDisable(false);
+    }
+
+    @FXML
+    private void checkMostrarOnAction() {
+        if (checkMostrarExames.isSelected()) {
+            dp_localiza.setDisable(true);
+            carregarTabela();
+        } else {
+            dp_localiza.setDisable(false);
+            onDateSelected();
+        }
     }
 }
