@@ -59,8 +59,6 @@ public class MensalidadeController implements Initializable {
     private TableColumn<MensalidadeModel, Boolean> pagoColuna;
     @FXML
     private Button bt_salvar;
-    /*Vai conter todos dos CheckBox da Tabela*/
-    private List<CheckBox> listCheckBox;
 
     private HomeController homeController;
 
@@ -78,31 +76,18 @@ public class MensalidadeController implements Initializable {
         this.descontoColuna.setCellValueFactory(cellData -> cellData.getValue().getDescontoProperty().asObject());
         this.valorColuna.setCellValueFactory(cellData -> cellData.getValue().getValorProperty().asObject());
         this.pagoColuna.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
-        /*Usamos o metodo CellFactory para mudar a estrutura da coluna e colocamos um checkBox, smp para mudar a estrutura da coluna
-        usaremos CellFactory*/
-        // this.pagoColuna.setCellFactory(checkBox -> new CheckBoxTableCell<>());
-        /*Veja a baixo como seria sem a lambda, teriamos que usar uma classe anonima para add o checkBox*/
-//        this.pagoColuna.setCellFactory(new Callback<TableColumn<MensalidadeModel, Boolean>, TableCell<MensalidadeModel, Boolean>>() {
-//            @Override
-//            public TableCell<MensalidadeModel, Boolean> call(TableColumn<MensalidadeModel, Boolean> param) {
-        /*Criamos o checkBox q vamos colocar na coluna da tabela*/
-//                CheckBoxTableCell<MensalidadeModel,Boolean> checkBox = new CheckBoxTableCell<>();
-        /*Retornamos o checkBox, assim adicionado ele a nossa coluna*/
-//                return checkBox;
-//            }
-//        });
-        /*Instancio a Lista*/
-        this.listCheckBox = new ArrayList<>();
 
-        this.pagoColuna.setCellFactory(coluna -> {
-            CustomCheckBoxTable customCheck = new CustomCheckBoxTable<>(coluna);
-            /*Falamos oq deve acontecer no evento do clique no CheckBox, no caso colocamos para
-            chamar o nosso metodo checkBoxOnAction, e passamos o checkBox como parametro para
-            verificamos o estado do checkBox*/
-            //customCheck.getCheckBox().setOnAction(evento -> checkBoxOnAction(customCheck.getCheckBox(), customCheck));
-            /*Agora adicionamos nossos checkBox dentro da lista*/
-            listCheckBox.add(customCheck.getCheckBox());
-            return customCheck;
+        /*Veja como ficou simples*/
+        pagoColuna.setCellFactory(coluna -> new CustomCheckBoxTable<>(coluna));
+        /*Botão salvar começa desativado*/
+        this.bt_salvar.setDisable(true);
+        /*Evento na TableView utilizando a property acontece até quando a Tabela e populado ou dando um clear*/
+        tabela_mensalidade.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (tabela_mensalidade.getSelectionModel().getSelectedIndex() == -1) {
+                this.bt_salvar.setDisable(true);
+            } else {
+                this.bt_salvar.setDisable(false);
+            }
         });
 
         /**
@@ -116,10 +101,6 @@ public class MensalidadeController implements Initializable {
      * Método que carrega a tabela Mensalidade
      */
     public void preencheTabela() {
-        /*Limpa a lista de CheckBox para evitar problemas*/
-        if (listCheckBox != null) {
-            this.listCheckBox.clear();
-        }
         PacienteModel paciente = tabela_paciente.getSelectionModel().getSelectedItem();
 
         MensalidadeModel mm = new MensalidadeModel(paciente);
@@ -201,20 +182,13 @@ public class MensalidadeController implements Initializable {
      */
     @FXML
     private void onSave() {
-        if (this.tabela_mensalidade.getSelectionModel().getSelectedIndex() != -1) {
-            /*Pegamos o checkBox q esta na lista e sabemos que o check foi colocado na lista na mesma sequencia da Tabela*/
-            CheckBox checkBox = this.listCheckBox.get(tabela_mensalidade.getSelectionModel().getSelectedIndex());
-            /*Pegamos a mensalidade na Tabela*/
-            MensalidadeModel mensalidade = this.tabela_mensalidade.getSelectionModel().getSelectedItem();
-            /*Mudamos o status dela pelo do CheckBox*/
-            mensalidade.setStatus(checkBox.isSelected());
-            if (MensalidadeDAO.executeUpdates(mensalidade, MensalidadeDAO.UPDATE_STATUS)) {
-                DialogFX.showMessage("Mensalidade paga com sucesso", "Sucesso", DialogFX.SUCESS);
-            } else {
-                DialogFX.showMessage("Não foi possivel salvar o status da Mensalidade", "ERRO", DialogFX.ERRO);
-            }
+        boolean valorDaColuna = pagoColuna.getCellData(tabela_mensalidade.getSelectionModel().getSelectedIndex());
+        MensalidadeModel mensalidade = tabela_mensalidade.getSelectionModel().getSelectedItem();
+        mensalidade.setStatus(valorDaColuna);
+        if (MensalidadeDAO.executeUpdates(mensalidade, MensalidadeDAO.UPDATE_STATUS)) {
+            DialogFX.showMessage("Status da mensalidade alterada com sucesso!", "Sucesso!", DialogFX.SUCESS);
         } else {
-            DialogFX.showMessage("Selecione uma mensalidade por favor!", "Mensalidade não selecionada", DialogFX.ATENCAO);
+            DialogFX.showMessage("Houve um erro ao alterar os status da mensalidade", "Erro!", DialogFX.ERRO);
         }
     }
 
