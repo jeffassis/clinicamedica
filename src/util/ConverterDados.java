@@ -1,5 +1,8 @@
 package util;
 
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
 import javafx.util.StringConverter;
 import model.bean.BairroModel;
 import model.bean.CategoriaModel;
@@ -69,7 +72,7 @@ public class ConverterDados {
      *
      * @return
      */
-    public StringConverter<MedicoModel> getMedicoConverter() {
+    public StringConverter<MedicoModel> getMedicoConverter(ComboBox<MedicoModel> comboBox) {
         StringConverter<MedicoModel> convertido = new StringConverter<MedicoModel>() {
             @Override
             public String toString(MedicoModel object) {
@@ -89,10 +92,8 @@ public class ConverterDados {
             }
 
             @Override
-            public MedicoModel fromString(String string) {
-                MedicoModel medico = new MedicoModel();
-                medico.setNome(string);
-                return MedicoDAO.executeQuery(medico, MedicoDAO.QUERY_NOME).get(0);
+            public MedicoModel fromString(String nomeDoMedico) {
+                return comboBox.getItems().stream().filter(medico -> medico.getNome().equals(nomeDoMedico)).findFirst().get();
             }
         };
         return convertido;
@@ -162,11 +163,11 @@ public class ConverterDados {
     }
 
     /**
-     * Retorna um toString proprio de PacienteModel
-     *
+     * Retorna um toString proprio de PacienteModel 
+     * @param comboBox
      * @return
      */
-    public StringConverter<PacienteModel> getPacienteConverter() {
+    public StringConverter<PacienteModel> getPacienteConverter(ComboBox<PacienteModel> comboBox) {
         StringConverter<PacienteModel> convertido = new StringConverter<PacienteModel>() {
             @Override
             public String toString(PacienteModel object) {
@@ -185,11 +186,8 @@ public class ConverterDados {
             }
 
             @Override
-            public PacienteModel fromString(String string) {
-                /*Necessario para evitar a exceção utilizando o AutoComplete no comboBox*/
-                PacienteModel pm = new PacienteModel();
-                pm.setNome(string);
-                return PacienteDAO.executeQuery(pm, PacienteDAO.QUERY_NOME).get(0);
+            public PacienteModel fromString(String nomeDoPaciente) {
+                return comboBox.getItems().stream().filter(paciente -> paciente.getNome().equals(nomeDoPaciente)).findFirst().get();
             }
 
         };
@@ -227,7 +225,7 @@ public class ConverterDados {
         return convertido;
     }
 
-    public StringConverter<DependenteModel> getDependenteConverter() {
+    public StringConverter<DependenteModel> getDependenteConverter(ComboBox<DependenteModel> comboBox) {
         StringConverter<DependenteModel> converter = new StringConverter<DependenteModel>() {
             @Override
             public String toString(DependenteModel object) {
@@ -246,10 +244,8 @@ public class ConverterDados {
             }
 
             @Override
-            public DependenteModel fromString(String string) {
-                DependenteModel dm = new DependenteModel();
-                dm.setNome(string);
-                return DependentesDAO.executeQuery(dm, DependentesDAO.QUERY_NOME).get(0);
+            public DependenteModel fromString(String nomeDoDependente) {
+                return comboBox.getItems().stream().filter(dependente -> dependente.getNome().equals(nomeDoDependente)).findFirst().get();
             }
         };
         return converter;
