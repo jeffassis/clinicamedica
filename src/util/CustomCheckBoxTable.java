@@ -66,6 +66,7 @@ public class CustomCheckBoxTable<S,T> extends TableCell<S, T> {
     /**
      * retorna o CheckBox da Classe.
      * @return 
+     * @deprecated - Não é mais necessario.
      */
     public CheckBox getCheckBox(){
         return this.checkBox;
