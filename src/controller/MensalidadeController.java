@@ -76,9 +76,10 @@ public class MensalidadeController implements Initializable {
         this.descontoColuna.setCellValueFactory(cellData -> cellData.getValue().getDescontoProperty().asObject());
         this.valorColuna.setCellValueFactory(cellData -> cellData.getValue().getValorProperty().asObject());
         this.pagoColuna.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
-
+        
         /*Veja como ficou simples*/
-        pagoColuna.setCellFactory(coluna -> new CustomCheckBoxTable<>(coluna));
+        pagoColuna.setCellFactory(coluna -> new CheckBoxTableCell<>());
+        tabela_mensalidade.setEditable(true);
         /*Botão salvar começa desativado*/
         this.bt_salvar.setDisable(true);
         /*Evento na TableView utilizando a property acontece até quando a Tabela e populado ou dando um clear*/
