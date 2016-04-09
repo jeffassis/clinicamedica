@@ -29,18 +29,22 @@ public class DependentesDAO {
 
     public static final int CREATE = 0;
     public static final int UPDATE = 1;
-    public static final int DELETE = 2;
+    /**
+     * Troca o paciente cujo é dependente.
+     */
+    public static final int UPDATE_TROCA = 2;
+    public static final int DELETE = 3;
 
-    public static final int QUERY_TODOS = 3;
+    public static final int QUERY_TODOS = 4;
     /**
      * Passe o ID do paciente e retornarar o Dependente relacionado a ele.
      */
-    public static final int QUERY_PACIENTE = 4;
+    public static final int QUERY_PACIENTE = 5;
     /**
      * Passe o ID do dependente e retornarar o paciente Relacionado a ele.
      */
-    public static final int QUERY_DEPENDENTE = 5;
-    public static final int QUERY_NOME = 6;
+    public static final int QUERY_DEPENDENTE = 6;
+    public static final int QUERY_NOME = 7;
 
     /**
      * Método executa operações de CREATE,UPDATE e DELETE no banco de Dados.
@@ -87,6 +91,15 @@ public class DependentesDAO {
                     sql = "delete from dependente where id_dependente = ?";
                     ps = conexao.prepareStatement(sql);
                     ps.setInt(1, dm.getCodigo());
+                    ps.executeUpdate();
+                    ConnectionFactory.closeConnection(conexao, ps);
+                    return true;
+                case UPDATE_TROCA:
+                    sql = "update paciente_dependente set id_codigo_paciente = ?"
+                            + " where id_codigo_dependente  = ?";
+                    ps = conexao.prepareStatement(sql);
+                    ps.setInt(1, dm.getPacienteModel().getCodigo());
+                    ps.setInt(2, dm.getCodigo());
                     ps.executeUpdate();
                     ConnectionFactory.closeConnection(conexao, ps);
                     return true;
@@ -334,7 +347,7 @@ public class DependentesDAO {
     /**
      * Adiciona vários dependentes no banco e dependentes eles a um paciente.
      *
-     * @param dependentes 
+     * @param dependentes
      * @return
      */
     public static boolean executeMultiUpdates(List<DependenteModel> dependentes) {
