@@ -49,4 +49,13 @@ public class Funcionalidades {
     public void iniciarProcessos(Object referencia) {
         //Deve ser implementada por quem utilizar esta classe.
     }
+    
+    /**
+     * Processos Iniciais com parêmetro que recebe duas Referencias.
+     * @param referencia1
+     * @param referencia2 
+     */
+    public void iniciarProcessos(Object referencia1, Object referencia2){
+        //Deve ser implementada por quem utilizar esta classe.
+    }
 }
