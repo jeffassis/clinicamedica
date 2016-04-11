@@ -76,6 +76,7 @@ public class ProcessosStage {
                     funcoes.iniciarProcessos();
                     funcoes.iniciarProcessos(referencia1);
                     funcoes.iniciarProcessos(referencia1, referencia2);
+                    funcoes.pegarReferencia(referencia1);
                     funcoes.iniciarProcessos(editar, dados);
                 }
                 palco.show();
@@ -130,7 +131,7 @@ public class ProcessosStage {
      *
      * @param urlIcon
      */
-    public void addURLIcon(String urlIcon) {
+    public void addIcon(String urlIcon) {
         this.urlIcon = urlIcon;
     }
     
