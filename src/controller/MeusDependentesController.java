@@ -34,6 +34,7 @@ import util.ConverterDados;
 import util.DialogFX;
 import util.Log;
 import util.MaskFormatter;
+import util.ProcessosStage;
 
 /**
  *
@@ -61,6 +62,7 @@ public class MeusDependentesController implements Initializable {
     private HomeController controller;
     private PacienteDetalheController control;
     private Stage palco;
+    private ProcessosStage processo;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -109,7 +111,7 @@ public class MeusDependentesController implements Initializable {
      * Evento que é lançado ao selecionar um Paciente.
      */
     @FXML
-    private void onSelectedPaciente() {
+    public void onSelectedPaciente() {
         if (!cb_dependentes.getSelectionModel().isSelected(-1)) {
             DependenteModel dm = cb_dependentes.getSelectionModel().getSelectedItem();
             txt_codigo.setText(dm.getCodigoProperty().getValue().toString());
@@ -134,7 +136,7 @@ public class MeusDependentesController implements Initializable {
             dm.setNascimento(dp_nascimento.getEditor().getText());
             dm.setParentesco(cb_parent.getSelectionModel().getSelectedItem());
             dm.setTelefone(txt_telefone.getText());
-            if (DependentesDAO.executeUpdates(dm, DependentesDAO.UPDATE)) {
+            if (DependentesDAO.executeUpdates(dm, DependentesDAO.UPDATE) && DependentesDAO.executeUpdates(dm, DependentesDAO.UPDATE_TROCA)) {
                 bt_cadastrar.setText("Cadastrar");
                 editar = false;
                 txt_dependente.setEditable(false);
@@ -157,7 +159,7 @@ public class MeusDependentesController implements Initializable {
      * Evento que é lançado quando o MenuItem editar e pressionado.
      */
     @FXML
-    private void onEditar() {
+    private void onEditar(ActionEvent evento) {
         if (!editar) {
             editar = true;
             bt_cadastrar.setText("Salvar");
@@ -251,6 +253,29 @@ public class MeusDependentesController implements Initializable {
             DialogFX.showMessage("Por favor selecione antes um dependente", "Nenhum dependente selecionado", DialogFX.ATENCAO);
         }
         
+    }
+    
+    /**
+     * Evento do botão alterar paciente.
+     */
+    @FXML
+    private void onAlterarPaciente(){
+        if(processo == null){
+            processo = new ProcessosStage("/view/TrocaPaciente.fxml",new TrocaPacienteController());
+            processo.addTitle("Alterar Paciente de Dependencia");
+            processo.setModality(true);
+            processo.show(null,cb_dependentes.getSelectionModel().getSelectedItem(),this);
+        }else{
+            processo.show(null,cb_dependentes.getSelectionModel().getSelectedItem(),this);
+        }
+    }
+    
+    /**
+     * Método retorna o comboBox desta Classe.
+     * @return 
+     */
+    public ComboBox<DependenteModel> getCbDependentes(){
+        return this.cb_dependentes;
     }
     
 }
