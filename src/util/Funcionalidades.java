@@ -58,4 +58,12 @@ public class Funcionalidades {
     public void iniciarProcessos(Object referencia1, Object referencia2){
         //Deve ser implementada por quem utilizar esta classe.
     }
+    
+    /**
+     * Método que pega a referencia de alguma Classe ou Objeto.
+     * @param referencia 
+     */
+    public void pegarReferencia(Object referencia){
+         //Deve ser implementada por quem utilizar esta classe.
+    }
 }
