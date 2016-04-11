@@ -80,7 +80,7 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="bt_alterar" mnemonicParsing="false" text="Alterar Paciente" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Button fx:id="bt_alterar" mnemonicParsing="false" onAction="#onAlterarPaciente" text="Alterar Paciente" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="150.0" />
                </GridPane.margin>
