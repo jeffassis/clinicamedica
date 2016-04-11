@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="controller.TrocaPacienteController">
+   <children>
+      <Label layoutX="131.0" layoutY="14.0" text="Selecione um Paciente">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cb_paciente" layoutX="88.0" layoutY="75.0" prefHeight="25.0" prefWidth="226.0" />
+      <HBox layoutX="232.0" layoutY="161.0" spacing="5.0">
+         <children>
+            <Button fx:id="bt_trocar" onAction="#onTrocar" mnemonicParsing="false" text="Trocar" />
+            <Button fx:id="bt_cancelar" onAction="#onCancelar"  mnemonicParsing="false" text="Cancelar" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
