@@ -16,13 +16,14 @@ import javafx.scene.control.TextField;
 import model.bean.FuncionarioModel;
 import model.dao.FuncionarioDAO;
 import util.DialogFX;
+import util.Funcionalidades;
 
 /**
  * FXML Controller class
  *
  * @author jeff-
  */
-public class FuncionarioController implements Initializable {
+public class FuncionarioController extends Funcionalidades implements Initializable {
 
     @FXML
     private TextField txt_codigo;
@@ -75,6 +76,7 @@ public class FuncionarioController implements Initializable {
     /**
      * Metodo para carregar o TableView da GUI com Thread
      */
+    @Override
     public void carregarTabela() {
         Task task = new Task() {
             @Override
@@ -281,6 +283,7 @@ public class FuncionarioController implements Initializable {
     /**
      * Método reiniciar os dados da tela.
      */
+    @Override
     public void refresh(){
         limparCampos();
         desabilitarCampos();

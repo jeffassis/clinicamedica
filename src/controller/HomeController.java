@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.bean.PacienteModel;
 import util.Log;
+import util.ProcessosStage;
 
 /**
  * Class controller da Tela Principal
@@ -35,35 +36,7 @@ public class HomeController implements Initializable {
     /*Colocando uma imagem de pasta na Itens da TreeView*/
     Image icon = new Image(getClass().getResourceAsStream("/img/folder 16x16.png"));
     Image adm = new Image(getClass().getResourceAsStream("/img/folder16.png"));
-
-    /*Variavel booleana para verificar se as Janelas já estão abertas*/
-    private boolean abriuCadMedico, abriuCadPaciente, abriuCadFuncionario, abriuAgendamento,
-            abriuMeusPacientes, abriuCadCidade, abriuCadBairro, abriuCadExame,
-            abriuCadCategoria, abriuTabelaExame, abriuDependentes, abriuMensalidade, abriuMeusDependentes,
-            abriuGerarMensalidade;
-
-    /*Declaração do Stage para colocar as caracteristicas da nova Janela*/
-    private Stage cadMedicoPalco, cadPacientePalco, cadFuncionarioPalco, AgendamentoPalco,
-            MeusPacientesPalco, cadCidadePalco, cadBairroPalco, cadExamePalco,
-            primaryStage, cadCategoriaPalco, tabelaExamePalco, cadDependentesPalco,
-            mensalidadePalco, meusDependentes, gerarMensalidadePalco;
-
-    /*Declaração que representa a class Controller*/
-    private MedicosController medicosController;
-    private PacientesController pacientesController;
-    private FuncionarioController funcionarioController;
-    private AgendamentoController agendamentoController;
-    private MeusPacientesController meusPacientesController;
-    private CidadeController cidadeController;
-    private BairroController bairroController;
-    private ExameController exameController;
-    private CategoriasController categoriasController;
-    private TabelaExameController tabelaExameController;
-    private DependentesController dependentesController;
-    private MensalidadeController mensalidadeController;
-    private GerarMensalidadeController gerarMensalidadeController;
-    private MeusDependentesController meusDependentesController;
-
+    private Stage primaryStage;
     /*Declaração dos TreeItem*/
     private TreeItem<String> root, nodeA, nodeB, nodeC,
             nodeA1, nodeA2, nodeA3, nodeA4, nodeA5, nodeA6, nodeA7,
@@ -71,6 +44,10 @@ public class HomeController implements Initializable {
     /*Declaração dos nossos SplitPanes*/
     @FXML
     private SplitPane split_superior, split_lateral;
+    /*Nova forma de Chamar as Telas*/
+    ProcessosStage telaMedico, telaPacientes, telaMeusPacientes, telaFuncionarios
+            , telaAgendamento, telaCidade, telaBairro, telaExame, telaCategoria
+            , telaDeExames, telaDependentes, telaMensalidades, telaMeusDependentes, telaGerarMensalidades;
 
     /**
      * Initializes the controller class.
@@ -173,40 +150,14 @@ public class HomeController implements Initializable {
      */
     @FXML
     private void cadMedico() {
-        /*Verifica se a Janela já foi aberta*/
-        if (!abriuCadMedico) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Medicos.fxml"));
-            try {
-                this.cadMedicoPalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.medicosController = carregar.getController();
-
-                this.cadMedicoPalco.setTitle("Cadastro de Médicos");
-                this.cadMedicoPalco.setScene(scene);
-                this.cadMedicoPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                /*Informamos de onde ele veio que no caso é a tela Home, assim ele fica
-                dependende dela, se ela minimizar a todas depedendes dela tbm vão*/
-                this.cadMedicoPalco.initOwner(primaryStage);
-                /*Alteramos para que não seja maximizado e nem redimensionavel*/
-                this.cadMedicoPalco.setResizable(false);
-                this.cadMedicoPalco.setMaximized(false);
-                this.cadMedicoPalco.show();
-                this.medicosController.carregarTabela();
-                /*informamos que a tela já foi aberta uma vez*/
-                this.abriuCadMedico = true;
-
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class
-                        .getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
+        if (this.telaMedico == null) {
+            this.telaMedico = new ProcessosStage("/view/Medicos.fxml", new MedicosController());
+            telaMedico.addTitle("Cadastro de Médicos");
+            telaMedico.addIcon("/img/medico_icon.png");
+            telaMedico.addPrimaryStage(primaryStage);
+            telaMedico.show(null, null, null);
         } else {
-            this.medicosController.refresh();
-            this.cadMedicoPalco.show();
-            this.cadMedicoPalco.requestFocus();
-            this.medicosController.carregarTabela();
+            telaMedico.show(null, null, null);
         }
     }
 
@@ -243,37 +194,16 @@ public class HomeController implements Initializable {
      * passar null.
      */
     public void cadPaciente(boolean editar, TableView<PacienteModel> tabela) {
-        if (!abriuCadPaciente) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Pacientes.fxml"));
-            try {
-                this.cadPacientePalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.pacientesController = carregar.getController();
-                this.cadPacientePalco.setTitle("Cadastro de Pacientes");
-                this.cadPacientePalco.setScene(scene);
-                this.cadPacientePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.cadPacientePalco.setResizable(false);
-                this.cadPacientePalco.setMaximized(false);
-                this.cadPacientePalco.initOwner(primaryStage);
-                this.cadPacientePalco.show();
-                this.pacientesController.iniciarProcessos(editar, tabela);
-                this.abriuCadPaciente = true;
-                /*Pegamos a referencia dessa classe*/
-                this.pacientesController.getHomeController(this);
-
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class
-                        .getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
+        if (this.telaPacientes == null) {
+            this.telaPacientes = new ProcessosStage("/view/Pacientes.fxml", new PacientesController());
+            telaPacientes.addTitle("Cadastro de Pacientes");
+            telaPacientes.addIcon("/img/medico_icon.png");
+            telaPacientes.addPrimaryStage(primaryStage);
+            telaPacientes.setEditar(editar);
+            telaPacientes.show(tabela, null, null);
         } else {
-            /*Deixamos a tela como se estivesse abrindo pela primeira vez*/
-            this.pacientesController.refresh();
-            this.cadPacientePalco.show();
-            this.pacientesController.iniciarProcessos(editar, tabela);
-            this.cadPacientePalco.requestFocus();
+            telaPacientes.setEditar(editar);
+            telaPacientes.show(tabela, null, null);
         }
     }
 
@@ -291,256 +221,108 @@ public class HomeController implements Initializable {
      */
     @FXML
     public void meusPacientes() {
-        if (!abriuMeusPacientes) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/MeusPacientes.fxml"));
-            try {
-                this.MeusPacientesPalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.meusPacientesController = carregar.getController();
-                this.MeusPacientesPalco.setTitle("Meus Pacientes");
-                this.MeusPacientesPalco.setScene(scene);
-                this.MeusPacientesPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.MeusPacientesPalco.setResizable(false);
-                this.MeusPacientesPalco.setMaximized(false);
-                this.MeusPacientesPalco.initOwner(primaryStage);
-                this.MeusPacientesPalco.show();
-                /*Pegamos a referencia da HomeController*/
-                this.meusPacientesController.pegarHomeReferencia(this);
-                this.meusPacientesController.carregarTabela();
-                this.abriuMeusPacientes = true;
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
+        if (telaMeusPacientes == null) {
+            this.telaMeusPacientes = new ProcessosStage("/view/MeusPacientes.fxml", new MeusPacientesController());
+            telaMeusPacientes.addTitle("Meus Pacientes");
+            telaMeusPacientes.addIcon("/img/medico_icon.png");
+            telaMeusPacientes.addPrimaryStage(primaryStage);
+            telaMeusPacientes.show(null, this, null);
         } else {
-            this.MeusPacientesPalco.show();
-            this.meusPacientesController.carregarTabela();
-            this.MeusPacientesPalco.requestFocus();
+            telaMeusPacientes.show(null, this, null);
         }
     }
 
     @FXML
     private void cadFuncionario() {
-        if (!abriuCadFuncionario) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Funcionario.fxml"));
-            try {
-                this.cadFuncionarioPalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.funcionarioController = carregar.getController();
-                this.cadFuncionarioPalco.setTitle("Cadastro de Funcionários");
-                this.cadFuncionarioPalco.setScene(scene);
-                this.cadFuncionarioPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.cadFuncionarioPalco.setResizable(false);
-                this.cadFuncionarioPalco.setMaximized(false);
-                this.cadFuncionarioPalco.initOwner(primaryStage);
-                this.cadFuncionarioPalco.show();
-                this.funcionarioController.carregarTabela();
-
-                this.abriuCadFuncionario = true;
-
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class
-                        .getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
+        if (telaFuncionarios == null) {
+            this.telaFuncionarios = new ProcessosStage("/view/Funcionario.fxml", new FuncionarioController());
+            telaFuncionarios.addTitle("Cadastro de Funcionários");
+            telaFuncionarios.addIcon("/img/medico_icon.png");
+            telaFuncionarios.addPrimaryStage(primaryStage);
+            telaFuncionarios.show(null, null, null);
         } else {
-            this.funcionarioController.refresh();
-            this.cadFuncionarioPalco.show();
-            this.cadFuncionarioPalco.requestFocus();
-            this.funcionarioController.carregarTabela();
+            telaFuncionarios.show(null, null, null);
         }
     }
 
     @FXML
     private void agendamento() {
-        if (!abriuAgendamento) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Agendamento.fxml"));
-            try {
-                this.AgendamentoPalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.agendamentoController = carregar.getController();
-                this.AgendamentoPalco.setTitle("Agendamento");
-                this.AgendamentoPalco.setScene(scene);
-                this.AgendamentoPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.AgendamentoPalco.setResizable(false);
-                this.AgendamentoPalco.setMaximized(false);
-                this.AgendamentoPalco.initOwner(primaryStage);
-                this.AgendamentoPalco.show();
-                this.agendamentoController.iniciarProcessos();
-                //this.agendamentoController.carregarTabela();
-                this.abriuAgendamento = true;
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
+        if (this.telaAgendamento == null) {
+            this.telaAgendamento = new ProcessosStage("/view/Agendamento.fxml", new AgendamentoController());
+            telaAgendamento.addTitle("Agendamento");
+            telaAgendamento.addIcon("/img/medico_icon.png");
+            telaAgendamento.addPrimaryStage(primaryStage);
+            telaAgendamento.show(null, null, null);
+            /*Não segue o padrão das outras Classes, o iniciarProcessos nesse caso tem q acontecer depois do show*/
+            ((AgendamentoController) telaAgendamento.getController()).iniciandoProcessos();
         } else {
-            this.agendamentoController.refresh();
-            this.AgendamentoPalco.show();
-            this.AgendamentoPalco.requestFocus();
-            this.agendamentoController.iniciarProcessos();
-            //this.agendamentoController.carregarTabela();
+            telaAgendamento.show(null, null, null);
+            ((AgendamentoController) telaAgendamento.getController()).iniciandoProcessos();
         }
     }
 
     @FXML
     private void cadCidade() {
-        if (!abriuCadCidade) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Cidade.fxml"));
-            try {
-                this.cadCidadePalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.cidadeController = carregar.getController();
-                this.cadCidadePalco.setTitle("Cadastro de Cidades");
-                this.cadCidadePalco.setScene(scene);
-                this.cadCidadePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.cadCidadePalco.setResizable(false);
-                this.cadCidadePalco.setMaximized(false);
-                this.cadCidadePalco.initOwner(primaryStage);
-                this.cadCidadePalco.show();
-                this.cidadeController.carregarTabela();
-                this.abriuCadCidade = true;
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
+        if (telaCidade == null) {
+            this.telaCidade = new ProcessosStage("/view/Cidade.fxml", new CidadeController());
+            telaCidade.addTitle("Cadastro de Cidades");
+            telaCidade.addIcon("/img/medico_icon.png");
+            telaCidade.addPrimaryStage(primaryStage);
+            telaCidade.show(null, null, null);
         } else {
-            this.cidadeController.refresh();
-            this.cadCidadePalco.show();
-            this.cadCidadePalco.requestFocus();
-            this.cidadeController.carregarTabela();
+            telaCidade.show(null, null, null);
         }
     }
 
     @FXML
     private void cadBairro() {
-        if (!abriuCadBairro) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Bairro.fxml"));
-            try {
-                this.cadBairroPalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.bairroController = carregar.getController();
-                this.cadBairroPalco.setTitle("Cadastro de Bairros");
-                this.cadBairroPalco.setScene(scene);
-                this.cadBairroPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.cadBairroPalco.setResizable(false);
-                this.cadBairroPalco.setMaximized(false);
-                this.cadBairroPalco.initOwner(primaryStage);
-                this.cadBairroPalco.show();
-                this.bairroController.carregarTabela();
-                this.bairroController.iniciarProcessos();
-                this.abriuCadBairro = true;
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
+        if (telaBairro == null) {
+            this.telaBairro = new ProcessosStage("/view/Bairro.fxml", new BairroController());
+            telaBairro.addTitle("Cadastro de Cidades");
+            telaBairro.addIcon("/img/medico_icon.png");
+            telaBairro.addPrimaryStage(primaryStage);
+            telaBairro.show(null, null, null);
         } else {
-            this.bairroController.refresh();
-            this.cadBairroPalco.show();
-            this.cadBairroPalco.requestFocus();
-            this.bairroController.carregarTabela();
-            this.bairroController.iniciarProcessos();
+            telaBairro.show(null, null, null);
         }
     }
 
     @FXML
     private void cadExame() {
-        if (!abriuCadExame) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Exame.fxml"));
-            this.cadExamePalco = new Stage();
-            try {
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.exameController = carregar.getController();
-                this.cadExamePalco.setTitle("Cadastros de Exame");
-                this.cadExamePalco.setScene(scene);
-                this.cadExamePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.cadExamePalco.setResizable(false);
-                this.cadExamePalco.setMaximized(false);
-                this.cadExamePalco.initOwner(primaryStage);
-                this.cadExamePalco.show();
-                this.exameController.carregarTabela();
-                this.abriuCadExame = true;
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
+        if (telaExame == null) {
+            this.telaExame = new ProcessosStage("/view/Exame.fxml", new ExameController());
+            telaExame.addTitle("Cadastros de Exame");
+            telaExame.addIcon("/img/medico_icon.png");
+            telaExame.addPrimaryStage(primaryStage);
+            telaExame.show(null, null, null);
         } else {
-            this.exameController.refresh();
-            this.cadExamePalco.show();
-            this.cadExamePalco.requestFocus();
-            this.exameController.carregarTabela();
+            telaExame.show(null, null, null);
         }
     }
 
     @FXML
     private void cadCategoria() {
-        if (!abriuCadCategoria) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Categorias.fxml"));
-            try {
-                this.cadCategoriaPalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.categoriasController = carregar.getController();
-                this.cadCategoriaPalco.setTitle("Cadastro de Categorias");
-                this.cadCategoriaPalco.setScene(scene);
-                this.cadCategoriaPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.cadCategoriaPalco.setResizable(false);
-                this.cadCategoriaPalco.setMaximized(false);
-                this.cadCategoriaPalco.initOwner(primaryStage);
-                this.cadCategoriaPalco.show();
-                this.categoriasController.carregarTabela();
-                this.abriuCadCategoria = true;
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
+        if (telaCategoria == null) {
+            this.telaCategoria = new ProcessosStage("/view/Categorias.fxml", new CategoriasController());
+            telaCategoria.addTitle("Cadastro de Categorias");
+            telaCategoria.addIcon("/img/medico_icon.png");
+            telaCategoria.addPrimaryStage(primaryStage);
+            telaCategoria.show(null, null, null);
         } else {
-            this.cadCategoriaPalco.show();
-            this.cadCategoriaPalco.requestFocus();
-            this.categoriasController.carregarTabela();
-            this.categoriasController.onCancel();
+            telaCategoria.show(null, null, null);
         }
     }
 
     @FXML
     private void tabelaExame() {
-        if (!abriuTabelaExame) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/TabelaExame.fxml"));
-            try {
-                this.tabelaExamePalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.tabelaExameController = carregar.getController();
-                this.tabelaExamePalco.setTitle("Tabela de preço de Exames");
-                this.tabelaExamePalco.setScene(scene);
-                this.tabelaExamePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
-                this.tabelaExamePalco.setResizable(false);
-                this.tabelaExamePalco.setMaximized(false);
-                this.tabelaExamePalco.initOwner(primaryStage);
-                this.tabelaExamePalco.show();
-                this.tabelaExameController.carregarTabela();
-                this.abriuTabelaExame = true;
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
+        if (telaDeExames == null) {
+            this.telaDeExames = new ProcessosStage("/view/TabelaExame.fxml", new TabelaExameController());
+            telaDeExames.addTitle("Tabela de preço de Exames");
+            telaDeExames.addIcon("/img/medico_icon.png");
+            telaDeExames.addPrimaryStage(primaryStage);
+            telaDeExames.show(null, null, null);
         } else {
-            this.tabelaExamePalco.show();
-            this.tabelaExamePalco.requestFocus();
-            this.tabelaExameController.carregarTabela();
+            telaDeExames.show(null, null, null);
         }
     }
 
@@ -549,31 +331,14 @@ public class HomeController implements Initializable {
      */
     @FXML
     public void cadDependentes() {
-        if (!abriuDependentes) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Dependentes.fxml"));
-            try {
-                this.cadDependentesPalco = new Stage();
-                Parent root = carregar.load();
-                Scene cena = new Scene(root);
-                this.dependentesController = carregar.getController();
-                this.cadDependentesPalco.setTitle("Cadastro de Dependentes");
-                this.cadDependentesPalco.setScene(cena);
-                this.cadDependentesPalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/paciente64.png")));
-                this.cadDependentesPalco.setResizable(false);
-                this.cadDependentesPalco.setMaximized(false);
-                this.dependentesController.iniciarProcessos();
-                this.cadDependentesPalco.show();
-                this.abriuDependentes = true;
-
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
+        if (telaDependentes == null) {
+            this.telaDependentes = new ProcessosStage("/view/Dependentes.fxml", new DependentesController());
+            telaDependentes.addTitle("Cadastro de Dependentes");
+            telaDependentes.addIcon("/img/paciente64.png");
+            telaDependentes.addPrimaryStage(primaryStage);
+            telaDependentes.show(null, null, null);
         } else {
-            this.dependentesController.refresh();
-            this.cadDependentesPalco.show();
-            this.cadDependentesPalco.requestFocus();
-            this.dependentesController.iniciarProcessos();
+            telaDependentes.show(null, null, null);
         }
     }
 
@@ -582,32 +347,14 @@ public class HomeController implements Initializable {
      */
     @FXML
     private void mensalidade() {
-        if (!abriuMensalidade) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/Mensalidade.fxml"));
-            try {
-                this.mensalidadePalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.mensalidadeController = carregar.getController();
-                this.mensalidadePalco.setTitle("Pagamento de Mensalidades");
-                this.mensalidadePalco.setScene(scene);
-                this.mensalidadePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/paciente64.png")));
-                this.mensalidadePalco.setResizable(false);
-                this.mensalidadePalco.setMaximized(false);
-                this.mensalidadePalco.initOwner(primaryStage);
-                this.mensalidadeController.pegarHomeReferencia(this);
-                this.mensalidadeController.carregarTabela2();
-                this.mensalidadePalco.show();
-
-                this.abriuMensalidade = true;
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        if (telaMensalidades == null) {
+            this.telaMensalidades = new ProcessosStage("/view/Mensalidade.fxml", new MensalidadeController());
+            telaMensalidades.addTitle("Pagamento de Mensalidades");
+            telaMensalidades.addIcon("/img/paciente64.png");
+            telaMensalidades.addPrimaryStage(primaryStage);
+            telaMensalidades.show(null, null, null);
         } else {
-            this.mensalidadePalco.show();
-            this.mensalidadePalco.requestFocus();
-            this.mensalidadeController.carregarTabela2();
+            telaMensalidades.show(null, null, null);
         }
     }
 
@@ -616,30 +363,14 @@ public class HomeController implements Initializable {
      */
     @FXML
     private void meusDependentes() {
-        if (!abriuMeusDependentes) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/MeusDependentes.fxml"));
-            try {
-                Parent root = carregar.load();
-                this.meusDependentes = new Stage();
-                this.meusDependentes.setTitle("Meus Dependentes");
-                this.meusDependentes.getIcons().add(new Image(getClass().getResourceAsStream("/img/users_icon.png")));
-                Scene cena = new Scene(root);
-                this.meusDependentes.setScene(cena);
-                this.meusDependentes.setResizable(false);
-                this.meusDependentes.setMaximized(false);
-                this.meusDependentes.initOwner(primaryStage);
-                this.meusDependentesController = carregar.getController();
-                this.meusDependentesController.iniciarProcessos(this);
-                this.meusDependentes.show();
-                abriuMeusDependentes = true;
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                Log.relatarExcecao(HomeController.class.getName(), ex);
-            }
+        if (telaMeusDependentes == null) {
+            this.telaMeusDependentes = new ProcessosStage("/view/MeusDependentes.fxml", new MeusDependentesController());
+            telaMeusDependentes.addTitle("Meus Dependentes");
+            telaMeusDependentes.addIcon("/img/users_icon.png");
+            telaMeusDependentes.addPrimaryStage(primaryStage);
+            telaMeusDependentes.show(null, null, null);
         } else {
-            this.meusDependentesController.refresh();
-            this.meusDependentesController.iniciarProcessos(this);
-            this.meusDependentes.show();
+            telaMeusDependentes.show(null, null, null);
         }
     }
 
@@ -648,34 +379,14 @@ public class HomeController implements Initializable {
      */
     @FXML
     public void gerarMensalidade() {
-        if (!abriuGerarMensalidade) {
-            FXMLLoader carregar = new FXMLLoader(getClass().getResource("/view/GerarMensalidade.fxml"));
-            try {
-                this.gerarMensalidadePalco = new Stage();
-                Parent root;
-                root = carregar.load();
-                Scene scene = new Scene(root);
-                this.gerarMensalidadeController = carregar.getController();
-                this.gerarMensalidadePalco.setTitle("Gerar Mensalidade");
-                this.gerarMensalidadePalco.setScene(scene);
-                this.gerarMensalidadePalco.getIcons().add(new Image(getClass().getResourceAsStream("/img/paciente64.png")));
-                this.gerarMensalidadePalco.setResizable(false);
-                this.gerarMensalidadePalco.setMaximized(false);
-                this.gerarMensalidadePalco.initOwner(primaryStage);
-                this.gerarMensalidadeController.iniciarProcessos();
-                //this.gerarMensalidadeController.carregarTabela();
-                this.gerarMensalidadePalco.show();
-
-                this.abriuGerarMensalidade = true;
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+        if (telaGerarMensalidades == null) {
+            this.telaGerarMensalidades = new ProcessosStage("/view/GerarMensalidade.fxml", new GerarMensalidadeController());
+            telaGerarMensalidades.addTitle("Gerar Mensalidade");
+            telaGerarMensalidades.addIcon("/img/paciente64.png");
+            telaGerarMensalidades.addPrimaryStage(primaryStage);
+            telaGerarMensalidades.show(null, null, null);
         } else {
-            //this.gerarMensalidadeController.carregarTabela();
-            this.gerarMensalidadeController.iniciarProcessos();
-            this.gerarMensalidadePalco.show();
-            this.gerarMensalidadePalco.requestFocus();
+            telaGerarMensalidades.show(null, null, null);
         }
     }
 }

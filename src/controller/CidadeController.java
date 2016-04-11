@@ -15,13 +15,14 @@ import javafx.scene.control.TextField;
 import model.bean.CidadeModel;
 import model.dao.CidadeDAO;
 import util.DialogFX;
+import util.Funcionalidades;
 
 /**
  * FXML Controller class
  *
  * @author jeff-
  */
-public class CidadeController implements Initializable {
+public class CidadeController extends Funcionalidades implements Initializable {
 
     @FXML
     private TextField txt_codigo;
@@ -72,6 +73,7 @@ public class CidadeController implements Initializable {
     /**
      * Metodo para carregar o TableView da GUI com Thread
      */
+    @Override
     public void carregarTabela() {
         Task task = new Task() {
             @Override
@@ -254,6 +256,7 @@ public class CidadeController implements Initializable {
     /**
      * Método reiniciar os dados da tela.
      */
+    @Override
     public void refresh(){
         limparCampos();
         desabilitarCampos();

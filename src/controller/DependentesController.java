@@ -29,13 +29,14 @@ import model.dao.PacienteDAO;
 import util.AutoCompleteComboBox;
 import util.ConverterDados;
 import util.DialogFX;
+import util.Funcionalidades;
 import util.MaskFormatter;
 
 /**
  *
  * @author jeanderson
  */
-public class DependentesController implements Initializable {
+public class DependentesController extends Funcionalidades implements Initializable {
 
     /*Declaração dos componentes*/
     @FXML
@@ -121,6 +122,7 @@ public class DependentesController implements Initializable {
     /**
      * Inicializa Processos importantes.
      */
+    @Override
     public void iniciarProcessos() {
         /*Para evitar exceções*/
         cb_paciente.getItems().clear();
@@ -223,6 +225,7 @@ public class DependentesController implements Initializable {
     /**
      * Método reiniciar os dados da tela.
      */
+    @Override
     public void refresh() {
         limparCampos();
     }

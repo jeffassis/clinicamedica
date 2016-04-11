@@ -23,6 +23,7 @@ import model.dao.CidadeDAO;
 import model.dao.PacienteDAO;
 import util.ConverterDados;
 import util.DialogFX;
+import util.Funcionalidades;
 import util.MaskFormatter;
 
 /**
@@ -30,7 +31,7 @@ import util.MaskFormatter;
  *
  * @author jeff-
  */
-public class PacientesController implements Initializable {
+public class PacientesController extends Funcionalidades implements Initializable {
 
     @FXML
     private DatePicker dp_nascimento, dp_cliente;
@@ -87,13 +88,14 @@ public class PacientesController implements Initializable {
      * editar ou não.
      * @param tableView - Passa uma Tabela de Pacientes
      */
-    public void iniciarProcessos(boolean editar, TableView<PacienteModel> tableView) {
+    @Override
+    public void iniciarProcessos(boolean editar, Object tableView) {
         /*Para evitar uma exception de Thread temos que limpar o comboBox*/
         cb_cidade.getItems().clear();
         cb_bairro.getItems().clear();
         /*Fazemos isso pois vamos precisar saber se no onSave estamos alterando ou salvando dados*/
         this.editar = editar;
-        this.tabela = tableView;
+        this.tabela = (TableView<PacienteModel>) tableView;
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
@@ -320,6 +322,7 @@ public class PacientesController implements Initializable {
     /**
      * Método reiniciar os dados da tela.
      */
+    @Override
     public void refresh() {
         limparCampos();
         desabilitarCampos();

@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import model.bean.MedicoModel;
 import model.dao.MedicoDAO;
 import util.DialogFX;
+import util.Funcionalidades;
 import util.MaskFormatter;
 
 /**
@@ -22,7 +23,7 @@ import util.MaskFormatter;
  *
  * @author jeff-
  */
-public class MedicosController implements Initializable {
+public class MedicosController extends Funcionalidades implements Initializable {
 
     @FXML
     private TextField txt_codigo;
@@ -96,6 +97,7 @@ public class MedicosController implements Initializable {
     /**
      * Metodo para carregar o TableView da GUI com Thread
      */
+    @Override
     public void carregarTabela() {
         Task task = new Task() {
             @Override
@@ -309,6 +311,7 @@ public class MedicosController implements Initializable {
     /**
      * Método reiniciar os dados da tela.
      */
+    @Override
     public void refresh() {
         limparCampos();
         desabilitarCampos();

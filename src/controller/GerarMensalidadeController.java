@@ -20,6 +20,7 @@ import model.dao.PacienteDAO;
 import util.AutoCompleteComboBox;
 import util.ConverterDados;
 import util.DialogFX;
+import util.Funcionalidades;
 import util.MaskFormatter;
 
 /**
@@ -27,7 +28,7 @@ import util.MaskFormatter;
  *
  * @author jeff-
  */
-public class GerarMensalidadeController implements Initializable {
+public class GerarMensalidadeController extends Funcionalidades implements Initializable {
 
     @FXML
     private TextField txt_codigo, txt_valor, txt_desconto;
@@ -107,6 +108,7 @@ public class GerarMensalidadeController implements Initializable {
     /**
      * Executa a função iniciais como preencher o comboBox
      */
+    @Override
     public void iniciarProcessos() {
         /*Para evitar Exception de thread temos que limpar o comboBox*/
         cb_paciente.getItems().clear();
@@ -133,7 +135,7 @@ public class GerarMensalidadeController implements Initializable {
     /**
      * Metodo para carregar o TableView da GUI sendo controlado pelo ComboBox
      */
-    public void carregarTabela() {
+    public void carregandoTabela() {
 
         PacienteModel paciente = cb_paciente.getSelectionModel().getSelectedItem();
         

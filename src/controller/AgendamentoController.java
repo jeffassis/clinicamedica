@@ -25,6 +25,7 @@ import model.dao.PacienteDAO;
 import util.AutoCompleteComboBox;
 import util.ConverterDados;
 import util.DialogFX;
+import util.Funcionalidades;
 import util.MaskFormatter;
 
 /**
@@ -32,7 +33,7 @@ import util.MaskFormatter;
  *
  * @author jeff-
  */
-public class AgendamentoController implements Initializable {
+public class AgendamentoController extends Funcionalidades implements Initializable {
 
     @FXML
     private ComboBox<MedicoModel> cb_medico;
@@ -114,7 +115,8 @@ public class AgendamentoController implements Initializable {
      * Executa as funções iniciais como preencher o comboBox do Medico
      * utilizando o Task já que pode ser um processo pesado
      */
-    public void iniciarProcessos() {
+    
+    public void iniciandoProcessos() {
         /*Para evitar uma exception de Thread temos que limpar o comboBox*/
         cb_medico.getItems().clear();
         cb_paciente.getItems().clear();
@@ -147,7 +149,8 @@ public class AgendamentoController implements Initializable {
     /**
      * Metodo para carregar o TableView da GUI com Thread
      */
-    public void carregarTabela() {
+    
+    public void carregandoTabela() {
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
@@ -226,7 +229,7 @@ public class AgendamentoController implements Initializable {
     private void onClear() {
         limparCampos();
         tabela_agenda.getSelectionModel().clearSelection();
-        carregarTabela();
+        carregandoTabela();
     }
 
     /**
@@ -276,6 +279,7 @@ public class AgendamentoController implements Initializable {
     /**
      * Método reiniciar os dados da tela.
      */
+    @Override
     public void refresh() {
         limparCampos();
         checkMostrarExames.setSelected(false);
@@ -286,7 +290,7 @@ public class AgendamentoController implements Initializable {
     private void checkMostrarOnAction() {
         if (checkMostrarExames.isSelected()) {
             dp_localiza.setDisable(true);
-            carregarTabela();
+            carregandoTabela();
         } else {
             dp_localiza.setDisable(false);
             onDateSelected();

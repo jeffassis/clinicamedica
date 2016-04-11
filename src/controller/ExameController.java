@@ -13,13 +13,14 @@ import javafx.scene.control.TextField;
 import model.bean.ExameModel;
 import model.dao.ExameDAO;
 import util.DialogFX;
+import util.Funcionalidades;
 
 /**
  * FXML Controller class
  *
  * @author jeff-
  */
-public class ExameController implements Initializable {
+public class ExameController extends Funcionalidades implements Initializable {
 
     @FXML
     private TextField txt_codigo;
@@ -59,6 +60,7 @@ public class ExameController implements Initializable {
     /**
      * Metodo para carregar o TableView da GUI com Thread
      */
+    @Override
     public void carregarTabela() {
         Task task = new Task() {
             @Override
@@ -219,6 +221,7 @@ public class ExameController implements Initializable {
     /**
      * Método reiniciar os dados da tela.
      */
+    @Override
     public void refresh(){
      limparCampos();
      desabilitarCampos();

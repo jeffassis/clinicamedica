@@ -32,6 +32,7 @@ import model.dao.DependentesDAO;
 import util.AutoCompleteComboBox;
 import util.ConverterDados;
 import util.DialogFX;
+import util.Funcionalidades;
 import util.Log;
 import util.MaskFormatter;
 import util.ProcessosStage;
@@ -40,7 +41,7 @@ import util.ProcessosStage;
  *
  * @author jeanderson
  */
-public class MeusDependentesController implements Initializable {
+public class MeusDependentesController extends Funcionalidades implements Initializable {
     
     @FXML
     private ComboBox<DependenteModel> cb_dependentes;
@@ -85,8 +86,9 @@ public class MeusDependentesController implements Initializable {
      *
      * @param homeController
      */
-    public void iniciarProcessos(HomeController homeController) {
-        this.controller = homeController;
+    @Override
+    public void iniciarProcessos(Object homeController) {
+        this.controller = (HomeController) homeController;
         cb_dependentes.getItems().clear();
         Task task = new Task() {
             @Override
@@ -215,6 +217,7 @@ public class MeusDependentesController implements Initializable {
     /**
      * Método reiniciar os dados da tela.
      */
+    @Override
     public void refresh() {
         txt_codigo.setText("");
         txt_dependente.setText("");

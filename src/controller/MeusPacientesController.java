@@ -20,13 +20,14 @@ import javax.swing.text.TabableView;
 import model.bean.PacienteModel;
 import model.dao.PacienteDAO;
 import util.DialogFX;
+import util.Funcionalidades;
 
 /**
  * FXML Controller class
  *
  * @author jeff-
  */
-public class MeusPacientesController implements Initializable {
+public class MeusPacientesController extends Funcionalidades implements Initializable {
 
     @FXML
     private TableView<PacienteModel> tabela_paciente;
@@ -63,6 +64,7 @@ public class MeusPacientesController implements Initializable {
         this.emailColuna.setCellValueFactory(cellData -> cellData.getValue().getEmailProperty());
     }
 
+    @Override
     public void carregarTabela() {
         Task task = new Task() {
             @Override
@@ -88,14 +90,15 @@ public class MeusPacientesController implements Initializable {
         thread.setDaemon(true);
         thread.start();
     }
-
+    
     /**
      * Método que pega a referencia de HomeController.
-     *
-     * @param homeController
+     * @param referencia 
      */
-    public void pegarHomeReferencia(HomeController homeController) {
-        this.homeController = homeController;
+    @Override
+    public void pegarReferencia(Object referencia) {
+        super.pegarReferencia(referencia);
+        this.homeController = (HomeController) referencia;
     }
 
     @FXML

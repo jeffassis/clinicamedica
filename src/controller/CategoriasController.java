@@ -13,13 +13,14 @@ import javafx.scene.control.TextField;
 import model.bean.CategoriaModel;
 import model.dao.CategoriaDAO;
 import util.DialogFX;
+import util.Funcionalidades;
 
 /**
  * FXML Controller class
  *
  * @author jeff-
  */
-public class CategoriasController implements Initializable {
+public class CategoriasController extends Funcionalidades implements Initializable {
 
     @FXML
     private TextField txt_codigo;
@@ -60,6 +61,7 @@ public class CategoriasController implements Initializable {
     /**
      * Metodo para carregar o TableView da GUI com Thread
      */
+    @Override
     public void carregarTabela() {
         Task task = new Task() {
             @Override

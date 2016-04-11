@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import model.bean.ValorExameModel;
 import model.dao.ValorExameDAO;
 import util.DialogFX;
+import util.Funcionalidades;
 import util.Log;
 
 /**
@@ -29,7 +30,7 @@ import util.Log;
  *
  * @author jeff-
  */
-public class TabelaExameController implements Initializable {
+public class TabelaExameController extends Funcionalidades implements Initializable {
 
     /*Variavel booleana para conferir se a janela foi aberta*/
     private boolean abriuPrecoExame;
@@ -78,6 +79,7 @@ public class TabelaExameController implements Initializable {
     /**
      * Metodo para carregar o TableView da GUI com Thread
      */
+    @Override
     public void carregarTabela() {
         Task task = new Task() {
             @Override

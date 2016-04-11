@@ -17,13 +17,14 @@ import model.dao.BairroDAO;
 import model.dao.CidadeDAO;
 import util.ConverterDados;
 import util.DialogFX;
+import util.Funcionalidades;
 
 /**
  * FXML Controller class
  *
  * @author jeff-
  */
-public class BairroController implements Initializable {
+public class BairroController extends Funcionalidades implements Initializable {
 
     @FXML
     private TextField txt_codigo;
@@ -67,6 +68,7 @@ public class BairroController implements Initializable {
     /**
      * Metodo para carregar o TableView da GUI com Thread
      */
+    @Override
     public void carregarTabela() {
         Task task = new Task() {
             @Override
@@ -90,6 +92,7 @@ public class BairroController implements Initializable {
      * Executa as funções iniciais como preencher o comboBox do Bairro
      * utilizando o Task já que pode ser um processo pesado
      */
+    @Override
     public void iniciarProcessos() {
         /*Para evitar uma exception de Thread temos que limpar o comboBox*/
         cb_cidade.getItems().clear();
@@ -217,6 +220,7 @@ public class BairroController implements Initializable {
     /**
      * Método reiniciar os dados da tela.
      */
+    @Override
     public void refresh(){
         limparCampos();
         desabilitarCampos();

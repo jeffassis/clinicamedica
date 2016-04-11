@@ -27,13 +27,14 @@ import model.dao.MensalidadeDAO;
 import model.dao.PacienteDAO;
 import util.CustomCheckBoxTable;
 import util.DialogFX;
+import util.Funcionalidades;
 
 /**
  * FXML Controller class
  *
  * @author jeff-
  */
-public class MensalidadeController implements Initializable {
+public class MensalidadeController extends Funcionalidades implements Initializable {
 
     @FXML
     private TextField txt_paciente;
@@ -130,7 +131,8 @@ public class MensalidadeController implements Initializable {
      * povoamento dos dados da TableView de Mensalidade vai ser preenchido
      * conforme for selecionado o paciente.
      */
-    public void carregarTabela2() {
+    @Override
+    public void carregarTabela() {
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
@@ -155,15 +157,16 @@ public class MensalidadeController implements Initializable {
     private void gerarCobranca() {
         this.homeController.gerarMensalidade();
     }
-
     /**
      * Método que pega a referencia de HomeController.
-     *
-     * @param homeController
+     * @param referencia 
      */
-    public void pegarHomeReferencia(HomeController homeController) {
-        this.homeController = homeController;
+    @Override
+    public void pegarReferencia(Object referencia) {
+        super.pegarReferencia(referencia);
+        this.homeController = (HomeController) referencia;
     }
+    
 
     /**
      * Evento do clique no CheckBox da Coluna.
