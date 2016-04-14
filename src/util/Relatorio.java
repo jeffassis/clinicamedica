@@ -46,6 +46,7 @@ public class Relatorio {
             return pastaDoPdf;
         } catch (JRException | SQLException ex) {
             Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(Relatorio.class.getName(), ex);
             return null;
         }
     }

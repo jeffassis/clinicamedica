@@ -83,6 +83,7 @@ public class ProcessosStage {
                 abriuTela = true;
             } catch (IOException ex) {
                 Logger.getLogger(ProcessosStage.class.getName()).log(Level.SEVERE, null, ex);
+                Log.relatarExcecao(ProcessosStage.class.getName(), ex);
             }
         } else {
             if (controller instanceof Funcionalidades) {
