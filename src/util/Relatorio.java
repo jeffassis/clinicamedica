@@ -18,7 +18,6 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 
 /**
  *
@@ -26,7 +25,13 @@ import net.sf.jasperreports.engine.JasperReport;
  */
 public class Relatorio {
 
-    public static void gerarMensalidade(MensalidadeModel mensalidade) {
+    /**
+     * Gera um relatório da Mensalidade de determinado paciente.
+     *
+     * @param mensalidade
+     * @return - Retorna a Path e o arquivo PDF gerado
+     */
+    public static String gerarMensalidade(MensalidadeModel mensalidade) {
         try {
             String pasta = Relatorio.class.getClassLoader().getResource("").getPath() + "jasper/";
             String pastaEArquivo = pasta + "Paciente_mensalidade.jrxml";
@@ -38,8 +43,10 @@ public class Relatorio {
             String pastaDoPdf = "/Users/" + System.getProperty("user.name") + "/Documents/" + mensalidade.getPacienteModel().getNome() + ".pdf";
             JasperExportManager.exportReportToPdfFile(print, pastaDoPdf);
             conexao.close();
+            return pastaDoPdf;
         } catch (JRException | SQLException ex) {
             Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 
