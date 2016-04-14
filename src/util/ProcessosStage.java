@@ -36,8 +36,6 @@ public class ProcessosStage {
      * Exibi a Tela, deve preencher algumas configurações nos parâmetros, Obs:
      * os campos podem ser null.
      *
-     * @param editar
-     * @param modality
      * @param dados
      * @param referencia1
      * @param referencia2
