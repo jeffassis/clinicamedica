@@ -44,7 +44,7 @@ public class MeusPacientesController extends Funcionalidades implements Initiali
     /*Vamos precisar dele para chamar a tela paciente para editar os dados*/
     private HomeController homeController;
     @FXML
-    private MenuItem mnAtivo, mnInativo;
+    private MenuItem mnTodos,mnAtivo, mnInativo;
     private ObservableList<PacienteModel> listaDePacientes;
     private SortedList<PacienteModel> listaDeAtivos;
     private SortedList<PacienteModel> listaDeInativos;
@@ -54,9 +54,7 @@ public class MeusPacientesController extends Funcionalidades implements Initiali
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /**
-         * Implementação da TableView
-         */
+        /*Implementação da Tableview*/
         this.codigoColuna.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty().asObject());
         this.nomeColuna.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
         this.enderecoColuna.setCellValueFactory(cellData -> cellData.getValue().getEnderecoProperty());
@@ -80,7 +78,7 @@ public class MeusPacientesController extends Funcionalidades implements Initiali
                 /*Filtro de pacientes ativos, passamos como parametro uma lista de pacientes e no segundo fazemos a condição*/
                 FilteredList<PacienteModel> filtroDeAtivos = new FilteredList<>(listaDePacientes, paciente -> paciente.getStatus());
                 FilteredList<PacienteModel> filtroDeInativos = new FilteredList<>(listaDePacientes, paciente -> paciente.getStatus() == false);
-                
+
                 /*Adicionamos o dados a essa lista, passando o filtro ou seja ela so terar os dados de acordo com o filtro*/
                 listaDeAtivos = new SortedList<>(filtroDeAtivos);
                 listaDeInativos = new SortedList<>(filtroDeInativos);
@@ -90,10 +88,10 @@ public class MeusPacientesController extends Funcionalidades implements Initiali
         thread.setDaemon(true);
         thread.start();
     }
-    
+
     /**
      * Método que pega a referencia de HomeController.
-     * @param referencia 
+     * @param referencia
      */
     @Override
     public void pegarReferencia(Object referencia) {
@@ -137,8 +135,15 @@ public class MeusPacientesController extends Funcionalidades implements Initiali
      */
     @FXML
     private void mnInativoAction() {
+
        if(listaDeInativos != null){
            tabela_paciente.setItems(listaDeInativos);
        }
+    }
+    @FXML
+    private void mnTodosAction(){
+    	if(listaDePacientes != null){
+    		tabela_paciente.setItems(listaDePacientes);
+    	}
     }
 }
