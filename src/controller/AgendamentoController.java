@@ -2,6 +2,7 @@ package controller;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -115,14 +116,15 @@ public class AgendamentoController extends Funcionalidades implements Initializa
      * Executa as funções iniciais como preencher o comboBox do Medico
      * utilizando o Task já que pode ser um processo pesado
      */
-    
+
     public void iniciandoProcessos() {
         /*Para evitar uma exception de Thread temos que limpar o comboBox*/
         cb_medico.getItems().clear();
         cb_paciente.getItems().clear();
         /*Precisa formatar a data atual para o padrão que queremos*/
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        dp_localiza.getEditor().setText(dateFormat.format(Calendar.getInstance().getTime()));
+        //dp_localiza.getEditor().setText(dateFormat.format(Calendar.getInstance().getTime()));
+        dp_localiza.setValue(LocalDate.now());
         onDateSelected();
 
         Task task = new Task() {
@@ -149,7 +151,7 @@ public class AgendamentoController extends Funcionalidades implements Initializa
     /**
      * Metodo para carregar o TableView da GUI com Thread
      */
-    
+
     public void carregandoTabela() {
         Task task = new Task() {
             @Override
