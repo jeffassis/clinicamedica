@@ -26,6 +26,7 @@ import model.bean.MensalidadeModel;
 import model.bean.PacienteModel;
 import model.dao.MensalidadeDAO;
 import model.dao.PacienteDAO;
+import sun.security.pkcs11.Secmod.DbMode;
 import util.AutoCompleteComboBox;
 import util.ConverterDados;
 import util.DialogFX;
@@ -45,10 +46,6 @@ public class GerarMensalidadeController extends Funcionalidades implements Initi
 	private DatePicker dp_data;
 	@FXML
 	private ComboBox<PacienteModel> cb_paciente;
-	@FXML
-	private ComboBox cb_mes;
-	ObservableList<String> listaMes = FXCollections.observableArrayList("Janeiro", "Fevereiro", "Março", "Abril",
-			"Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
 	@FXML
 	private TableView<MensalidadeModel> tabela_mensalidade;
 	@FXML
@@ -82,12 +79,9 @@ public class GerarMensalidadeController extends Funcionalidades implements Initi
 	/**
 	 * Initializes the controller class.
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		/**
-		 * Preenchendo o combo Mês
-		 */
-		cb_mes.setItems(listaMes);
 
 		/**
 		 * Carregar todas as colunas da tabela pegando os dados do BD
@@ -203,7 +197,7 @@ public class GerarMensalidadeController extends Funcionalidades implements Initi
 			mensalidadeModel.setCodigo(Integer.parseInt(txt_codigo.getText().trim()));
 			mensalidadeModel.setValor(Double.valueOf(txt_valor.getText().trim().replace(",", ".")));
 			mensalidadeModel.setDesconto(Double.valueOf(txt_desconto.getText().trim().replace(",", ".")));
-			mensalidadeModel.setMes((String) cb_mes.getSelectionModel().getSelectedItem());
+			mensalidadeModel.setMes(dp_data.getValue().getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault()));
 
 			if (dp_data.getEditor().getText().length() == 10) {
 				mensalidadeModel.setData_pagto(dp_data.getEditor().getText());
@@ -235,13 +229,6 @@ public class GerarMensalidadeController extends Funcionalidades implements Initi
 			txt_desconto.setText(mensalidadeModel.getDescontoProperty().getValue().toString());
 			cb_paciente.setValue(mensalidadeModel.getPacienteModel());
 			dp_data.getEditor().setText(mensalidadeModel.getData_pagto());
-
-			for (int i = 0; i < cb_mes.getItems().size(); i++) {
-				if (((String) cb_mes.getItems().get(i)).equals(mensalidadeModel.getMes())) {
-					cb_mes.getSelectionModel().select(i);
-					break;
-				}
-			}
 			bt_editar.setDisable(true);
 			bt_excluir.setDisable(true);
 			habilitarCampos();
@@ -320,7 +307,6 @@ public class GerarMensalidadeController extends Funcionalidades implements Initi
 		txt_codigo.setText("");
 		txt_valor.setText("");
 		txt_desconto.setText("");
-		cb_mes.getSelectionModel().clearSelection();
 		cb_paciente.getEditor().setText("");
 		dp_data.getEditor().clear();
 	}
@@ -332,7 +318,6 @@ public class GerarMensalidadeController extends Funcionalidades implements Initi
 		dp_data.setDisable(true);
 		txt_valor.setDisable(true);
 		txt_desconto.setDisable(true);
-		cb_mes.setDisable(true);
 		bt_salvar.setDisable(true);
 	}
 
@@ -343,7 +328,6 @@ public class GerarMensalidadeController extends Funcionalidades implements Initi
 		dp_data.setDisable(false);
 		txt_valor.setDisable(false);
 		txt_desconto.setDisable(false);
-		cb_mes.setDisable(false);
 		bt_salvar.setDisable(false);
 	}
 }

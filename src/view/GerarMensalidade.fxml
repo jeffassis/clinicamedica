@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -22,7 +17,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GerarMensalidadeController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GerarMensalidadeController">
    <children>
       <SplitPane dividerPositions="0.4578313253012048" layoutX="111.0" layoutY="48.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -51,11 +46,6 @@
                               <Insets right="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Mes:" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets right="5.0" />
-                           </GridPane.margin>
-                        </Label>
                         <TextField fx:id="txt_valor" disable="true" GridPane.columnIndex="3" />
                         <TextField fx:id="txt_desconto" disable="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <Label text="Paciente:" GridPane.rowIndex="1">
@@ -68,7 +58,6 @@
                               <Insets right="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <ComboBox fx:id="cb_mes" disable="true" prefHeight="26.0" prefWidth="192.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                         <ComboBox fx:id="cb_paciente" onAction="#carregandoTabela" prefHeight="26.0" prefWidth="228.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Codigo:">
                            <GridPane.margin>
