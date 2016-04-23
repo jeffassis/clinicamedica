@@ -124,6 +124,7 @@ public class MeusPacientesController extends Funcionalidades implements Initiali
     private void onRefresh() {
         carregarTabela();
         tabela_paciente.getSelectionModel().clearSelection();
+        txt_pesquisa.clear();
     }
 
     /**
