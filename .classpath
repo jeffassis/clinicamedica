@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/commons-digester-1.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/itext-2.1.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/jasper-compiler-jdt-5.5.23.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/jasperreports-6.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/jasperreports-fonts-6.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/jasperreports-functions-6.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/jasperreports-javaflow-6.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/joda-time-2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/postgresql-9.2-1002.jdbc4.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

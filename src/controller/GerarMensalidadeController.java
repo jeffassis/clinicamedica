@@ -1,7 +1,12 @@
 package controller;
 
 import java.net.URL;
+import java.time.Month;
 import java.util.ResourceBundle;
+
+import org.joda.time.DateTime;
+import org.joda.time.Months;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -138,7 +143,7 @@ public class GerarMensalidadeController extends Funcionalidades implements Initi
     public void carregandoTabela() {
 
         PacienteModel paciente = cb_paciente.getSelectionModel().getSelectedItem();
-        
+
         MensalidadeModel mm = new MensalidadeModel(paciente);
 
         Task task = new Task() {
@@ -147,7 +152,8 @@ public class GerarMensalidadeController extends Funcionalidades implements Initi
                 return MensalidadeDAO.executeQuery(mm, MensalidadeDAO.QUERY_PACIENTE);
             }
 
-            @Override
+            @SuppressWarnings("unchecked")
+			@Override
             protected void succeeded() {
                 super.succeeded();
                 tabela_mensalidade.setItems((ObservableList<MensalidadeModel>) getValue());
