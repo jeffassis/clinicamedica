@@ -27,12 +27,12 @@
                               <Insets left="5.0" right="8.0" top="8.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField>
+                        <TextField fx:id="txt_pesquisa">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <Button mnemonicParsing="false" text="Pesquisar">
+                        <Button fx:id="bt_pesquisar" onAction="#btPesquisaOnAction" mnemonicParsing="false" text="Pesquisar">
                            <HBox.margin>
                               <Insets left="10.0" top="5.0" />
                            </HBox.margin>

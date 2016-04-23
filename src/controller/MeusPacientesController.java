@@ -11,10 +11,12 @@ import javafx.collections.transformation.SortedList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javax.swing.text.TabableView;
 import model.bean.PacienteModel;
@@ -48,6 +50,10 @@ public class MeusPacientesController extends Funcionalidades implements Initiali
     private ObservableList<PacienteModel> listaDePacientes;
     private SortedList<PacienteModel> listaDeAtivos;
     private SortedList<PacienteModel> listaDeInativos;
+    @FXML
+    private Button bt_pesquisar;
+    @FXML
+    private TextField txt_pesquisa;
 
     /**
      * Initializes the controller class.
@@ -140,10 +146,27 @@ public class MeusPacientesController extends Funcionalidades implements Initiali
            tabela_paciente.setItems(listaDeInativos);
        }
     }
+    /**
+     * Evento do menuItem Todos.
+     */
     @FXML
     private void mnTodosAction(){
     	if(listaDePacientes != null){
     		tabela_paciente.setItems(listaDePacientes);
+    		txt_pesquisa.clear();
     	}
     }
+    /**
+     * Evento do botão pesquisar.
+     */
+    @FXML
+    private void btPesquisaOnAction(){
+    	if(txt_pesquisa.getText().isEmpty()){
+    		DialogFX.showMessage("Digite um nome antes para a pesquisa!", "Campo vazio", DialogFX.ATENCAO);
+    	}else{
+    		tabela_paciente.setItems(new SortedList<>(new FilteredList<PacienteModel>(listaDePacientes,paciente -> paciente.getNome().startsWith(txt_pesquisa.getText()))));
+    	}
+    }
+
 }
+
