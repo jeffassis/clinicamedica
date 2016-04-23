@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import model.bean.MedicoModel;
 import model.bean.MensalidadeModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -25,30 +27,59 @@ import net.sf.jasperreports.engine.JasperPrint;
  */
 public class Relatorio {
 
-    /**
-     * Gera um relatório da Mensalidade de determinado paciente.
-     *
-     * @param mensalidade
-     * @return - Retorna a Path e o arquivo PDF gerado
-     */
-    public static String gerarMensalidade(MensalidadeModel mensalidade) {
-        try {
-            String pasta = Relatorio.class.getClassLoader().getResource("").getPath() + "jasper/";
-            String pastaEArquivo = pasta + "Paciente_mensalidade.jrxml";
-            Connection conexao = ConnectionFactory.getConnection();
-            JasperCompileManager.compileReportToFile(pastaEArquivo);
-            Map<String, Object> parametros = new HashMap<>();
-            parametros.put("ID_PACIENTE", mensalidade.getPacienteModel().getCodigo());
-            JasperPrint print = JasperFillManager.fillReport(pasta + "Paciente_mensalidade.jasper", parametros, conexao);
-            String pastaDoPdf = "/Users/" + System.getProperty("user.name") + "/Documents/" + mensalidade.getPacienteModel().getNome() + ".pdf";
-            JasperExportManager.exportReportToPdfFile(print, pastaDoPdf);
-            conexao.close();
-            return pastaDoPdf;
-        } catch (JRException | SQLException ex) {
-            Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
-            Log.relatarExcecao(Relatorio.class.getName(), ex);
-            return null;
-        }
-    }
+	/**
+	 * Gera um relatório da Mensalidade de determinado paciente.
+	 *
+	 * @param mensalidade
+	 * @return - Retorna a Path e o arquivo PDF gerado
+	 */
+	public static String gerarMensalidade(MensalidadeModel mensalidade) {
+		try {
+			String pasta = Relatorio.class.getClassLoader().getResource("").getPath() + "jasper/";
+			String pastaEArquivo = pasta + "Paciente_mensalidade.jrxml";
+			Connection conexao = ConnectionFactory.getConnection();
+			JasperCompileManager.compileReportToFile(pastaEArquivo);
+			Map<String, Object> parametros = new HashMap<>();
+			parametros.put("ID_PACIENTE", mensalidade.getPacienteModel().getCodigo());
+			JasperPrint print = JasperFillManager.fillReport(pasta + "Paciente_mensalidade.jasper", parametros,
+					conexao);
+			String pastaDoPdf = "/Users/" + System.getProperty("user.name") + "/Documents/"
+					+ mensalidade.getPacienteModel().getNome() + ".pdf";
+			JasperExportManager.exportReportToPdfFile(print, pastaDoPdf);
+			conexao.close();
+			return pastaDoPdf;
+		} catch (JRException | SQLException ex) {
+			Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
+			Log.relatarExcecao(Relatorio.class.getName(), ex);
+			return null;
+		}
+	}
+
+	/**
+	 * Método gera um relatorios com os atendimentos do médico.
+	 *
+	 * @param medico
+	 * @return
+	 */
+	public static String gerarRelatorioAtendimento(MedicoModel medico) {
+		try {
+			String pasta = Relatorio.class.getClassLoader().getResource("").getPath() + "jasper/";
+			String pastaEArquivo = pasta + "Medico_atendimento.jrxml";
+			Connection conexao = ConnectionFactory.getConnection();
+			JasperCompileManager.compileReportToFile(pastaEArquivo);
+			Map<String, Object> parametros = new HashMap<>();
+			parametros.put("ID_MEDICO", medico.getCodigo());
+			/*Devido um erro de configuração o nome do arquivo nao ficou igual ao do jrxml*/
+			JasperPrint print = JasperFillManager.fillReport(pasta + "medico_atendemento.jasper", parametros, conexao);
+			String pastaDoPdf = "/Users/" + System.getProperty("user.name") + "/Documents/" + medico.getNome() + ".pdf";
+			JasperExportManager.exportReportToPdfFile(print, pastaDoPdf);
+			conexao.close();
+			return pastaDoPdf;
+		} catch (JRException | SQLException ex) {
+			Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
+			Log.relatarExcecao(Relatorio.class.getName(), ex);
+			return null;
+		}
+	}
 
 }
