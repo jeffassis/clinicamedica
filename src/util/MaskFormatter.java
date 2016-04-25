@@ -486,6 +486,9 @@ public class MaskFormatter {
 	 */
 	public void showMask() {
 		switch (this.maskSelecionada) {
+		case TEL_DIG:
+			textField.setPromptText("(__) ____-_____");
+			break;
 		case TEL_8DIG:
 			textField.setPromptText("(__) ____-____");
 			break;
