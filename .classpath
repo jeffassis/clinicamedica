@@ -16,5 +16,8 @@
 	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/jasperreports-javaflow-6.2.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/joda-time-2.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/NetBeansProjects/clinicamedica/dist/lib/postgresql-9.2-1002.jdbc4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/Bibliotecas/commons-email-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/Bibliotecas/commons-email-1.4-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jeand/OneDrive/Documentos/Bibliotecas/javax.mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
