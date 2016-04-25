@@ -106,9 +106,8 @@ public class AgendamentoController extends Funcionalidades implements Initializa
         /**
          * Colocando a Mascara no DatePicker
          */
-        MaskFormatter formatter = new MaskFormatter(dpData);
-        formatter.setMask(MaskFormatter.DATA_BARRA);
-        formatter.showMask();
+        MaskFormatter formatter = new MaskFormatter();
+        formatter.addComponente(dpData, MaskFormatter.DATA_BARRA, true);
         formatter.addComponente(dp_localiza, MaskFormatter.DATA_BARRA, true);
     }
 

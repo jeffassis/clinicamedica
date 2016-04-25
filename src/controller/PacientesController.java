@@ -64,11 +64,9 @@ public class PacientesController extends Funcionalidades implements Initializabl
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        MaskFormatter formatter = new MaskFormatter(txt_telefone);
-        formatter.setMask(MaskFormatter.TEL_8DIG);
-        /*Caso vc queria mostrar a mascara no TextField*/
-        formatter.showMask();
+        MaskFormatter formatter = new MaskFormatter();
         /*Adicionamos outros componentes*/
+        formatter.addComponente(txt_telefone, MaskFormatter.TEL_DIG, true);
         formatter.addComponente(dp_cliente, MaskFormatter.DATA_BARRA, true);
         formatter.addComponente(dp_nascimento, MaskFormatter.DATA_BARRA, true);
         this.checkStatus.setSelected(true);

@@ -103,10 +103,8 @@ public class GerarMensalidadeController extends Funcionalidades implements Initi
 		/**
 		 * Mascara da Data
 		 */
-		formatter = new MaskFormatter(dp_data);
-		formatter.setMask(MaskFormatter.DATA_BARRA);
+		formatter = new MaskFormatter();
 		formatter.addComponente(dp_data, MaskFormatter.DATA_BARRA, true);
-		formatter.showMask();
 	}
 
 	/**

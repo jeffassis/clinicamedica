@@ -42,7 +42,7 @@ import util.ProcessosStage;
  * @author jeanderson
  */
 public class MeusDependentesController extends Funcionalidades implements Initializable {
-    
+
     @FXML
     private ComboBox<DependenteModel> cb_dependentes;
     @FXML
@@ -55,7 +55,7 @@ public class MeusDependentesController extends Funcionalidades implements Initia
     private DatePicker dp_nascimento;
     @FXML
     private TextField txt_codigo, txt_paciente, txt_dependente, txt_telefone;
-    
+
     private boolean editar, abriuVerDados;
     private AutoCompleteComboBox autoCompleteComboBox;
     private MaskFormatter formatter;
@@ -64,7 +64,7 @@ public class MeusDependentesController extends Funcionalidades implements Initia
     private PacienteDetalheController control;
     private Stage palco;
     private ProcessosStage processo;
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> parentesco = FXCollections.observableArrayList();
@@ -74,11 +74,10 @@ public class MeusDependentesController extends Funcionalidades implements Initia
         bt_alterar.setDisable(true);
         cb_dependentes.setConverter(new ConverterDados(ConverterDados.GET_DEPENDENTE_NOME).getDependenteConverter(cb_dependentes));
         this.autoCompleteComboBox = new AutoCompleteComboBox(cb_dependentes);
-        this.formatter = new MaskFormatter(dp_nascimento);
-        formatter.setMask(MaskFormatter.DATA_BARRA);
-        formatter.showMask();
-        formatter.addComponente(txt_telefone, MaskFormatter.TEL_8DIG, true);
-        
+        this.formatter = new MaskFormatter();
+        formatter.addComponente(txt_telefone, MaskFormatter.TEL_DIG, true);
+        formatter.addComponente(dp_nascimento, MaskFormatter.DATA_BARRA, true);
+
     }
 
     /**
@@ -96,13 +95,13 @@ public class MeusDependentesController extends Funcionalidades implements Initia
                 cb_dependentes.setItems(DependentesDAO.executeQuery(null, DependentesDAO.QUERY_TODOS));
                 return null;
             }
-            
+
             @Override
             protected void succeeded() {
                 super.succeeded();
                 autoCompleteComboBox.saveData();
             }
-            
+
         };
         Thread t = new Thread(task);
         t.setDaemon(true);
@@ -153,7 +152,7 @@ public class MeusDependentesController extends Funcionalidades implements Initia
                 DialogFX.showMessage("Houve um erro ao alterar dados", "ERRO!", DialogFX.ERRO);
             }
         } else {
-            
+
         }
     }
 
@@ -211,7 +210,7 @@ public class MeusDependentesController extends Funcionalidades implements Initia
             /*Fecha a janela*/
             ((Node) evento.getSource()).getScene().getWindow().hide();
         }
-        
+
     }
 
     /**
@@ -225,7 +224,7 @@ public class MeusDependentesController extends Funcionalidades implements Initia
         dp_nascimento.getEditor().setText("");
         cb_parent.getSelectionModel().clearSelection();
     }
-    
+
     @FXML
     private void onVerDados() {
         if (!cb_dependentes.getSelectionModel().isSelected(-1)) {
@@ -255,9 +254,9 @@ public class MeusDependentesController extends Funcionalidades implements Initia
         } else {
             DialogFX.showMessage("Por favor selecione antes um dependente", "Nenhum dependente selecionado", DialogFX.ATENCAO);
         }
-        
+
     }
-    
+
     /**
      * Evento do botão alterar paciente.
      */
@@ -272,13 +271,13 @@ public class MeusDependentesController extends Funcionalidades implements Initia
             processo.show(null,cb_dependentes.getSelectionModel().getSelectedItem(),this);
         }
     }
-    
+
     /**
      * Método retorna o comboBox desta Classe.
-     * @return 
+     * @return
      */
     public ComboBox<DependenteModel> getCbDependentes(){
         return this.cb_dependentes;
     }
-    
+
 }

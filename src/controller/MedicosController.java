@@ -85,13 +85,9 @@ public class MedicosController extends Funcionalidades implements Initializable 
         /**
          * Máscaras dos telefones
          */
-        MaskFormatter formatter1 = new MaskFormatter(txt_tel1);
-        MaskFormatter formatter2 = new MaskFormatter(txt_celular);
-        formatter1.setMask(MaskFormatter.TEL_8DIG);
-        formatter2.setMask(MaskFormatter.TEL_9DIG);
-        /*Amostrar o desenho da mascara*/
-        formatter1.showMask();
-        formatter2.showMask();
+        MaskFormatter formatter = new MaskFormatter();
+        formatter.addComponente(txt_tel1, MaskFormatter.TEL_DIG, true);
+        formatter.addComponente(txt_celular, MaskFormatter.TEL_DIG, true);
     }
 
     /**

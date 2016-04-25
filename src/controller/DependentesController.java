@@ -73,19 +73,18 @@ public class DependentesController extends Funcionalidades implements Initializa
         /*Botão salvar inicia bloqueado*/
         bt_salvar.setDisable(true);
         /*Adicionando as mascaras*/
-        formatter = new MaskFormatter(txt_telefone1);
-        formatter.setMask(MaskFormatter.TEL_8DIG);
-        formatter.showMask();
-        formatter.addComponente(txt_telefone2, MaskFormatter.TEL_8DIG, true);
-        formatter.addComponente(txt_telefone3, MaskFormatter.TEL_8DIG, true);
-        formatter.addComponente(txt_telefone4, MaskFormatter.TEL_8DIG, true);
-        formatter.addComponente(txt_telefone5, MaskFormatter.TEL_8DIG, true);
+        formatter = new MaskFormatter();
+        formatter.addComponente(txt_telefone1, MaskFormatter.TEL_DIG, true);
+        formatter.addComponente(txt_telefone2, MaskFormatter.TEL_DIG, true);
+        formatter.addComponente(txt_telefone3, MaskFormatter.TEL_DIG, true);
+        formatter.addComponente(txt_telefone4, MaskFormatter.TEL_DIG, true);
+        formatter.addComponente(txt_telefone5, MaskFormatter.TEL_DIG, true);
         formatter.addComponente(dp_nascimento1, MaskFormatter.DATA_BARRA, true);
         formatter.addComponente(dp_nascimento2, MaskFormatter.DATA_BARRA, true);
         formatter.addComponente(dp_nascimento3, MaskFormatter.DATA_BARRA, true);
         formatter.addComponente(dp_nascimento4, MaskFormatter.DATA_BARRA, true);
         formatter.addComponente(dp_nascimento5, MaskFormatter.DATA_BARRA, true);
-        
+
 
         /*Adicionamos um evento que vai ser chamado quando o usuario digitar, esse evento
         é apenas mostrar o valor que nem está na imagem 1 - depentende 50,00 2 - 70,00*/

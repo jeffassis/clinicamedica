@@ -23,7 +23,7 @@ import util.MaskFormatter;
  * @author jeand
  */
 public class PacienteDetalheController implements Initializable {
-    
+
     @FXML
     private DatePicker dp_nascimento, dp_cliente;
     @FXML
@@ -32,17 +32,16 @@ public class PacienteDetalheController implements Initializable {
     private TextField txt_cep, txt_documento, txt_tipo, txt_email, txt_observacoes;
     @FXML
     private Button bt_editar, bt_voltar;
-    
+
     private MaskFormatter formatter;
     private HomeController homeController;
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.formatter = new MaskFormatter(dp_nascimento);
-        this.formatter.setMask(MaskFormatter.DATA_BARRA);
-        formatter.showMask();
+        this.formatter = new MaskFormatter();
+        formatter.addComponente(dp_nascimento, MaskFormatter.DATA_BARRA, true);
         formatter.addComponente(dp_cliente, MaskFormatter.DATA_BARRA, true);
-        formatter.addComponente(txt_telefone, MaskFormatter.TEL_8DIG, true);
+        formatter.addComponente(txt_telefone, MaskFormatter.TEL_DIG, true);
     }
 
     /**
@@ -83,7 +82,7 @@ public class PacienteDetalheController implements Initializable {
     private void onEditar(ActionEvent evento) {
         ((Node) evento.getSource()).getScene().getWindow().hide();
         this.homeController.meusPacientes();
-        
+
     }
 
     /**
@@ -95,5 +94,5 @@ public class PacienteDetalheController implements Initializable {
     private void onVoltar(ActionEvent evento) {
         ((Node) evento.getSource()).getScene().getWindow().hide();
     }
-    
+
 }
