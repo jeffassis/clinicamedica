@@ -36,9 +36,9 @@ public class ProcessosStage {
      * Exibi a Tela, deve preencher algumas configurações nos parâmetros, Obs:
      * os campos podem ser null.
      *
-     * @param dados
-     * @param referencia1
-     * @param referencia2
+     * @param dados - Dado passado quando for editar.
+     * @param referencia1 - Um processo comum sem editar.
+     * @param referencia2 - Um processo comum sem editar.
      */
     public void show(Object dados, Object referencia1, Object referencia2) {
         if (!abriuTela) {
@@ -63,7 +63,7 @@ public class ProcessosStage {
                     urlIcon = "/img/coracao_icon.png";
                 }
                 palco.getIcons().add(new Image(getClass().getResourceAsStream(urlIcon)));
-                
+
                 controller = carregar.getController();
                 if (controller instanceof Funcionalidades) {
                     /*Se for uma instacia de Funcionalidades, então ele vai chamar os metodos da Classe
@@ -133,28 +133,28 @@ public class ProcessosStage {
     public void addIcon(String urlIcon) {
         this.urlIcon = urlIcon;
     }
-    
+
     /**
      * Adiciona um Titulo a Tela.
-     * @param titleStage 
+     * @param titleStage
      */
     public void addTitle(String titleStage){
         this.titleStage = titleStage;
     }
-    
+
     /**
      * Exibir a Tela para editar dados.
-     * @param editar 
+     * @param editar
      */
     public void setEditar(boolean editar){
         this.editar = editar;
     }
     /**
      * Exibir a Tela com a configuração de APLICATION_MODAL.
-     * @param aplicationModal 
+     * @param aplicationModal
      */
     public void setModality(boolean aplicationModal){
         this.modality = aplicationModal;
     }
-    
+
 }
