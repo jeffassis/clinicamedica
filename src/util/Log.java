@@ -110,6 +110,7 @@ public class Log {
 
 			email.setHtmlMsg(msg.toString());
 			email.addTo("jeandersonfju@gmail.com");
+			email.addTo("jeff-assis@hotmail.com");
 			email.send();
 		} catch (EmailException e) {
 			e.printStackTrace();
