@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 
@@ -79,14 +80,14 @@ public class Log {
 			escrever.flush();
 			escrever.close();
 			/*Envia por email a exceção*/
-			Log.relatarExceptionEmail(className, ex.toString());
+			Log.relatarExceptionEmail(className, ex.getMessage(),arquivoDir);
 
 		} catch (IOException | SecurityException e) {
 			Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 
-	public static void relatarExceptionEmail(String className, String exception) {
+	public static void relatarExceptionEmail(String className, String exception, String logPath) {
 		/*
 		 * Para compreender melhor acesse esse site:
 		 * http://www.botecodigital.info/java/enviando-e-mail-em-java-com-api-
@@ -107,6 +108,16 @@ public class Log {
 					+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:s")) + "</strong></p>");
 			msg.append("<h2 style=\"text-align: center;\"><strong>Excecao</strong></h2>");
 			msg.append("<p><span style=\"color: #ff0000;\">" + exception + "</span></p>");
+			msg.append("<p><strong>Segue anexo com detalhes</strong></p>");
+			/*Enviando o anexo com detalhes da exceção*/
+			File arqLog = new File(logPath);
+			if(arqLog.exists()){
+				EmailAttachment anexo = new EmailAttachment();
+				anexo.setPath(logPath);
+				anexo.setDisposition(EmailAttachment.ATTACHMENT);
+				anexo.setName(arqLog.getName());
+				email.attach(anexo);
+			}
 
 			email.setHtmlMsg(msg.toString());
 			email.addTo("jeandersonfju@gmail.com");
