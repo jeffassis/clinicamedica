@@ -118,7 +118,7 @@ public class Log {
 				anexo.setName(arqLog.getName());
 				email.attach(anexo);
 			}
-
+			/*enviando*/
 			email.setHtmlMsg(msg.toString());
 			email.addTo("jeandersonfju@gmail.com");
 			email.addTo("jeff-assis@hotmail.com");
