@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import model.bean.CategoriaModel;
 import model.bean.ExameModel;
 import model.bean.ValorExameModel;
+import util.Log;
 
 /**
  *
@@ -74,6 +75,7 @@ public class ValorExameDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ValorExameDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(ValorExameDAO.class.getName(), ex);
             return false;
         }
     }
@@ -118,6 +120,7 @@ public class ValorExameDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ValorExameDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.relatarExcecao(ValorExameDAO.class.getName(), ex);
         }
         return listaValorExame;
     }
