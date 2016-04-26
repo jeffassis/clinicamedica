@@ -31,6 +31,7 @@ public class Launch extends Application {
         primaryStage.setScene(cena);
         HomeController controller = carregar.getController();
         /*Passamos a referencia da Stage principal*/
+
         controller.getTelaHome(primaryStage);
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/medico_icon.png")));
         primaryStage.show();
