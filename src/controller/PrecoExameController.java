@@ -22,13 +22,14 @@ import model.dao.ExameDAO;
 import model.dao.ValorExameDAO;
 import util.ConverterDados;
 import util.DialogFX;
+import util.Funcionalidades;
 
 /**
  * FXML Controller class
  *
  * @author jeff-
  */
-public class PrecoExameController implements Initializable {
+public class PrecoExameController extends Funcionalidades implements Initializable {
 
     @FXML
     private TextField txt_id_valor;
@@ -68,7 +69,8 @@ public class PrecoExameController implements Initializable {
         /*Utilizando a nossa Classe converter CategoriaModel*/
         this.cb_categoria.setConverter(new ConverterDados(ConverterDados.GET_CATEGORIA_DESCRICAO).getCategoriaConverter());
     }
-
+      
+   
     /**
      * Executa as funções iniciais como preencher o comboBox utilizando o Task
      * já que pode ser um processo pesado
@@ -76,7 +78,8 @@ public class PrecoExameController implements Initializable {
      * @param editar
      * @param tabela
      */
-    public void iniciarProcessos(boolean editar, TableView<ValorExameModel> tabela) {
+    @Override
+    public void iniciarProcessos(boolean editar, Object tabela) {
         /*Para evitar uma exception de Thread temos que limpar o comboBox*/
         cb_categoria.getItems().clear();
         tabela_exame.getSelectionModel().clearSelection();
@@ -91,7 +94,7 @@ public class PrecoExameController implements Initializable {
             @Override
             protected void succeeded() {
                 if (editar == true) {
-                    editarDados(tabela);
+                    editarDados((TableView<ValorExameModel>)tabela);
                 }
             }
         };
@@ -104,6 +107,7 @@ public class PrecoExameController implements Initializable {
     /**
      * Metodo para carregar o TableView da GUI com Thread
      */
+    @Override
     public void carregarTabela() {
         Task task = new Task() {
             @Override
